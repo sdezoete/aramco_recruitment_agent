@@ -1,0 +1,935 @@
+﻿start_result:
+{
+  "status": "completed",
+  "session_id": "demo-flow-session",
+  "requisition_id": "JR-1001",
+  "message": "Search and ranking completed.",
+  "clarification_questions": [],
+  "ranked_candidates": [
+    {
+      "candidate_id": "200002",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Yousef Hassan Almalki is a data science applicant targeting Data Analyst roles with 0+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. "
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200003",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Dana Almutairi is a data science applicant targeting Data Scientist roles with 0+ years of analytics and machine learning experience. Holds a Bachelor in Computer Science. Core str"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200004",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Faisal Alqahtani is a data science applicant targeting AI Engineer roles with 1+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. Core s"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200005",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Faisal Alotaibi is a data science applicant targeting Applied Scientist roles with 1+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. C"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200011",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Yousef Alzahrani is a data science applicant targeting ML Engineer roles with 7+ years of analytics and machine learning experience. Holds a Bachelor in Data Science. Core strength"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200014",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Tariq Alzahrani is a data science applicant targeting Machine Learning Engineer roles with 7+ years of analytics and machine learning experience. Holds a PhD in Applied Mathematics"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200021",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Faisal Almalki is a data science applicant targeting Data Analyst roles with 3+ years of analytics and machine learning experience. Holds a Master in Applied Mathematics. Core stre"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200025",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Yousef Alqahtani is a data science applicant targeting Applied Scientist roles with 4+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. "
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200026",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Nasser Faisal Alzahrani is a data science applicant targeting AI Engineer roles with 10+ years of analytics and machine learning experience. Holds a Bachelor in Computer Science. C"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200034",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Saif Alotaibi is a data science applicant targeting Senior Data Scientist roles with 1+ years of analytics and machine learning experience. Holds a Master in Software Engineering. "
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200036",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Omar Alotaibi is a data science applicant targeting Data Analyst roles with 10+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. Core st"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200037",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Maha Alsubaie is a data science applicant targeting Senior Data Analyst roles with 6+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. C"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200040",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Nour Maha Alshammari is a data science applicant targeting AI Engineer roles with 9+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. Co"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200041",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Ibrahim Maha Alqahtani is a data science applicant targeting Machine Learning Engineer roles with 11+ years of analytics and machine learning experience. Holds a Master in Computer"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200051",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Omar Saif Alzahrani is a data science applicant targeting Data Analyst roles with 0+ years of analytics and machine learning experience. Holds a PhD in Software Engineering. Core s"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200053",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Nour Almalki is a data science applicant targeting Applied Scientist roles with 10+ years of analytics and machine learning experience. Holds a Master in Software Engineering. Core"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200054",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Noor Tariq Alshammari is a data science applicant targeting Applied Scientist roles with 3+ years of analytics and machine learning experience. Holds a Master in Data Science. Core"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200055",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Huda Tariq Alsubaie is a data science applicant targeting Data Analyst roles with 1+ years of analytics and machine learning experience. Holds a Bachelor in Electrical Engineering."
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200056",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Lina Alsubaie is a data science applicant targeting Data Scientist roles with 6+ years of analytics and machine learning experience. Holds a PhD in Computer Science. Core strengths"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200057",
+      "total_score": 0.3,
+      "score_breakdown": {
+        "skill_coverage": 0.6667,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: mlops, python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Huda Omar Alghamdi is a data science applicant targeting Senior Data Analyst roles with 6+ years of analytics and machine learning experience. Holds a Bachelor in Data Science. Cor"
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "candidate_id": "200006",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Saif Almalki is a data science applicant targeting Applied Scientist roles with 12+ years of analytics and machine learning experience. Holds a Master in Data Science. Core strengt"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200007",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Tariq Alyami is a data science applicant targeting Machine Learning Engineer roles with 7+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathemati"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200009",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: kubernetes"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Hassan Almutairi is a data science applicant targeting Data Analyst roles with 7+ years of analytics and machine learning experience. Holds a Master in Electrical Engineering. Core"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200012",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Huda Alghamdi is a data science applicant targeting Data Scientist roles with 12+ years of analytics and machine learning experience. Holds a Bachelor in Computer Science. Core str"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200013",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Omar Lina Alsubaie is a data science applicant targeting Senior Data Analyst roles with 12+ years of analytics and machine learning experience. Holds a Master in Data Science. Core"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200015",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Maha Abdullah Alqahtani is a data science applicant targeting ML Engineer roles with 6+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics."
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200016",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Rania Alghamdi is a data science applicant targeting Data Scientist roles with 10+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. Core"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200017",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Maha Alzahrani is a data science applicant targeting Senior Data Scientist roles with 3+ years of analytics and machine learning experience. Holds a Master in Statistics. Core stre"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200018",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Hassan Lina Alharbi is a data science applicant targeting AI Engineer roles with 7+ years of analytics and machine learning experience. Holds a Bachelor in Statistics. Core strengt"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200020",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Saif Reem Alotaibi is a data science applicant targeting ML Engineer roles with 3+ years of analytics and machine learning experience. Holds a Bachelor in Computer Science. Core st"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200028",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Reem Rania Alharbi is a data science applicant targeting Applied Scientist roles with 10+ years of analytics and machine learning experience. Holds a Bachelor in Statistics. Core s"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200038",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Hassan Alyami is a data science applicant targeting Senior Data Scientist roles with 4+ years of analytics and machine learning experience. Holds a Bachelor in Data Science. Core s"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200042",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Lina Omar Alzahrani is a data science applicant targeting Machine Learning Engineer roles with 6+ years of analytics and machine learning experience. Holds a PhD in Data Science. C"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200043",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Huda Maha Alotaibi is a data science applicant targeting Data Analyst roles with 4+ years of analytics and machine learning experience. Holds a Bachelor in Applied Mathematics. Cor"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200044",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Saif Faisal Almutairi is a data science applicant targeting Data Analyst roles with 0+ years of analytics and machine learning experience. Holds a Master in Statistics. Core streng"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200045",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Faisal Huda Almutairi is a data science applicant targeting Data Scientist roles with 10+ years of analytics and machine learning experience. Holds a Bachelor in Statistics. Core s"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200046",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Rania Hassan Alharbi is a data science applicant targeting Senior Data Analyst roles with 6+ years of analytics and machine learning experience. Holds a Master in Computer Science."
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200049",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Abdullah Hassan Alotaibi is a data science applicant targeting Data Analyst roles with 10+ years of analytics and machine learning experience. Holds a Bachelor in Statistics. Core "
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200058",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Saif Maha Almalki is a data science applicant targeting Senior Data Analyst roles with 11+ years of analytics and machine learning experience. Holds a Master in Electrical Engineer"
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    },
+    {
+      "candidate_id": "200059",
+      "total_score": 0.15,
+      "score_breakdown": {
+        "skill_coverage": 0.3333,
+        "education": 0.0,
+        "domain": 0.0
+      },
+      "evidence": [
+        {
+          "source": "SKILLS.skill",
+          "detail": "Matched skills: python"
+        },
+        {
+          "source": "CANDIDATE.summary",
+          "detail": "Khalid Sarah Alshammari is a data science applicant targeting Data Scientist roles with 3+ years of analytics and machine learning experience. Holds a Bachelor in Statistics. Core "
+        }
+      ],
+      "gaps": [
+        "Low must-have skill coverage"
+      ]
+    }
+  ],
+  "archetype_report": {
+    "archetypes": [
+      {
+        "archetype_name": "Deep Learning Specialist",
+        "candidate_ids": [
+          "200002",
+          "200003",
+          "200004",
+          "200005",
+          "200009",
+          "200011",
+          "200014",
+          "200021",
+          "200025",
+          "200026",
+          "200034",
+          "200036",
+          "200037",
+          "200040",
+          "200041",
+          "200049",
+          "200051",
+          "200053",
+          "200054",
+          "200055",
+          "200056",
+          "200057",
+          "200058"
+        ],
+        "typical_strengths": [
+          "Model architecture depth",
+          "Research-heavy profile"
+        ],
+        "typical_risks": [
+          "May have less production ownership"
+        ],
+        "best_for": "Novel model innovation"
+      },
+      {
+        "archetype_name": "MLOps Engineer",
+        "candidate_ids": [
+          "200006",
+          "200015",
+          "200016",
+          "200018",
+          "200028",
+          "200038",
+          "200045",
+          "200046"
+        ],
+        "typical_strengths": [
+          "Deployment and monitoring",
+          "Pipeline reliability"
+        ],
+        "typical_risks": [
+          "May be less focused on model architecture research"
+        ],
+        "best_for": "Productionization and platform reliability"
+      },
+      {
+        "archetype_name": "Generalist Data Scientist",
+        "candidate_ids": [
+          "200007",
+          "200012",
+          "200013",
+          "200017",
+          "200020",
+          "200042",
+          "200043",
+          "200044",
+          "200059"
+        ],
+        "typical_strengths": [
+          "Broad modeling toolkit",
+          "Flexible domain adaptation"
+        ],
+        "typical_risks": [
+          "May lack deep specialization in one niche"
+        ],
+        "best_for": "Balanced experimentation and delivery"
+      }
+    ],
+    "recommendation_note": "If shipping and monitoring are top priorities, favor MLOps Engineer candidates. If innovation in model quality is top priority, favor Deep Learning Specialist candidates."
+  },
+  "candidate_count": 40
+}

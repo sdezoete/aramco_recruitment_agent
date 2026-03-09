@@ -5,8 +5,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # SQL Server connection
-    DB_DRIVER: str = "{ODBC Driver 17 for SQL Server}"
-    DB_SERVER: str = "cw-002918"
+    DB_DRIVER: str = "{ODBC Driver 18 for SQL Server}"
+    DB_SERVER: str = "DESKTOP-PI79SVO\\SQLEXPRESS"
     DB_NAME: str = "arif_recruitment"
     DB_TRUSTED_CONNECTION: str = "yes"
     DB_USERNAME: str | None = None

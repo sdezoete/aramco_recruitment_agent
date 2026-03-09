@@ -17,44 +17,44 @@ T_SKL = "T_IIR_ARIF_SKILLS"
 
 # Update right-hand values if your real SQL column names differ.
 COLUMN_MAP_CANDIDATE = {
-    "candidate_id": "candidate_id",
-    "full_name": "full_name",
-    "email": "email",
-    "summary": "summary",
-    "resume_text_dump": "resume_text_dump",
-    "test_score_verbal": "test_score_verbal",
-    "test_score_math": "test_score_math",
-    "test_score_insight": "test_score_insight",
-    "current_title": "current_title",
-    "current_employer": "current_employer",
-    "location": "location",
+    "candidate_id": "CAST(CANDIDATE_ID AS NVARCHAR(64))",
+    "full_name": "LTRIM(RTRIM(CONCAT(COALESCE(GIVENNAME, ''), ' ', COALESCE(MIDDLENAME, ''), ' ', COALESCE(SURNAME, ''))))",
+    "email": "NULL",
+    "summary": "SUMMARY",
+    "resume_text_dump": "TEXT_TOKENS",
+    "test_score_verbal": "TRY_CAST(VERBREASON AS FLOAT)",
+    "test_score_math": "TRY_CAST(NUMREASON AS FLOAT)",
+    "test_score_insight": "TRY_CAST(INDREASON AS FLOAT)",
+    "current_title": "CURRENT_JOB_TITLE",
+    "current_employer": "CURRENT_EMPLOYER",
+    "location": "COUNTRY",
 }
 
 COLUMN_MAP_EDU = {
-    "candidate_id": "candidate_id",
-    "degree_level": "degree_level",
-    "major": "major",
-    "institution": "institution",
-    "gpa": "gpa",
-    "start_date": "start_date",
-    "end_date": "end_date",
+    "candidate_id": "CAST(CANDIDATE_ID AS NVARCHAR(64))",
+    "degree_level": "DEGREE",
+    "major": "MAJOR",
+    "institution": "INSTITUTION",
+    "gpa": "NULL",
+    "start_date": "STARTDATE",
+    "end_date": "ENDDATE",
 }
 
 COLUMN_MAP_EXP = {
-    "candidate_id": "candidate_id",
-    "job_title": "job_title",
-    "employer": "employer",
-    "start_date": "start_date",
-    "end_date": "end_date",
-    "description": "description",
+    "candidate_id": "CAST(CANDIDATE_ID AS NVARCHAR(64))",
+    "job_title": "TITLE",
+    "employer": "EMPLOYER",
+    "start_date": "STARTDATE",
+    "end_date": "ENDDATE",
+    "description": "NULL",
 }
 
 COLUMN_MAP_SKL = {
-    "candidate_id": "candidate_id",
-    "skill": "skill",
-    "proficiency": "proficiency",
-    "years": "years",
-    "last_used": "last_used",
+    "candidate_id": "CAST(CANDIDATE_ID AS NVARCHAR(64))",
+    "skill": "COALESCE(NORM_SKILL, ORG_SKILL)",
+    "proficiency": "NULL",
+    "years": "NULL",
+    "last_used": "NULL",
 }
 
 
@@ -79,7 +79,7 @@ class RecruitmentRepository:
         sql = f"""
         SELECT {_select_list(COLUMN_MAP_CANDIDATE)}
         FROM {T_CANDIDATE}
-        WHERE candidate_id IN {in_clause}
+        WHERE CANDIDATE_ID IN {in_clause}
         """
 
         with open_db_connection() as conn:
@@ -97,7 +97,7 @@ class RecruitmentRepository:
         sql = f"""
         SELECT {_select_list(COLUMN_MAP_EDU)}
         FROM {T_EDU}
-        WHERE candidate_id IN {in_clause}
+        WHERE CANDIDATE_ID IN {in_clause}
         """
 
         with open_db_connection() as conn:
@@ -115,7 +115,7 @@ class RecruitmentRepository:
         sql = f"""
         SELECT {_select_list(COLUMN_MAP_EXP)}
         FROM {T_EXP}
-        WHERE candidate_id IN {in_clause}
+        WHERE CANDIDATE_ID IN {in_clause}
         """
 
         with open_db_connection() as conn:
@@ -133,7 +133,7 @@ class RecruitmentRepository:
         sql = f"""
         SELECT {_select_list(COLUMN_MAP_SKL)}
         FROM {T_SKL}
-        WHERE candidate_id IN {in_clause}
+        WHERE CANDIDATE_ID IN {in_clause}
         """
 
         with open_db_connection() as conn:
@@ -182,23 +182,23 @@ class RecruitmentRepository:
 
         if filters.candidate_ids:
             in_clause, in_params = build_in_clause_params(filters.candidate_ids)
-            where_clauses.append(f"c.candidate_id IN {in_clause}")
+            where_clauses.append(f"c.CANDIDATE_ID IN {in_clause}")
             params.extend(in_params)
 
         if filters.min_test_verbal is not None:
-            where_clauses.append("c.test_score_verbal >= ?")
+            where_clauses.append("TRY_CAST(c.VERBREASON AS FLOAT) >= ?")
             params.append(filters.min_test_verbal)
         if filters.min_test_math is not None:
-            where_clauses.append("c.test_score_math >= ?")
+            where_clauses.append("TRY_CAST(c.NUMREASON AS FLOAT) >= ?")
             params.append(filters.min_test_math)
         if filters.min_test_insight is not None:
-            where_clauses.append("c.test_score_insight >= ?")
+            where_clauses.append("TRY_CAST(c.INDREASON AS FLOAT) >= ?")
             params.append(filters.min_test_insight)
 
         if filters.text_keywords_any:
             keyword_clauses: list[str] = []
             for keyword in filters.text_keywords_any:
-                keyword_clauses.append("(c.summary LIKE ? OR c.resume_text_dump LIKE ?)")
+                keyword_clauses.append("(c.SUMMARY LIKE ? OR c.TEXT_TOKENS LIKE ?)")
                 params.extend([f"%{keyword}%", f"%{keyword}%"])
             where_clauses.append("(" + " OR ".join(keyword_clauses) + ")")
 
@@ -207,8 +207,8 @@ class RecruitmentRepository:
             where_clauses.append(
                 f"""EXISTS (
                         SELECT 1 FROM {T_SKL} s
-                        WHERE s.candidate_id = c.candidate_id
-                        AND LOWER(s.skill) IN {in_clause}
+                        WHERE s.CANDIDATE_ID = c.CANDIDATE_ID
+                        AND LOWER(COALESCE(s.NORM_SKILL, s.ORG_SKILL)) IN {in_clause}
                     )"""
             )
             params.extend(in_params)
@@ -218,8 +218,8 @@ class RecruitmentRepository:
                 where_clauses.append(
                     f"""EXISTS (
                             SELECT 1 FROM {T_SKL} s2
-                            WHERE s2.candidate_id = c.candidate_id
-                            AND LOWER(s2.skill) = ?
+                            WHERE s2.CANDIDATE_ID = c.CANDIDATE_ID
+                            AND LOWER(COALESCE(s2.NORM_SKILL, s2.ORG_SKILL)) = ?
                         )"""
                 )
                 params.append(skill.lower())
@@ -228,8 +228,8 @@ class RecruitmentRepository:
             where_clauses.append(
                 f"""EXISTS (
                         SELECT 1 FROM {T_EDU} e
-                        WHERE e.candidate_id = c.candidate_id
-                        AND e.gpa >= ?
+                        WHERE e.CANDIDATE_ID = c.CANDIDATE_ID
+                        AND TRY_CAST(c.GPA AS FLOAT) >= ?
                     )"""
             )
             params.append(filters.min_gpa)
@@ -239,8 +239,8 @@ class RecruitmentRepository:
             where_clauses.append(
                 f"""EXISTS (
                         SELECT 1 FROM {T_EDU} e2
-                        WHERE e2.candidate_id = c.candidate_id
-                        AND LOWER(e2.degree_level) IN {in_clause}
+                        WHERE e2.CANDIDATE_ID = c.CANDIDATE_ID
+                        AND LOWER(e2.DEGREE) IN {in_clause}
                     )"""
             )
             params.extend(in_params)
@@ -250,8 +250,8 @@ class RecruitmentRepository:
             where_clauses.append(
                 f"""EXISTS (
                         SELECT 1 FROM {T_EDU} e3
-                        WHERE e3.candidate_id = c.candidate_id
-                        AND LOWER(e3.major) IN {in_clause}
+                        WHERE e3.CANDIDATE_ID = c.CANDIDATE_ID
+                        AND LOWER(e3.MAJOR) IN {in_clause}
                     )"""
             )
             params.extend(in_params)
@@ -260,10 +260,10 @@ class RecruitmentRepository:
         offset = max(0, filters.offset)
 
         sql = f"""
-        SELECT c.candidate_id
+        SELECT CAST(c.CANDIDATE_ID AS NVARCHAR(64)) AS candidate_id
         FROM {T_CANDIDATE} c
         WHERE {' AND '.join(where_clauses)}
-        ORDER BY c.candidate_id
+        ORDER BY c.CANDIDATE_ID
         OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
         """
 

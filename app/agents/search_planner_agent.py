@@ -53,7 +53,8 @@ class SearchPlannerAgent:
             skills_any=skills_any or None,
             degree_levels_any=[degree] if degree else None,
             min_gpa=requirements.education.min_gpa,
-            text_keywords_any=requirements.domain_keywords or None,
+            # Keep domain terms for ranking/explanations, not hard filtering.
+            text_keywords_any=None,
             limit=plan.limit,
             offset=0,
         )

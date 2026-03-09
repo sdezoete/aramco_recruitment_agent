@@ -1,0 +1,5178 @@
+{
+  "overview": {
+    "database_name": "arif_recruitment",
+    "version": 5,
+    "generator_type": "generic_sql_server_schema_extractor",
+    "table_count": 4,
+    "relationship_count": 0,
+    "count_rule_count": 8,
+    "chunking": {
+      "max_tables_per_chunk": 8,
+      "max_relationships_per_chunk": 25,
+      "table_chunk_count": 1,
+      "relationship_chunk_count": 0,
+      "join_hint_chunk_count": 0
+    },
+    "global_analysis": {
+      "entity_key_map": {
+        "dbo.T_IIR_ARIF_CANDIDATE": {
+          "likely_entity_key": "ARIF_ID",
+          "candidate_keys_ranked": [
+            {
+              "column_name": "ARIF_ID",
+              "score": 170,
+              "reasons": [
+                "primary_key",
+                "identity",
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "NATIONAL_ID",
+              "score": 30,
+              "reasons": [
+                "column_name_suffix_id",
+                "short_text_possible_business_key"
+              ]
+            },
+            {
+              "column_name": "HIGHEST_JOB_REQ_ID",
+              "score": 30,
+              "reasons": [
+                "column_name_suffix_id",
+                "short_text_possible_business_key"
+              ]
+            },
+            {
+              "column_name": "HIGHEST_APPLICATION_ID",
+              "score": 30,
+              "reasons": [
+                "column_name_suffix_id",
+                "short_text_possible_business_key"
+              ]
+            }
+          ]
+        },
+        "dbo.T_IIR_ARIF_EDUCATION": {
+          "likely_entity_key": "SCHOOL_ID",
+          "candidate_keys_ranked": [
+            {
+              "column_name": "SCHOOL_ID",
+              "score": 170,
+              "reasons": [
+                "primary_key",
+                "identity",
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "ARIF_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "DEGREE",
+              "score": 5,
+              "reasons": [
+                "short_text_possible_business_key"
+              ]
+            },
+            {
+              "column_name": "MAJOR",
+              "score": 5,
+              "reasons": [
+                "short_text_possible_business_key"
+              ]
+            }
+          ]
+        },
+        "dbo.T_IIR_ARIF_EXPERIENCE": {
+          "likely_entity_key": "JOB_ID",
+          "candidate_keys_ranked": [
+            {
+              "column_name": "JOB_ID",
+              "score": 170,
+              "reasons": [
+                "primary_key",
+                "identity",
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "ARIF_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "YEARS_OF_EXPERIENCE",
+              "score": 10,
+              "reasons": [
+                "numeric_type"
+              ]
+            },
+            {
+              "column_name": "TITLE",
+              "score": 5,
+              "reasons": [
+                "short_text_possible_business_key"
+              ]
+            }
+          ]
+        },
+        "dbo.T_IIR_ARIF_SKILLS": {
+          "likely_entity_key": "SKILL_ID",
+          "candidate_keys_ranked": [
+            {
+              "column_name": "SKILL_ID",
+              "score": 170,
+              "reasons": [
+                "primary_key",
+                "identity",
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "ARIF_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "score": 40,
+              "reasons": [
+                "column_name_suffix_id",
+                "numeric_type",
+                "not_nullable"
+              ]
+            },
+            {
+              "column_name": "ORG_SKILL",
+              "score": 5,
+              "reasons": [
+                "short_text_possible_business_key"
+              ]
+            },
+            {
+              "column_name": "NORM_SKILL",
+              "score": 5,
+              "reasons": [
+                "short_text_possible_business_key"
+              ]
+            }
+          ]
+        }
+      },
+      "table_roles": {
+        "dbo.T_IIR_ARIF_CANDIDATE": {
+          "role": "standalone",
+          "inbound_relationship_count": 0,
+          "outbound_relationship_count": 0,
+          "textual_column_count": 22,
+          "reasons": [
+            "entity_key_discovered"
+          ]
+        },
+        "dbo.T_IIR_ARIF_EDUCATION": {
+          "role": "standalone",
+          "inbound_relationship_count": 0,
+          "outbound_relationship_count": 0,
+          "textual_column_count": 7,
+          "reasons": [
+            "entity_key_discovered"
+          ]
+        },
+        "dbo.T_IIR_ARIF_EXPERIENCE": {
+          "role": "standalone",
+          "inbound_relationship_count": 0,
+          "outbound_relationship_count": 0,
+          "textual_column_count": 7,
+          "reasons": [
+            "entity_key_discovered"
+          ]
+        },
+        "dbo.T_IIR_ARIF_SKILLS": {
+          "role": "standalone",
+          "inbound_relationship_count": 0,
+          "outbound_relationship_count": 0,
+          "textual_column_count": 2,
+          "reasons": [
+            "entity_key_discovered"
+          ]
+        }
+      }
+    },
+    "guidance_for_llm": {
+      "rules": [
+        "Only generate SQL against listed tables and columns.",
+        "Prefer explicit joins using discovered foreign keys and join_hints.",
+        "Use entity_key_analysis to decide when COUNT(DISTINCT ...) is safer than COUNT(*).",
+        "Use count_rules to avoid duplicate counting after joins.",
+        "Use query_templates as safe starting patterns.",
+        "Use recommended_filter_columns for WHERE clauses when appropriate.",
+        "Use recommended_search_columns for text search when appropriate.",
+        "Pattern profiles describe the typical structure of text values.",
+        "Sample values intentionally exclude poor-quality and Arabic-script examples."
+      ]
+    }
+  },
+  "table_payloads": [
+    {
+      "payload_type": "table_chunk",
+      "chunk_index": 1,
+      "chunk_count": 1,
+      "database_name": "arif_recruitment",
+      "tables": [
+        {
+          "schema_name": "dbo",
+          "table_name": "T_IIR_ARIF_CANDIDATE",
+          "full_table_name": "dbo.T_IIR_ARIF_CANDIDATE",
+          "row_count": 106787,
+          "table_role": {
+            "role": "standalone",
+            "inbound_relationship_count": 0,
+            "outbound_relationship_count": 0,
+            "textual_column_count": 22,
+            "reasons": [
+              "entity_key_discovered"
+            ]
+          },
+          "entity_key_analysis": {
+            "likely_entity_key": "ARIF_ID",
+            "candidate_keys_ranked": [
+              {
+                "column_name": "ARIF_ID",
+                "score": 170,
+                "reasons": [
+                  "primary_key",
+                  "identity",
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "CANDIDATE_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "NATIONAL_ID",
+                "score": 30,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "short_text_possible_business_key"
+                ]
+              },
+              {
+                "column_name": "HIGHEST_JOB_REQ_ID",
+                "score": 30,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "short_text_possible_business_key"
+                ]
+              },
+              {
+                "column_name": "HIGHEST_APPLICATION_ID",
+                "score": 30,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "short_text_possible_business_key"
+                ]
+              }
+            ]
+          },
+          "primary_keys": [
+            "ARIF_ID"
+          ],
+          "foreign_keys": [],
+          "searchable_columns": [
+            "GIVENNAME",
+            "MIDDLENAME",
+            "SURNAME",
+            "CURRENT_EMPLOYER",
+            "CURRENT_JOB_TITLE",
+            "COUNTRY",
+            "NATIONAL_ID",
+            "SAUDI_EXPAT",
+            "GPA",
+            "SOURCE_OF_APPLICATION",
+            "GENDER",
+            "HIGHEST_JOB_REQ_ID",
+            "HIGHEST_APPLICATION_ID",
+            "HIGHEST_APPLICATION_STATUS",
+            "RESUME_FILE_TYPE",
+            "CANDIDATE_FLAG",
+            "INDREASON",
+            "NUMREASON",
+            "VERBREASON",
+            "SUMMARY",
+            "TEXT_TOKENS"
+          ],
+          "likely_filter_columns": [
+            "ARIF_ID",
+            "CREATED_ON",
+            "SAUDI_EXPAT",
+            "LAST_MODIFIED",
+            "SOURCE_OF_APPLICATION",
+            "GENDER",
+            "HIGHEST_APPLICATION_STATUS",
+            "APPLICATION_STATUS_CODE",
+            "RESUME_UPLOADED",
+            "RESUME_DATE",
+            "RESUME_FILE_TYPE",
+            "RESUME_PROCESSED",
+            "EDUCATION_EXTRACTED",
+            "EXPERIENCE_EXTRACTED",
+            "SKILLS_EXTRACTED",
+            "SUMMARY_EXTRACTED",
+            "WILD_SEARCH_EXTRACTED",
+            "CANDIDATE_FLAG",
+            "INDREASON",
+            "NUMREASON",
+            "VERBREASON"
+          ],
+          "likely_sort_columns": [
+            "ARIF_ID",
+            "CANDIDATE_ID",
+            "CREATED_ON",
+            "LAST_MODIFIED",
+            "APPLICATION_STATUS_CODE",
+            "RESUME_UPLOADED",
+            "RESUME_DATE",
+            "RESUME_PROCESSED",
+            "EDUCATION_EXTRACTED",
+            "EXPERIENCE_EXTRACTED",
+            "SKILLS_EXTRACTED",
+            "SUMMARY_EXTRACTED",
+            "WILD_SEARCH_EXTRACTED"
+          ],
+          "columns": [
+            {
+              "column_order": 1,
+              "column_name": "ARIF_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": true,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": true,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 106787,
+              "sample_values": [
+                "10000000",
+                "10000001",
+                "10000002",
+                "10000003",
+                "10000004"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "primary_key",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 2,
+              "column_name": "CANDIDATE_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 106787,
+              "sample_values": [
+                "1000015",
+                "100005",
+                "1000053",
+                "1000056",
+                "1000063"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 3,
+              "column_name": "GIVENNAME",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 26240,
+              "sample_values": [
+                "Sarah",
+                "Mohamad",
+                "ashraf",
+                "Maram",
+                "Reema"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_1",
+                "dominant_pattern_ratio": 0.9286,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 1080,
+                    "ratio": 0.9286,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 74,
+                    "ratio": 0.0636,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 9,
+                    "ratio": 0.0077,
+                    "description": "text value with about 3 words"
+                  }
+                ],
+                "representative_values": [
+                  "Sarah",
+                  "Mohamad",
+                  "ashraf",
+                  "Maram",
+                  "Reema"
+                ],
+                "anomaly_examples": [
+                  "Juan Carlos",
+                  "Saleh Hamoud",
+                  "Abdul Haseeb",
+                  "Muhammad Fizwadi",
+                  "Haider Ali"
+                ],
+                "value_interpretation": "very strong dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 4,
+              "column_name": "MIDDLENAME",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 11200,
+              "sample_values": [
+                "Afit",
+                "Kunnath",
+                "Kader",
+                "Muneif",
+                "Hamad"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_1",
+                "dominant_pattern_ratio": 0.9818,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 1136,
+                    "ratio": 0.9818,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 20,
+                    "ratio": 0.0173,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 1,
+                    "ratio": 0.0009,
+                    "description": "text value with about 3 words"
+                  }
+                ],
+                "representative_values": [
+                  "Afit",
+                  "Kunnath",
+                  "Kader",
+                  "Muneif",
+                  "Hamad"
+                ],
+                "anomaly_examples": [
+                  "José Martins",
+                  "Samir Helmy Mohamed",
+                  "Mohammed adnan",
+                  "Abdelhameed Tawfeeq",
+                  "Samir mohsen"
+                ],
+                "value_interpretation": "very strong dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 5,
+              "column_name": "SURNAME",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 44596,
+              "sample_values": [
+                "Albanaqi",
+                "Alyami",
+                "Alshehri",
+                "elsaid",
+                "Aldakheel"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_1",
+                "dominant_pattern_ratio": 0.922,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 1064,
+                    "ratio": 0.922,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 85,
+                    "ratio": 0.0737,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 4,
+                    "ratio": 0.0035,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 1,
+                    "ratio": 0.0009,
+                    "description": "text value with about 4 words"
+                  }
+                ],
+                "representative_values": [
+                  "Albanaqi",
+                  "Alyami",
+                  "Alshehri",
+                  "elsaid",
+                  "Aldakheel"
+                ],
+                "anomaly_examples": [
+                  "AL RUMAIH",
+                  "Mohamad Salleh",
+                  "Al -Al Sayed Nasser",
+                  "Kumar Mahto",
+                  "MOHD SABRI"
+                ],
+                "value_interpretation": "very strong dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 6,
+              "column_name": "CREATED_ON",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": "(getdate())",
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 1558,
+              "sample_values": [
+                "2026-03-08",
+                "2026-03-07",
+                "2026-03-06",
+                "2026-03-05",
+                "2026-03-04"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_order": 7,
+              "column_name": "CURRENT_EMPLOYER",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 36100,
+              "sample_values": [
+                "AGP LTD",
+                "Metal Majic",
+                "Armstrong Energy",
+                "rayat company",
+                "Wood plc"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.2481,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 288,
+                    "ratio": 0.2481,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 242,
+                    "ratio": 0.2084,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 228,
+                    "ratio": 0.1964,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 165,
+                    "ratio": 0.1421,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 94,
+                    "ratio": 0.081,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 55,
+                    "ratio": 0.0474,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 38,
+                    "ratio": 0.0327,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 16,
+                    "ratio": 0.0138,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 12,
+                    "ratio": 0.0103,
+                    "description": "text value with about 15 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 11,
+                    "ratio": 0.0095,
+                    "description": "text value with about 9 words"
+                  }
+                ],
+                "representative_values": [
+                  "AGP LTD",
+                  "Metal Majic",
+                  "Armstrong Energy",
+                  "rayat company",
+                  "Wood plc"
+                ],
+                "anomaly_examples": [
+                  "PT. Chandra Asri Petrochemical, Tbk",
+                  "Media.net Software Services",
+                  "Virtusa Consulting Service Pvt. Ltd",
+                  "Self-Employed",
+                  "HPE (Hewlett Packard Enterprise)"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 8,
+              "column_name": "CURRENT_JOB_TITLE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 31679,
+              "sample_values": [
+                "Lead Inspector",
+                "Mechanical Engineering",
+                "Instrumentation Engineer",
+                "Legal Counsel",
+                "Project Lead"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.3307,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 378,
+                    "ratio": 0.3307,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 297,
+                    "ratio": 0.2598,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 154,
+                    "ratio": 0.1347,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 90,
+                    "ratio": 0.0787,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 79,
+                    "ratio": 0.0691,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 63,
+                    "ratio": 0.0551,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 31,
+                    "ratio": 0.0271,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 20,
+                    "ratio": 0.0175,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 12,
+                    "ratio": 0.0105,
+                    "description": "text value with about 11 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 10,
+                    "ratio": 0.0087,
+                    "description": "text value with about 9 words"
+                  }
+                ],
+                "representative_values": [
+                  "Lead Inspector",
+                  "Mechanical Engineering",
+                  "Instrumentation Engineer",
+                  "Legal Counsel",
+                  "Project Lead"
+                ],
+                "anomaly_examples": [
+                  "Associate Engineer - Reliability static",
+                  "Director - Transformation",
+                  "Grade “A” Trainer",
+                  "database",
+                  "Engineer - HSE"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 9,
+              "column_name": "YEARS_OF_EXPERIENCE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 106787,
+              "null_ratio": 1.0,
+              "distinct_count": 0,
+              "sample_values": [],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 10,
+              "column_name": "COUNTRY",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 190,
+              "sample_values": [
+                "Russian Federation",
+                "Brunei Darussalam",
+                "Saudi Arabia",
+                "Viet Nam",
+                "United Kingdom"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.605,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 726,
+                    "ratio": 0.605,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 441,
+                    "ratio": 0.3675,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 31,
+                    "ratio": 0.0258,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 2,
+                    "ratio": 0.0017,
+                    "description": "text value with about 4 words"
+                  }
+                ],
+                "representative_values": [
+                  "Russian Federation",
+                  "Brunei Darussalam",
+                  "Saudi Arabia",
+                  "Viet Nam",
+                  "United Kingdom"
+                ],
+                "anomaly_examples": [
+                  "Yemen",
+                  "Turkmenistan",
+                  "Jordan",
+                  "Iraq",
+                  "Venezuela (bolivarian Republic Of)"
+                ],
+                "value_interpretation": "strong dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 11,
+              "column_name": "NATIONAL_ID",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 42488,
+              "sample_values": [
+                "1049131061",
+                "1138593585",
+                "1118403441",
+                "1120458870",
+                "1100080322"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_10_PREFIX_1",
+                "dominant_pattern_ratio": 0.8842,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_10_PREFIX_1",
+                    "count": 1054,
+                    "ratio": 0.8842,
+                    "description": "digits length 10"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_10_PREFIX_2",
+                    "count": 31,
+                    "ratio": 0.026,
+                    "description": "digits length 10"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_7",
+                    "count": 20,
+                    "ratio": 0.0168,
+                    "description": "phone-like value with 7 digits"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_13_PREFIX_3",
+                    "count": 7,
+                    "ratio": 0.0059,
+                    "description": "digits length 13"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 7,
+                    "ratio": 0.0059,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_13",
+                    "count": 6,
+                    "ratio": 0.005,
+                    "description": "phone-like value with 13 digits"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_12_PREFIX_9",
+                    "count": 5,
+                    "ratio": 0.0042,
+                    "description": "digits length 12"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 5,
+                    "ratio": 0.0042,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_AAD+A",
+                    "count": 5,
+                    "ratio": 0.0042,
+                    "description": "alphanumeric code, shape=AAD+A"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_14_PREFIX_2",
+                    "count": 5,
+                    "ratio": 0.0042,
+                    "description": "digits length 14"
+                  }
+                ],
+                "representative_values": [
+                  "1049131061",
+                  "1138593585",
+                  "1118403441",
+                  "1120458870",
+                  "1100080322"
+                ],
+                "anomaly_examples": [
+                  "11113817488",
+                  "DY1984543",
+                  "2577862986",
+                  "U0583208",
+                  "07085620462"
+                ],
+                "value_interpretation": "very strong dominant format"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 12,
+              "column_name": "SAUDI_EXPAT",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 2,
+              "sample_values": [
+                "Expat",
+                "Saudi"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 13,
+              "column_name": "GPA",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 1853,
+              "sample_values": [
+                "3.57",
+                "3.19",
+                "3.36",
+                "3.96",
+                "2.77"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DECIMAL_RANGE_0_4_DP_2",
+                "dominant_pattern_ratio": 0.5176,
+                "pattern_summary": [
+                  {
+                    "pattern": "DECIMAL_RANGE_0_4_DP_2",
+                    "count": 558,
+                    "ratio": 0.5176,
+                    "description": "decimal value, bucket=RANGE_0_4, decimals=2"
+                  },
+                  {
+                    "pattern": "DECIMAL_RANGE_0_5_DP_2",
+                    "count": 263,
+                    "ratio": 0.244,
+                    "description": "decimal value, bucket=RANGE_0_5, decimals=2"
+                  },
+                  {
+                    "pattern": "DECIMAL_RANGE_0_4_DP_1",
+                    "count": 115,
+                    "ratio": 0.1067,
+                    "description": "decimal value, bucket=RANGE_0_4, decimals=1"
+                  },
+                  {
+                    "pattern": "DECIMAL_RANGE_0_5_DP_1",
+                    "count": 29,
+                    "ratio": 0.0269,
+                    "description": "decimal value, bucket=RANGE_0_5, decimals=1"
+                  },
+                  {
+                    "pattern": "DECIMAL_RANGE_0_100_DP_2",
+                    "count": 22,
+                    "ratio": 0.0204,
+                    "description": "decimal value, bucket=RANGE_0_100, decimals=2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_8",
+                    "count": 17,
+                    "ratio": 0.0158,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_6",
+                    "count": 14,
+                    "ratio": 0.013,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_7",
+                    "count": 13,
+                    "ratio": 0.0121,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DECIMAL_RANGE_0_100_DP_1",
+                    "count": 13,
+                    "ratio": 0.0121,
+                    "description": "decimal value, bucket=RANGE_0_100, decimals=1"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_9",
+                    "count": 6,
+                    "ratio": 0.0056,
+                    "description": "digits length 2"
+                  }
+                ],
+                "representative_values": [
+                  "3.57",
+                  "3.19",
+                  "3.36",
+                  "3.96",
+                  "2.77"
+                ],
+                "anomaly_examples": [
+                  "4.94",
+                  "99",
+                  "68",
+                  "73.33",
+                  "81.04"
+                ],
+                "value_interpretation": "moderate dominant format"
+              },
+              "value_semantics": "score_like_value",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 14,
+              "column_name": "LAST_MODIFIED",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 53,
+              "sample_values": [
+                "2026-03-09",
+                "2026-03-08",
+                "2026-03-07",
+                "2026-03-06",
+                "2026-03-05"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_order": 15,
+              "column_name": "SOURCE_OF_APPLICATION",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 1,
+              "sample_values": [
+                "SF"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 16,
+              "column_name": "GENDER",
+              "data_type": "nvarchar(30)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 3,
+              "sample_values": [
+                "No Selection",
+                "Female",
+                "Male"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 17,
+              "column_name": "HIGHEST_JOB_REQ_ID",
+              "data_type": "nvarchar(255)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 360,
+              "null_ratio": 0.0034,
+              "distinct_count": 3127,
+              "sample_values": [
+                "15359",
+                "15311",
+                "17531",
+                "17380",
+                "16741"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_5_PREFIX_1",
+                "dominant_pattern_ratio": 0.5926,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_5_PREFIX_1",
+                    "count": 701,
+                    "ratio": 0.5926,
+                    "description": "digits length 5"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_1",
+                    "count": 403,
+                    "ratio": 0.3407,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_8",
+                    "count": 16,
+                    "ratio": 0.0135,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_7",
+                    "count": 15,
+                    "ratio": 0.0127,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_6",
+                    "count": 12,
+                    "ratio": 0.0101,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_2",
+                    "count": 10,
+                    "ratio": 0.0085,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_9",
+                    "count": 8,
+                    "ratio": 0.0068,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_5",
+                    "count": 7,
+                    "ratio": 0.0059,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_4",
+                    "count": 6,
+                    "ratio": 0.0051,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_3",
+                    "count": 2,
+                    "ratio": 0.0017,
+                    "description": "digits length 4"
+                  }
+                ],
+                "representative_values": [
+                  "15359",
+                  "15311",
+                  "17531",
+                  "17380",
+                  "16741"
+                ],
+                "anomaly_examples": [
+                  "8211",
+                  "6654",
+                  "3630",
+                  "9348",
+                  "8851"
+                ],
+                "value_interpretation": "moderate dominant format"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 18,
+              "column_name": "HIGHEST_APPLICATION_ID",
+              "data_type": "nvarchar(255)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 360,
+              "null_ratio": 0.0034,
+              "distinct_count": 79762,
+              "sample_values": [
+                "4457396",
+                "4461776",
+                "4446677",
+                "4473505",
+                "4111500"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_7_PREFIX_4",
+                "dominant_pattern_ratio": 0.6739,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_7_PREFIX_4",
+                    "count": 808,
+                    "ratio": 0.6739,
+                    "description": "digits length 7"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_7_PREFIX_3",
+                    "count": 156,
+                    "ratio": 0.1301,
+                    "description": "digits length 7"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_7_PREFIX_2",
+                    "count": 86,
+                    "ratio": 0.0717,
+                    "description": "digits length 7"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_7_PREFIX_1",
+                    "count": 62,
+                    "ratio": 0.0517,
+                    "description": "digits length 7"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_6_PREFIX_7",
+                    "count": 10,
+                    "ratio": 0.0083,
+                    "description": "digits length 6"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_6_PREFIX_8",
+                    "count": 10,
+                    "ratio": 0.0083,
+                    "description": "digits length 6"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_6_PREFIX_1",
+                    "count": 10,
+                    "ratio": 0.0083,
+                    "description": "digits length 6"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_6_PREFIX_4",
+                    "count": 9,
+                    "ratio": 0.0075,
+                    "description": "digits length 6"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_6_PREFIX_3",
+                    "count": 7,
+                    "ratio": 0.0058,
+                    "description": "digits length 6"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_6_PREFIX_2",
+                    "count": 7,
+                    "ratio": 0.0058,
+                    "description": "digits length 6"
+                  }
+                ],
+                "representative_values": [
+                  "4457396",
+                  "4461776",
+                  "4446677",
+                  "4473505",
+                  "4111500"
+                ],
+                "anomaly_examples": [
+                  "1674133",
+                  "1871670",
+                  "2892783",
+                  "2264348",
+                  "482924"
+                ],
+                "value_interpretation": "strong dominant format"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 19,
+              "column_name": "HIGHEST_APPLICATION_STATUS",
+              "data_type": "nvarchar(255)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 360,
+              "null_ratio": 0.0034,
+              "distinct_count": 43,
+              "sample_values": [
+                "Interview Completed",
+                "Availability Confirmation",
+                "Requisition Closed",
+                "Auto Disqualified",
+                "Recruiter review"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.8758,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 1051,
+                    "ratio": 0.8758,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 113,
+                    "ratio": 0.0942,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 20,
+                    "ratio": 0.0167,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 14,
+                    "ratio": 0.0117,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 2,
+                    "ratio": 0.0017,
+                    "description": "text value with about 3 words"
+                  }
+                ],
+                "representative_values": [
+                  "Interview Completed",
+                  "Availability Confirmation",
+                  "Requisition Closed",
+                  "Auto Disqualified",
+                  "Recruiter review"
+                ],
+                "anomaly_examples": [
+                  "Moved to another Requisition",
+                  "Salary Recommendation - Recruiter",
+                  "Rejected After Hiring Org Review",
+                  "Rejected After Recruiter Review",
+                  "Rejected After Interview"
+                ],
+                "value_interpretation": "very strong dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 20,
+              "column_name": "APPLICATION_STATUS_CODE",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 360,
+              "null_ratio": 0.0034,
+              "distinct_count": 4,
+              "sample_values": [
+                "1",
+                "0",
+                "3",
+                "2"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 21,
+              "column_name": "RESUME_UPLOADED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 466,
+              "null_ratio": 0.0044,
+              "distinct_count": 2,
+              "sample_values": [
+                "1",
+                "0"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 22,
+              "column_name": "RESUME_DATE",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 466,
+              "null_ratio": 0.0044,
+              "distinct_count": 1431,
+              "sample_values": [
+                "2026-03-09",
+                "2026-03-08",
+                "2026-03-07",
+                "2026-03-06",
+                "2026-03-05"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_order": 23,
+              "column_name": "RESUME_FILE_TYPE",
+              "data_type": "nvarchar(30)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 466,
+              "null_ratio": 0.0044,
+              "distinct_count": 9,
+              "sample_values": [
+                "pdf",
+                "docx",
+                "doc",
+                "png",
+                "jpeg"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 24,
+              "column_name": "RESUME_PROCESSED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 438,
+              "null_ratio": 0.0041,
+              "distinct_count": 2,
+              "sample_values": [
+                "1",
+                "0"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 25,
+              "column_name": "EDUCATION_EXTRACTED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 32672,
+              "null_ratio": 0.306,
+              "distinct_count": 1,
+              "sample_values": [
+                "1"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 26,
+              "column_name": "EXPERIENCE_EXTRACTED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 35929,
+              "null_ratio": 0.3365,
+              "distinct_count": 1,
+              "sample_values": [
+                "1"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 27,
+              "column_name": "SKILLS_EXTRACTED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 30634,
+              "null_ratio": 0.2869,
+              "distinct_count": 1,
+              "sample_values": [
+                "1"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 28,
+              "column_name": "SUMMARY_EXTRACTED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 28978,
+              "null_ratio": 0.2714,
+              "distinct_count": 1,
+              "sample_values": [
+                "1"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 29,
+              "column_name": "WILD_SEARCH_EXTRACTED",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 28993,
+              "null_ratio": 0.2715,
+              "distinct_count": 1,
+              "sample_values": [
+                "1"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 30,
+              "column_name": "CANDIDATE_FLAG",
+              "data_type": "nvarchar(255)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 360,
+              "null_ratio": 0.0034,
+              "distinct_count": 8,
+              "sample_values": [
+                "SED",
+                "AOC",
+                "ASC"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 31,
+              "column_name": "INDREASON",
+              "data_type": "nvarchar(30)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 100,
+              "sample_values": [
+                "98",
+                "96",
+                "95",
+                "92",
+                "99"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_2_PREFIX_9",
+                "dominant_pattern_ratio": 0.3744,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_9",
+                    "count": 416,
+                    "ratio": 0.3744,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_8",
+                    "count": 144,
+                    "ratio": 0.1296,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_7",
+                    "count": 99,
+                    "ratio": 0.0891,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_6",
+                    "count": 97,
+                    "ratio": 0.0873,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_3",
+                    "count": 80,
+                    "ratio": 0.072,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_4",
+                    "count": 73,
+                    "ratio": 0.0657,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_5",
+                    "count": 71,
+                    "ratio": 0.0639,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_1",
+                    "count": 67,
+                    "ratio": 0.0603,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_2",
+                    "count": 64,
+                    "ratio": 0.0576,
+                    "description": "digits length 2"
+                  }
+                ],
+                "representative_values": [
+                  "98",
+                  "96",
+                  "95",
+                  "92",
+                  "99"
+                ],
+                "anomaly_examples": [
+                  "59",
+                  "66",
+                  "55",
+                  "57",
+                  "87"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 32,
+              "column_name": "NUMREASON",
+              "data_type": "nvarchar(30)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 100,
+              "sample_values": [
+                "93",
+                "92",
+                "95",
+                "96",
+                "99"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_2_PREFIX_9",
+                "dominant_pattern_ratio": 0.3896,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_9",
+                    "count": 427,
+                    "ratio": 0.3896,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_8",
+                    "count": 150,
+                    "ratio": 0.1369,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_7",
+                    "count": 101,
+                    "ratio": 0.0922,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_6",
+                    "count": 94,
+                    "ratio": 0.0858,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_5",
+                    "count": 78,
+                    "ratio": 0.0712,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_1",
+                    "count": 70,
+                    "ratio": 0.0639,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_3",
+                    "count": 69,
+                    "ratio": 0.063,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_4",
+                    "count": 55,
+                    "ratio": 0.0502,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_2",
+                    "count": 52,
+                    "ratio": 0.0474,
+                    "description": "digits length 2"
+                  }
+                ],
+                "representative_values": [
+                  "93",
+                  "92",
+                  "95",
+                  "96",
+                  "99"
+                ],
+                "anomaly_examples": [
+                  "58",
+                  "35",
+                  "37",
+                  "79",
+                  "30"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 33,
+              "column_name": "VERBREASON",
+              "data_type": "nvarchar(30)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 100,
+              "sample_values": [
+                "95",
+                "99",
+                "94",
+                "90",
+                "91"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_2_PREFIX_9",
+                "dominant_pattern_ratio": 0.3227,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_9",
+                    "count": 364,
+                    "ratio": 0.3227,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_8",
+                    "count": 155,
+                    "ratio": 0.1374,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_7",
+                    "count": 130,
+                    "ratio": 0.1152,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_3",
+                    "count": 90,
+                    "ratio": 0.0798,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_5",
+                    "count": 90,
+                    "ratio": 0.0798,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_4",
+                    "count": 88,
+                    "ratio": 0.078,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_6",
+                    "count": 80,
+                    "ratio": 0.0709,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_1",
+                    "count": 69,
+                    "ratio": 0.0612,
+                    "description": "digits length 2"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_2_PREFIX_2",
+                    "count": 62,
+                    "ratio": 0.055,
+                    "description": "digits length 2"
+                  }
+                ],
+                "representative_values": [
+                  "95",
+                  "99",
+                  "94",
+                  "90",
+                  "91"
+                ],
+                "anomaly_examples": [
+                  "68",
+                  "22",
+                  "27",
+                  "46",
+                  "37"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": true,
+              "likely_filter_column": true,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 34,
+              "column_name": "SUMMARY",
+              "data_type": "nvarchar(max)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 28890,
+              "null_ratio": 0.2705,
+              "distinct_count": 76127,
+              "sample_values": [
+                "Ali Alshahrani is a PMP‑certified civil engineer holding a B.Sc. in Civil Engineering from Jubail Industrial College, with over a year of professional experience as a Site Engineer at SAUDICO managing...",
+                "Faisal Hamad Mohammed Alrasheed is a civil engineer holding a Bachelor of Civil Engineering and diplomas in Computer Applications and Business Administration, with over eight years of multidisciplinar...",
+                "Sarah Hamed Aljandal is a Geography and GIS graduate from Imam Abdulrahman bin Faisal University with hands‑on experience gained during a four‑month internship at the Ministry of Environment, Water &...",
+                "Adia F. Njie holds a Master of Legal Studies from Pepperdine University Caruso School of Law and a BA from Howard University, bringing over three years of expertise in ESG reporting, regulatory compli...",
+                "Raneem Nasser Alnwisser holds an MBA and a Bachelor’s degree in Finance & Accounting, bringing over three years of accounting experience across logistics, naval support, and property management firms...."
+              ],
+              "text_metrics": {
+                "avg_length": 445.24,
+                "max_length_nonnull": 876,
+                "arabic_like_count": 0,
+                "english_like_count": 76102
+              },
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_10",
+                "dominant_pattern_ratio": 0.4362,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 523,
+                    "ratio": 0.4362,
+                    "description": "text value with about 28 words"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 46,
+                    "ratio": 0.0384,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_7",
+                    "count": 16,
+                    "ratio": 0.0133,
+                    "description": "phone-like value with 7 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_10",
+                    "count": 7,
+                    "ratio": 0.0058,
+                    "description": "phone-like value with 10 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_9",
+                    "count": 6,
+                    "ratio": 0.005,
+                    "description": "phone-like value with 9 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_12",
+                    "count": 5,
+                    "ratio": 0.0042,
+                    "description": "phone-like value with 12 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_11",
+                    "count": 4,
+                    "ratio": 0.0033,
+                    "description": "phone-like value with 11 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_13",
+                    "count": 2,
+                    "ratio": 0.0017,
+                    "description": "phone-like value with 13 digits"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_203_SHAPE_A+ AA‑A+ A+ A A+’A A+ AA A+ A+ A+ A+ A+ A+ (D+) AAA A+ A+‑AA",
+                    "count": 1,
+                    "ratio": 0.0008,
+                    "description": "alphanumeric code, shape=A+ AA‑A+ A+ A A+’A A+ AA A+ A+ A+ A+ A+ A+ (D+) AAA A+ A+‑AA"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_203_SHAPE_A+ A+, AA AAA‑A+ A+ A+ A+ A+ DD A+ AA A+ AAA A+ A+ A+ A+ A+,",
+                    "count": 1,
+                    "ratio": 0.0008,
+                    "description": "alphanumeric code, shape=A+ A+, AA AAA‑A+ A+ A+ A+ A+ DD A+ AA A+ AAA A+ A+ A+ A+ A+,"
+                  }
+                ],
+                "representative_values": [
+                  "Ali Alshahrani is a PMP‑certified civil engineer holding a B.Sc. in Civil Engineering from Jubail Industrial College, with over a year of professional experience as a Site Engineer at SAUDICO managing...",
+                  "Faisal Hamad Mohammed Alrasheed is a civil engineer holding a Bachelor of Civil Engineering and diplomas in Computer Applications and Business Administration, with over eight years of multidisciplinar...",
+                  "Sarah Hamed Aljandal is a Geography and GIS graduate from Imam Abdulrahman bin Faisal University with hands‑on experience gained during a four‑month internship at the Ministry of Environment, Water &...",
+                  "Adia F. Njie holds a Master of Legal Studies from Pepperdine University Caruso School of Law and a BA from Howard University, bringing over three years of expertise in ESG reporting, regulatory compli...",
+                  "Raneem Nasser Alnwisser holds an MBA and a Bachelor’s degree in Finance & Accounting, bringing over three years of accounting experience across logistics, naval support, and property management firms...."
+                ],
+                "anomaly_examples": [
+                  "Arun Janardhanan is a seasoned Oil & Gas professional with 17+ years of experience, holding an MBA in Oil & Gas Management (UPES) and a B.Tech. (Mechanical) from NIT Warangal. He excels in aviation fu...",
+                  "Abdullah Ahmed Aljafar holds a B.S. in Computer Science from Imam Abdulrahman bin Faisal University and has 6‑month experience as a Data Analyst and IT Trainee at the university’s health information a...",
+                  "Walid Omrani is a Senior Systems and Telecommunications Engineer with over 20 years of experience, holding a Master’s degree in Networks & Systems from the University of Versailles. He specializes in...",
+                  "Salman Amjad, P.Eng., a Canadian citizen with a BEng in Electrical Engineering from Ryerson/TMU, brings 15+ years of expertise in power transmission, distribution, renewable energy, and asset manageme...",
+                  "Bader Sami Alkhamees, a soon‑to‑graduate Computer Science student from King Faisal University (GPA 3.98), brings over six months of co‑op experience building full‑stack web and AI solutions with NestJ..."
+                ],
+                "value_interpretation": "moderate dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "long_text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 35,
+              "column_name": "TEXT_TOKENS",
+              "data_type": "nvarchar(max)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 106787,
+              "null_count": 28890,
+              "null_ratio": 0.2705,
+              "distinct_count": 77632,
+              "sample_values": [
+                "Maali Alwohaibi +966583378725 maali.alwohaibi@gmail.com https://www.linkedin.com/in/maali-alwohaibi SUMMARY A disciplined, forward-thinking, and detail-oriented professional with a Bachelor's degree i...",
+                "Ghadah Dibas Alhabardi ghadahdibas@gmail.com | +966551473813 Career Objective I aim to work within an exceptional team in an outstanding organization, to accomplish tasks with quality and excellence a...",
+                "SADEEM MOHAMMED ALMAGHSHI Email: sadeem.maghshi@gmail.com | Phone: +966532051425 | Jubail OBJECTIVE Recently graduate with a Bachelor’s degree in Information Technology. Skilled in networking, system...",
+                "Shammari Fawaz M Mobile: 0559552218. E-mail: fawaz.shammari.2@gmail.com or fawaz.shammari.2@aramco.com.sa Saudi Aramco: Company General Use PROFILE HIGHLIGHTS: A proactive, intelligent and innovative...",
+                "Shohair Shahnawaz sshohair@gmail.com | +44 7510 730581 | Glasgow, UK PERSONAL PROFILE Experienced Operations analyst with a track record of onboarding Italian clients for BNP Paribas and enhancing ope..."
+              ],
+              "text_metrics": {
+                "avg_length": 3123.07,
+                "max_length_nonnull": 4000,
+                "arabic_like_count": 0,
+                "english_like_count": 77853
+              },
+              "pattern_profile": {
+                "dominant_pattern": "PHONEISH_DIGITS_12",
+                "dominant_pattern_ratio": 0.1548,
+                "pattern_summary": [
+                  {
+                    "pattern": "PHONEISH_DIGITS_12",
+                    "count": 172,
+                    "ratio": 0.1548,
+                    "description": "phone-like value with 12 digits"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 106,
+                    "ratio": 0.0954,
+                    "description": "text value with about 30 words"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_14",
+                    "count": 94,
+                    "ratio": 0.0846,
+                    "description": "phone-like value with 14 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_13",
+                    "count": 71,
+                    "ratio": 0.0639,
+                    "description": "phone-like value with 13 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_10",
+                    "count": 58,
+                    "ratio": 0.0522,
+                    "description": "phone-like value with 10 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_15",
+                    "count": 49,
+                    "ratio": 0.0441,
+                    "description": "phone-like value with 15 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_11",
+                    "count": 37,
+                    "ratio": 0.0333,
+                    "description": "phone-like value with 11 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 6,
+                    "ratio": 0.0054,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_7",
+                    "count": 6,
+                    "ratio": 0.0054,
+                    "description": "phone-like value with 7 digits"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_9",
+                    "count": 5,
+                    "ratio": 0.0045,
+                    "description": "phone-like value with 9 digits"
+                  }
+                ],
+                "representative_values": [
+                  "Maali Alwohaibi +966583378725 maali.alwohaibi@gmail.com https://www.linkedin.com/in/maali-alwohaibi SUMMARY A disciplined, forward-thinking, and detail-oriented professional with a Bachelor's degree i...",
+                  "Ghadah Dibas Alhabardi ghadahdibas@gmail.com | +966551473813 Career Objective I aim to work within an exceptional team in an outstanding organization, to accomplish tasks with quality and excellence a...",
+                  "SADEEM MOHAMMED ALMAGHSHI Email: sadeem.maghshi@gmail.com | Phone: +966532051425 | Jubail OBJECTIVE Recently graduate with a Bachelor’s degree in Information Technology. Skilled in networking, system...",
+                  "Shammari Fawaz M Mobile: 0559552218. E-mail: fawaz.shammari.2@gmail.com or fawaz.shammari.2@aramco.com.sa Saudi Aramco: Company General Use PROFILE HIGHLIGHTS: A proactive, intelligent and innovative...",
+                  "Shohair Shahnawaz sshohair@gmail.com | +44 7510 730581 | Glasgow, UK PERSONAL PROFILE Experienced Operations analyst with a track record of onboarding Italian clients for BNP Paribas and enhancing ope..."
+                ],
+                "anomaly_examples": [
+                  "Eng. Brenda Fierro Cervantes Location: Álvaro Obregón C.P. 01080- México City Open to relocation and travel Phone: (52) 55-2686-3320 E-mail: brenda.fierro.c@gmail.com Linkedin: https://www.linkedin.co...",
+                  "Asep Hermawan Sanudin Page 1 CURICULUM VITAE ASEP HERMAWAN SANUDIN, M.M, RN, NR-EMT Date of birth: 27/06/1980 Current Base : Offshore Production Station Fixed Platform (Bul-Hanin platform, Maydan Mahz...",
+                  "Abdullah Abdulrahman Alsuhaymi +966 555 065 916 alsuhaymiabdullah20@gmail.com Abdullah Alsuhaymi Saudi Arabia SUMMARY As a highly analytical and results-driven professional, I possess hands-on experie...",
+                  "Dawood Abed Bakhadlaq Bachelor's degree in manufacturing engineering technology Mobile: 0558716177 | Email: dawood.adb1@gmail.com | Jeddah, Saudi Arabia -----------------------------------------------...",
+                  "Shah Alam, 10 40150 | +6011- 40796037 | eimanroshidi2103@gmail.com EIMAN MUHAMMAD BIN ROSHIDI Project Engineer (E lectrical & Mechanical / Project Execution) PROFESSIONAL SUMMARY Project Engineer with..."
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "phone_like_value",
+              "profile_error": null,
+              "semantic_role": "long_text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            }
+          ]
+        },
+        {
+          "schema_name": "dbo",
+          "table_name": "T_IIR_ARIF_EDUCATION",
+          "full_table_name": "dbo.T_IIR_ARIF_EDUCATION",
+          "row_count": 205046,
+          "table_role": {
+            "role": "standalone",
+            "inbound_relationship_count": 0,
+            "outbound_relationship_count": 0,
+            "textual_column_count": 7,
+            "reasons": [
+              "entity_key_discovered"
+            ]
+          },
+          "entity_key_analysis": {
+            "likely_entity_key": "SCHOOL_ID",
+            "candidate_keys_ranked": [
+              {
+                "column_name": "SCHOOL_ID",
+                "score": 170,
+                "reasons": [
+                  "primary_key",
+                  "identity",
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "ARIF_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "CANDIDATE_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "DEGREE",
+                "score": 5,
+                "reasons": [
+                  "short_text_possible_business_key"
+                ]
+              },
+              {
+                "column_name": "MAJOR",
+                "score": 5,
+                "reasons": [
+                  "short_text_possible_business_key"
+                ]
+              }
+            ]
+          },
+          "primary_keys": [
+            "SCHOOL_ID"
+          ],
+          "foreign_keys": [],
+          "searchable_columns": [
+            "DEGREE",
+            "MAJOR",
+            "INSTITUTION",
+            "STARTDATE",
+            "ENDDATE"
+          ],
+          "likely_filter_columns": [
+            "SCHOOL_ID",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "likely_sort_columns": [
+            "SCHOOL_ID",
+            "ARIF_ID",
+            "CANDIDATE_ID",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "columns": [
+            {
+              "column_order": 1,
+              "column_name": "SCHOOL_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": true,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": true,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 205052,
+              "sample_values": [
+                "1",
+                "10",
+                "100",
+                "1000",
+                "10000"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "primary_key",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 2,
+              "column_name": "ARIF_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 74222,
+              "sample_values": [
+                "10030654",
+                "10010690",
+                "10031145",
+                "10002124",
+                "10005269"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 3,
+              "column_name": "CANDIDATE_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 74222,
+              "sample_values": [
+                "1582520",
+                "1517805",
+                "513144",
+                "1535959",
+                "994303"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 4,
+              "column_name": "DEGREE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 16138,
+              "null_ratio": 0.0787,
+              "distinct_count": 14297,
+              "sample_values": [
+                "Postgraduate",
+                "Masters",
+                "W.A.E.C",
+                "BS",
+                "BE.D"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_1",
+                "dominant_pattern_ratio": 0.4315,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 501,
+                    "ratio": 0.4315,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 301,
+                    "ratio": 0.2593,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 195,
+                    "ratio": 0.168,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 112,
+                    "ratio": 0.0965,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 24,
+                    "ratio": 0.0207,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 15,
+                    "ratio": 0.0129,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 4,
+                    "ratio": 0.0034,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_32_SHAPE_A+ D A+ A+ AAA A+",
+                    "count": 1,
+                    "ratio": 0.0009,
+                    "description": "alphanumeric code, shape=A+ D A+ A+ AAA A+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_10_SHAPE_DDAA A+",
+                    "count": 1,
+                    "ratio": 0.0009,
+                    "description": "alphanumeric code, shape=DDAA A+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_11_SHAPE_AAA A+ D",
+                    "count": 1,
+                    "ratio": 0.0009,
+                    "description": "alphanumeric code, shape=AAA A+ D"
+                  }
+                ],
+                "representative_values": [
+                  "Postgraduate",
+                  "Masters",
+                  "W.A.E.C",
+                  "BS",
+                  "BE.D"
+                ],
+                "anomaly_examples": [
+                  "Master Degree",
+                  "Bachelor of Science (B.S.)",
+                  "Intermediate / GCE A-levels Equivalent",
+                  "Bachelor of Survey Engineering",
+                  "Bachelor of Applied"
+                ],
+                "value_interpretation": "moderate dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 5,
+              "column_name": "MAJOR",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 39310,
+              "null_ratio": 0.1917,
+              "distinct_count": 23249,
+              "sample_values": [
+                "Enterprise Program",
+                "Industrial Chemistry",
+                "Comparative Literature",
+                "Chemical Engineering",
+                "Organizational Management"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.51,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 612,
+                    "ratio": 0.51,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 207,
+                    "ratio": 0.1725,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 158,
+                    "ratio": 0.1317,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 135,
+                    "ratio": 0.1125,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 58,
+                    "ratio": 0.0483,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 17,
+                    "ratio": 0.0142,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 6,
+                    "ratio": 0.005,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 2,
+                    "ratio": 0.0017,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 1,
+                    "ratio": 0.0008,
+                    "description": "text value with about 10 words"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_AAA D+",
+                    "count": 1,
+                    "ratio": 0.0008,
+                    "description": "alphanumeric code, shape=AAA D+"
+                  }
+                ],
+                "representative_values": [
+                  "Enterprise Program",
+                  "Industrial Chemistry",
+                  "Comparative Literature",
+                  "Chemical Engineering",
+                  "Organizational Management"
+                ],
+                "anomaly_examples": [
+                  "Mechanical Engineering and Energy",
+                  "Applied Manufacturing Engineering",
+                  "Liberal Arts and Sciences in Journalism, Emphasis in Public Relations",
+                  "Civil",
+                  "Electrical and Electronics"
+                ],
+                "value_interpretation": "moderate dominant format"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 6,
+              "column_name": "INSTITUTION",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 12311,
+              "null_ratio": 0.06,
+              "distinct_count": 44381,
+              "sample_values": [
+                "West Virginia University",
+                "Akhbar Elyom Academy",
+                "Karaganda Buketov University",
+                "EAE Business School",
+                "ST. Joseph University"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_3",
+                "dominant_pattern_ratio": 0.3036,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 364,
+                    "ratio": 0.3036,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 226,
+                    "ratio": 0.1885,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 191,
+                    "ratio": 0.1593,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 150,
+                    "ratio": 0.1251,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 102,
+                    "ratio": 0.0851,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 72,
+                    "ratio": 0.0601,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 41,
+                    "ratio": 0.0342,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 29,
+                    "ratio": 0.0242,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 11,
+                    "ratio": 0.0092,
+                    "description": "text value with about 9 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 6,
+                    "ratio": 0.005,
+                    "description": "text value with about 11 words"
+                  }
+                ],
+                "representative_values": [
+                  "West Virginia University",
+                  "Akhbar Elyom Academy",
+                  "Karaganda Buketov University",
+                  "EAE Business School",
+                  "ST. Joseph University"
+                ],
+                "anomaly_examples": [
+                  "Illinois Institute of Technology",
+                  "University Of Technology, MARA, Malaysia",
+                  "Belfield Matriculation Higher Secondary School",
+                  "Norwegian University of Science and Technology (NTNU), Norway",
+                  "Abubakar Tafawa Balewa University"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 7,
+              "column_name": "STARTDATE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 108724,
+              "null_ratio": 0.5302,
+              "distinct_count": 3578,
+              "sample_values": [
+                "2017",
+                "2009",
+                "2021",
+                "2003",
+                "2001"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_4_PREFIX_2",
+                "dominant_pattern_ratio": 0.5223,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_2",
+                    "count": 574,
+                    "ratio": 0.5223,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_8_SHAPE_AAA D+",
+                    "count": 160,
+                    "ratio": 0.1456,
+                    "description": "alphanumeric code, shape=AAA D+"
+                  },
+                  {
+                    "pattern": "OTHER_LEN_7_SHAPE_DD/D+",
+                    "count": 114,
+                    "ratio": 0.1037,
+                    "description": "other structured value, shape=DD/D+"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_1",
+                    "count": 74,
+                    "ratio": 0.0673,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_14_SHAPE_A+ D+",
+                    "count": 34,
+                    "ratio": 0.0309,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_A+ D+",
+                    "count": 32,
+                    "ratio": 0.0291,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_11_SHAPE_A+ D+",
+                    "count": 24,
+                    "ratio": 0.0218,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_12_SHAPE_A+ D+",
+                    "count": 18,
+                    "ratio": 0.0164,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 14,
+                    "ratio": 0.0127,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_AAA. D+",
+                    "count": 9,
+                    "ratio": 0.0082,
+                    "description": "alphanumeric code, shape=AAA. D+"
+                  }
+                ],
+                "representative_values": [
+                  "2017",
+                  "2009",
+                  "2021",
+                  "2003",
+                  "2001"
+                ],
+                "anomaly_examples": [
+                  "Jun 2008",
+                  "August 2019",
+                  "March 2025",
+                  "Aug 2007",
+                  "05/2013"
+                ],
+                "value_interpretation": "moderate dominant format"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 8,
+              "column_name": "ENDDATE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 48707,
+              "null_ratio": 0.2375,
+              "distinct_count": 4498,
+              "sample_values": [
+                "2011",
+                "2016",
+                "2006",
+                "2017",
+                "2015"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "DIGITS_LEN_4_PREFIX_2",
+                "dominant_pattern_ratio": 0.6148,
+                "pattern_summary": [
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_2",
+                    "count": 675,
+                    "ratio": 0.6148,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_8_SHAPE_AAA D+",
+                    "count": 139,
+                    "ratio": 0.1266,
+                    "description": "alphanumeric code, shape=AAA D+"
+                  },
+                  {
+                    "pattern": "OTHER_LEN_7_SHAPE_DD/D+",
+                    "count": 87,
+                    "ratio": 0.0792,
+                    "description": "other structured value, shape=DD/D+"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_1",
+                    "count": 39,
+                    "ratio": 0.0355,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_A+ D+",
+                    "count": 35,
+                    "ratio": 0.0319,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_13_SHAPE_A+ D+",
+                    "count": 27,
+                    "ratio": 0.0246,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 19,
+                    "ratio": 0.0173,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_11_SHAPE_A+ D+",
+                    "count": 14,
+                    "ratio": 0.0128,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_10_SHAPE_A+ D+",
+                    "count": 13,
+                    "ratio": 0.0118,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_12_SHAPE_A+ D+",
+                    "count": 13,
+                    "ratio": 0.0118,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  }
+                ],
+                "representative_values": [
+                  "2011",
+                  "2016",
+                  "2006",
+                  "2017",
+                  "2015"
+                ],
+                "anomaly_examples": [
+                  "June 2002",
+                  "December 2025",
+                  "06/1994",
+                  "04/01/2024",
+                  "07/2025"
+                ],
+                "value_interpretation": "strong dominant format"
+              },
+              "value_semantics": "structured_numeric_identifier",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 9,
+              "column_name": "NORM_DEGREE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 205052,
+              "null_ratio": 1.0,
+              "distinct_count": 0,
+              "sample_values": [],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 10,
+              "column_name": "NORM_INSTITUTION",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 205052,
+              "null_ratio": 1.0,
+              "distinct_count": 0,
+              "sample_values": [],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 11,
+              "column_name": "NORM_STARTDATE",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 118682,
+              "null_ratio": 0.5788,
+              "distinct_count": 6154,
+              "sample_values": [
+                "8102-02-08",
+                "6221-02-03",
+                "2118-02-26",
+                "2104-11-05",
+                "2062-02-03"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_order": 12,
+              "column_name": "NORM_ENDDATE",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 205046,
+              "null_count": 63079,
+              "null_ratio": 0.3076,
+              "distinct_count": 6923,
+              "sample_values": [
+                "9999-12-31",
+                "5102-01-05",
+                "2119-02-26",
+                "2036-01-23",
+                "2036-01-19"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            }
+          ]
+        },
+        {
+          "schema_name": "dbo",
+          "table_name": "T_IIR_ARIF_EXPERIENCE",
+          "full_table_name": "dbo.T_IIR_ARIF_EXPERIENCE",
+          "row_count": 416387,
+          "table_role": {
+            "role": "standalone",
+            "inbound_relationship_count": 0,
+            "outbound_relationship_count": 0,
+            "textual_column_count": 7,
+            "reasons": [
+              "entity_key_discovered"
+            ]
+          },
+          "entity_key_analysis": {
+            "likely_entity_key": "JOB_ID",
+            "candidate_keys_ranked": [
+              {
+                "column_name": "JOB_ID",
+                "score": 170,
+                "reasons": [
+                  "primary_key",
+                  "identity",
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "ARIF_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "CANDIDATE_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "YEARS_OF_EXPERIENCE",
+                "score": 10,
+                "reasons": [
+                  "numeric_type"
+                ]
+              },
+              {
+                "column_name": "TITLE",
+                "score": 5,
+                "reasons": [
+                  "short_text_possible_business_key"
+                ]
+              }
+            ]
+          },
+          "primary_keys": [
+            "JOB_ID"
+          ],
+          "foreign_keys": [],
+          "searchable_columns": [
+            "TITLE",
+            "EMPLOYER",
+            "STARTDATE",
+            "ENDDATE"
+          ],
+          "likely_filter_columns": [
+            "JOB_ID",
+            "YEARS_OF_EXPERIENCE",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "likely_sort_columns": [
+            "JOB_ID",
+            "ARIF_ID",
+            "CANDIDATE_ID",
+            "YEARS_OF_EXPERIENCE",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "columns": [
+            {
+              "column_order": 1,
+              "column_name": "JOB_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": true,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": true,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 416389,
+              "sample_values": [
+                "1",
+                "10",
+                "100",
+                "1000",
+                "10000"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "primary_key",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 2,
+              "column_name": "ARIF_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 70914,
+              "sample_values": [
+                "10030591",
+                "10002276",
+                "10002017",
+                "10048504",
+                "10001526"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 3,
+              "column_name": "CANDIDATE_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 70914,
+              "sample_values": [
+                "1461732",
+                "165845",
+                "1514444",
+                "716939",
+                "1492582"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 4,
+              "column_name": "TITLE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 10148,
+              "null_ratio": 0.0244,
+              "distinct_count": 129362,
+              "sample_values": [
+                "Financial Analyst",
+                "Assistant Inspector",
+                "Tax Assistant",
+                "Process Engineer",
+                "Instrument Technician"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.3372,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 404,
+                    "ratio": 0.3372,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 315,
+                    "ratio": 0.2629,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 146,
+                    "ratio": 0.1219,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 115,
+                    "ratio": 0.096,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 71,
+                    "ratio": 0.0593,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 61,
+                    "ratio": 0.0509,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 41,
+                    "ratio": 0.0342,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 13,
+                    "ratio": 0.0109,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 12,
+                    "ratio": 0.01,
+                    "description": "text value with about 9 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 10,
+                    "ratio": 0.0083,
+                    "description": "text value with about 10 words"
+                  }
+                ],
+                "representative_values": [
+                  "Financial Analyst",
+                  "Assistant Inspector",
+                  "Tax Assistant",
+                  "Process Engineer",
+                  "Instrument Technician"
+                ],
+                "anomaly_examples": [
+                  "Senior Electrical Engineer",
+                  "Pipefitter",
+                  "Director of Studies",
+                  "Performance Development Lead",
+                  "Project Control Engineer"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 5,
+              "column_name": "EMPLOYER",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 10586,
+              "null_ratio": 0.0254,
+              "distinct_count": 161660,
+              "sample_values": [
+                "ABV Rock Group",
+                "Computech – Sudan",
+                "Four Seasons Hotel",
+                "ESolutions Road Company",
+                "Department of Defense"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_3",
+                "dominant_pattern_ratio": 0.2348,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 281,
+                    "ratio": 0.2348,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 278,
+                    "ratio": 0.2322,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 185,
+                    "ratio": 0.1546,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 158,
+                    "ratio": 0.132,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 119,
+                    "ratio": 0.0994,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 82,
+                    "ratio": 0.0685,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 45,
+                    "ratio": 0.0376,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 19,
+                    "ratio": 0.0159,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 10,
+                    "ratio": 0.0084,
+                    "description": "text value with about 12 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 8,
+                    "ratio": 0.0067,
+                    "description": "text value with about 9 words"
+                  }
+                ],
+                "representative_values": [
+                  "ABV Rock Group",
+                  "Computech – Sudan",
+                  "Four Seasons Hotel",
+                  "ESolutions Road Company",
+                  "Department of Defense"
+                ],
+                "anomaly_examples": [
+                  "Golf Canada",
+                  "WATEEN TELECOM",
+                  "Khwaja Fareed UEIT, Chemistry Lab",
+                  "ILF Consulting Engineers Abu Dhabi",
+                  "Al Hoty Company (Contractor) – Saudi Aramco"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 6,
+              "column_name": "STARTDATE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 21912,
+              "null_ratio": 0.0526,
+              "distinct_count": 15308,
+              "sample_values": [
+                "Aug 2017",
+                "Sep 2017",
+                "Jan 2009",
+                "Jan 2023",
+                "Jun 2025"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "ALNUM_LEN_8_SHAPE_AAA D+",
+                "dominant_pattern_ratio": 0.3299,
+                "pattern_summary": [
+                  {
+                    "pattern": "ALNUM_LEN_8_SHAPE_AAA D+",
+                    "count": 385,
+                    "ratio": 0.3299,
+                    "description": "alphanumeric code, shape=AAA D+"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_2",
+                    "count": 184,
+                    "ratio": 0.1577,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "OTHER_LEN_7_SHAPE_DD/D+",
+                    "count": 159,
+                    "ratio": 0.1362,
+                    "description": "other structured value, shape=DD/D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_A+ D+",
+                    "count": 76,
+                    "ratio": 0.0651,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_12_SHAPE_A+ D+",
+                    "count": 69,
+                    "ratio": 0.0591,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_10_SHAPE_A+ D+",
+                    "count": 66,
+                    "ratio": 0.0566,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_13_SHAPE_A+ D+",
+                    "count": 49,
+                    "ratio": 0.042,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_11_SHAPE_A+ D+",
+                    "count": 29,
+                    "ratio": 0.0249,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 27,
+                    "ratio": 0.0231,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_14_SHAPE_A+ D+",
+                    "count": 19,
+                    "ratio": 0.0163,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  }
+                ],
+                "representative_values": [
+                  "Aug 2017",
+                  "Sep 2017",
+                  "Jan 2009",
+                  "Jan 2023",
+                  "Jun 2025"
+                ],
+                "anomaly_examples": [
+                  "November 2012",
+                  "January 2018",
+                  "January 2006",
+                  "02/2018",
+                  "January 2011"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "alphanumeric_code",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 7,
+              "column_name": "ENDDATE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 58572,
+              "null_ratio": 0.1407,
+              "distinct_count": 12942,
+              "sample_values": [
+                "Feb 2012",
+                "Apr 2018",
+                "Apr 2024",
+                "AUG 2023",
+                "Dec 2008"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "ALNUM_LEN_8_SHAPE_AAA D+",
+                "dominant_pattern_ratio": 0.307,
+                "pattern_summary": [
+                  {
+                    "pattern": "ALNUM_LEN_8_SHAPE_AAA D+",
+                    "count": 361,
+                    "ratio": 0.307,
+                    "description": "alphanumeric code, shape=AAA D+"
+                  },
+                  {
+                    "pattern": "DIGITS_LEN_4_PREFIX_2",
+                    "count": 181,
+                    "ratio": 0.1539,
+                    "description": "digits length 4"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 149,
+                    "ratio": 0.1267,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "OTHER_LEN_7_SHAPE_DD/D+",
+                    "count": 129,
+                    "ratio": 0.1097,
+                    "description": "other structured value, shape=DD/D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_9_SHAPE_A+ D+",
+                    "count": 60,
+                    "ratio": 0.051,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_13_SHAPE_A+ D+",
+                    "count": 58,
+                    "ratio": 0.0493,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_12_SHAPE_A+ D+",
+                    "count": 38,
+                    "ratio": 0.0323,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_10_SHAPE_A+ D+",
+                    "count": 36,
+                    "ratio": 0.0306,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  },
+                  {
+                    "pattern": "PHONEISH_DIGITS_8",
+                    "count": 28,
+                    "ratio": 0.0238,
+                    "description": "phone-like value with 8 digits"
+                  },
+                  {
+                    "pattern": "ALNUM_LEN_11_SHAPE_A+ D+",
+                    "count": 26,
+                    "ratio": 0.0221,
+                    "description": "alphanumeric code, shape=A+ D+"
+                  }
+                ],
+                "representative_values": [
+                  "Feb 2012",
+                  "Apr 2018",
+                  "Apr 2024",
+                  "AUG 2023",
+                  "Dec 2008"
+                ],
+                "anomaly_examples": [
+                  "October 2016",
+                  "NOW",
+                  "July 2020",
+                  "12/2013",
+                  "2021"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "alphanumeric_code",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 8,
+              "column_name": "COUNTRY",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 416393,
+              "null_ratio": 1.0,
+              "distinct_count": 0,
+              "sample_values": [],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 9,
+              "column_name": "YEARS_OF_EXPERIENCE",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 67,
+              "sample_values": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_measure",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 10,
+              "column_name": "NORM_TITLE",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 416393,
+              "null_ratio": 1.0,
+              "distinct_count": 0,
+              "sample_values": [],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 11,
+              "column_name": "NORM_EMPLOYER",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 416393,
+              "null_ratio": 1.0,
+              "distinct_count": 0,
+              "sample_values": [],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "categorical_text",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_order": 12,
+              "column_name": "NORM_STARTDATE",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 76942,
+              "null_ratio": 0.1848,
+              "distinct_count": 9299,
+              "sample_values": [
+                "2915-12-28",
+                "2108-12-05",
+                "2040-06-06",
+                "2030-07-15",
+                "2029-06-23"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_order": 13,
+              "column_name": "NORM_ENDDATE",
+              "data_type": "date",
+              "base_type": "date",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 416387,
+              "null_count": 145473,
+              "null_ratio": 0.3494,
+              "distinct_count": 8577,
+              "sample_values": [
+                "9999-12-31",
+                "4202-02-05",
+                "2204-12-18",
+                "2204-12-10",
+                "2107-02-05"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "date_or_time",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "min_max"
+            }
+          ]
+        },
+        {
+          "schema_name": "dbo",
+          "table_name": "T_IIR_ARIF_SKILLS",
+          "full_table_name": "dbo.T_IIR_ARIF_SKILLS",
+          "row_count": 1473748,
+          "table_role": {
+            "role": "standalone",
+            "inbound_relationship_count": 0,
+            "outbound_relationship_count": 0,
+            "textual_column_count": 2,
+            "reasons": [
+              "entity_key_discovered"
+            ]
+          },
+          "entity_key_analysis": {
+            "likely_entity_key": "SKILL_ID",
+            "candidate_keys_ranked": [
+              {
+                "column_name": "SKILL_ID",
+                "score": 170,
+                "reasons": [
+                  "primary_key",
+                  "identity",
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "ARIF_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "CANDIDATE_ID",
+                "score": 40,
+                "reasons": [
+                  "column_name_suffix_id",
+                  "numeric_type",
+                  "not_nullable"
+                ]
+              },
+              {
+                "column_name": "ORG_SKILL",
+                "score": 5,
+                "reasons": [
+                  "short_text_possible_business_key"
+                ]
+              },
+              {
+                "column_name": "NORM_SKILL",
+                "score": 5,
+                "reasons": [
+                  "short_text_possible_business_key"
+                ]
+              }
+            ]
+          },
+          "primary_keys": [
+            "SKILL_ID"
+          ],
+          "foreign_keys": [],
+          "searchable_columns": [
+            "ORG_SKILL",
+            "NORM_SKILL"
+          ],
+          "likely_filter_columns": [
+            "SKILL_ID"
+          ],
+          "likely_sort_columns": [
+            "SKILL_ID",
+            "ARIF_ID",
+            "CANDIDATE_ID"
+          ],
+          "columns": [
+            {
+              "column_order": 1,
+              "column_name": "SKILL_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": true,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": true,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 1473748,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 1473776,
+              "sample_values": [
+                "1",
+                "10",
+                "100",
+                "1000",
+                "10000"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "primary_key",
+              "searchable": false,
+              "likely_filter_column": true,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 2,
+              "column_name": "ARIF_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 1473748,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 72797,
+              "sample_values": [
+                "10031044",
+                "10068204",
+                "10072159",
+                "10015790",
+                "10030648"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 3,
+              "column_name": "CANDIDATE_ID",
+              "data_type": "int",
+              "base_type": "int",
+              "nullable": false,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 1473748,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 72797,
+              "sample_values": [
+                "1403413",
+                "1412712",
+                "1593555",
+                "1559773",
+                "1541412"
+              ],
+              "text_metrics": null,
+              "pattern_profile": null,
+              "value_semantics": null,
+              "profile_error": null,
+              "semantic_role": "numeric_attribute",
+              "searchable": false,
+              "likely_filter_column": false,
+              "likely_sort_column": true,
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_order": 4,
+              "column_name": "ORG_SKILL",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 1473748,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 428796,
+              "sample_values": [
+                "Well Architect",
+                "UI/UX Design",
+                "KPI reporting",
+                "Aspen HYSYS",
+                "Reservoir Engineering"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.3401,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 404,
+                    "ratio": 0.3401,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 319,
+                    "ratio": 0.2685,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 163,
+                    "ratio": 0.1372,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 107,
+                    "ratio": 0.0901,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 67,
+                    "ratio": 0.0564,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 30,
+                    "ratio": 0.0253,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 19,
+                    "ratio": 0.016,
+                    "description": "text value with about 10 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 18,
+                    "ratio": 0.0152,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 10,
+                    "ratio": 0.0084,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 3,
+                    "ratio": 0.0025,
+                    "description": "text value with about 9 words"
+                  }
+                ],
+                "representative_values": [
+                  "Well Architect",
+                  "UI/UX Design",
+                  "KPI reporting",
+                  "Aspen HYSYS",
+                  "Reservoir Engineering"
+                ],
+                "anomaly_examples": [
+                  "Hindi/Urdu",
+                  "cybersecurity",
+                  "SQL",
+                  "EVM",
+                  "HAZOP & SIL"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            },
+            {
+              "column_order": 5,
+              "column_name": "NORM_SKILL",
+              "data_type": "nvarchar(300)",
+              "base_type": "nvarchar",
+              "nullable": true,
+              "identity": false,
+              "computed": false,
+              "default_definition": null,
+              "primary_key": false,
+              "foreign_key": false,
+              "referenced_schema_name": null,
+              "referenced_table_name": null,
+              "referenced_column_name": null,
+              "row_count": 1473748,
+              "null_count": 0,
+              "null_ratio": 0.0,
+              "distinct_count": 428796,
+              "sample_values": [
+                "Governance writing",
+                "Continuous learning",
+                "Tax planning",
+                "Board-ready reporting",
+                "Critical Thinking"
+              ],
+              "text_metrics": null,
+              "pattern_profile": {
+                "dominant_pattern": "TEXT_WORDS_2",
+                "dominant_pattern_ratio": 0.321,
+                "pattern_summary": [
+                  {
+                    "pattern": "TEXT_WORDS_2",
+                    "count": 381,
+                    "ratio": 0.321,
+                    "description": "text value with about 2 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_1",
+                    "count": 310,
+                    "ratio": 0.2612,
+                    "description": "text value with about 1 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_3",
+                    "count": 176,
+                    "ratio": 0.1483,
+                    "description": "text value with about 3 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_4",
+                    "count": 122,
+                    "ratio": 0.1028,
+                    "description": "text value with about 4 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_5",
+                    "count": 81,
+                    "ratio": 0.0682,
+                    "description": "text value with about 5 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_6",
+                    "count": 33,
+                    "ratio": 0.0278,
+                    "description": "text value with about 6 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_7",
+                    "count": 14,
+                    "ratio": 0.0118,
+                    "description": "text value with about 7 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_10",
+                    "count": 12,
+                    "ratio": 0.0101,
+                    "description": "text value with about 10 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_8",
+                    "count": 11,
+                    "ratio": 0.0093,
+                    "description": "text value with about 8 words"
+                  },
+                  {
+                    "pattern": "TEXT_WORDS_9",
+                    "count": 9,
+                    "ratio": 0.0076,
+                    "description": "text value with about 9 words"
+                  }
+                ],
+                "representative_values": [
+                  "Governance writing",
+                  "Continuous learning",
+                  "Tax planning",
+                  "Board-ready reporting",
+                  "Critical Thinking"
+                ],
+                "anomaly_examples": [
+                  "PyTorch",
+                  "MVC",
+                  "DHDT",
+                  "PowerPoint(Advanced)",
+                  "Italian"
+                ],
+                "value_interpretation": "mixed values"
+              },
+              "value_semantics": "free_text",
+              "profile_error": null,
+              "semantic_role": "text",
+              "searchable": true,
+              "likely_filter_column": false,
+              "likely_sort_column": false,
+              "aggregation_hint": "count_only"
+            }
+          ]
+        }
+      ],
+      "table_guidance": {
+        "dbo.T_IIR_ARIF_CANDIDATE": {
+          "recommended_search_columns": [
+            "GIVENNAME",
+            "MIDDLENAME",
+            "SURNAME",
+            "CURRENT_EMPLOYER",
+            "CURRENT_JOB_TITLE",
+            "COUNTRY",
+            "NATIONAL_ID",
+            "SAUDI_EXPAT",
+            "GPA",
+            "SOURCE_OF_APPLICATION",
+            "GENDER",
+            "HIGHEST_JOB_REQ_ID",
+            "HIGHEST_APPLICATION_ID",
+            "HIGHEST_APPLICATION_STATUS",
+            "RESUME_FILE_TYPE",
+            "CANDIDATE_FLAG",
+            "INDREASON",
+            "NUMREASON",
+            "VERBREASON",
+            "SUMMARY",
+            "TEXT_TOKENS"
+          ],
+          "recommended_filter_columns": [
+            "ARIF_ID",
+            "CREATED_ON",
+            "SAUDI_EXPAT",
+            "LAST_MODIFIED",
+            "SOURCE_OF_APPLICATION",
+            "GENDER",
+            "HIGHEST_APPLICATION_STATUS",
+            "APPLICATION_STATUS_CODE",
+            "RESUME_UPLOADED",
+            "RESUME_DATE",
+            "RESUME_FILE_TYPE",
+            "RESUME_PROCESSED",
+            "EDUCATION_EXTRACTED",
+            "EXPERIENCE_EXTRACTED",
+            "SKILLS_EXTRACTED",
+            "SUMMARY_EXTRACTED",
+            "WILD_SEARCH_EXTRACTED",
+            "CANDIDATE_FLAG",
+            "INDREASON",
+            "NUMREASON",
+            "VERBREASON"
+          ],
+          "recommended_sort_columns": [
+            "ARIF_ID",
+            "CANDIDATE_ID",
+            "CREATED_ON",
+            "LAST_MODIFIED",
+            "APPLICATION_STATUS_CODE",
+            "RESUME_UPLOADED",
+            "RESUME_DATE",
+            "RESUME_PROCESSED",
+            "EDUCATION_EXTRACTED",
+            "EXPERIENCE_EXTRACTED",
+            "SKILLS_EXTRACTED",
+            "SUMMARY_EXTRACTED",
+            "WILD_SEARCH_EXTRACTED"
+          ],
+          "aggregation_candidates": [
+            {
+              "column_name": "ARIF_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "CREATED_ON",
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_name": "YEARS_OF_EXPERIENCE",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "SAUDI_EXPAT",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "LAST_MODIFIED",
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_name": "SOURCE_OF_APPLICATION",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "GENDER",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "HIGHEST_APPLICATION_STATUS",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "APPLICATION_STATUS_CODE",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "RESUME_UPLOADED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "RESUME_DATE",
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_name": "RESUME_FILE_TYPE",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "RESUME_PROCESSED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "EDUCATION_EXTRACTED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "EXPERIENCE_EXTRACTED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "SKILLS_EXTRACTED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "SUMMARY_EXTRACTED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "WILD_SEARCH_EXTRACTED",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "CANDIDATE_FLAG",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "INDREASON",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "NUMREASON",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "VERBREASON",
+              "aggregation_hint": "group_count"
+            }
+          ]
+        },
+        "dbo.T_IIR_ARIF_EDUCATION": {
+          "recommended_search_columns": [
+            "DEGREE",
+            "MAJOR",
+            "INSTITUTION",
+            "STARTDATE",
+            "ENDDATE"
+          ],
+          "recommended_filter_columns": [
+            "SCHOOL_ID",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "recommended_sort_columns": [
+            "SCHOOL_ID",
+            "ARIF_ID",
+            "CANDIDATE_ID",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "aggregation_candidates": [
+            {
+              "column_name": "SCHOOL_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "ARIF_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "NORM_DEGREE",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "NORM_INSTITUTION",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "NORM_STARTDATE",
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_name": "NORM_ENDDATE",
+              "aggregation_hint": "min_max"
+            }
+          ]
+        },
+        "dbo.T_IIR_ARIF_EXPERIENCE": {
+          "recommended_search_columns": [
+            "TITLE",
+            "EMPLOYER",
+            "STARTDATE",
+            "ENDDATE"
+          ],
+          "recommended_filter_columns": [
+            "JOB_ID",
+            "YEARS_OF_EXPERIENCE",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "recommended_sort_columns": [
+            "JOB_ID",
+            "ARIF_ID",
+            "CANDIDATE_ID",
+            "YEARS_OF_EXPERIENCE",
+            "NORM_STARTDATE",
+            "NORM_ENDDATE"
+          ],
+          "aggregation_candidates": [
+            {
+              "column_name": "JOB_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "ARIF_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "COUNTRY",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "YEARS_OF_EXPERIENCE",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "NORM_TITLE",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "NORM_EMPLOYER",
+              "aggregation_hint": "group_count"
+            },
+            {
+              "column_name": "NORM_STARTDATE",
+              "aggregation_hint": "min_max"
+            },
+            {
+              "column_name": "NORM_ENDDATE",
+              "aggregation_hint": "min_max"
+            }
+          ]
+        },
+        "dbo.T_IIR_ARIF_SKILLS": {
+          "recommended_search_columns": [
+            "ORG_SKILL",
+            "NORM_SKILL"
+          ],
+          "recommended_filter_columns": [
+            "SKILL_ID"
+          ],
+          "recommended_sort_columns": [
+            "SKILL_ID",
+            "ARIF_ID",
+            "CANDIDATE_ID"
+          ],
+          "aggregation_candidates": [
+            {
+              "column_name": "SKILL_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "ARIF_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            },
+            {
+              "column_name": "CANDIDATE_ID",
+              "aggregation_hint": "sum_avg_min_max"
+            }
+          ]
+        }
+      },
+      "query_templates": {
+        "table_templates": {
+          "dbo.T_IIR_ARIF_CANDIDATE": {
+            "basic_select_top_100": "SELECT TOP 100 * FROM [dbo].[T_IIR_ARIF_CANDIDATE];",
+            "row_count": "SELECT COUNT(*) AS row_count FROM [dbo].[T_IIR_ARIF_CANDIDATE];",
+            "distinct_entity_count": "SELECT COUNT(DISTINCT [ARIF_ID]) AS distinct_entity_count FROM [dbo].[T_IIR_ARIF_CANDIDATE];",
+            "grouped_count": "SELECT TOP 50 [ARIF_ID] AS group_value, COUNT(*) AS row_count\nFROM [dbo].[T_IIR_ARIF_CANDIDATE]\nWHERE [ARIF_ID] IS NOT NULL\nGROUP BY [ARIF_ID]\nORDER BY COUNT(*) DESC;",
+            "latest_records": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_CANDIDATE]\nWHERE [CREATED_ON] IS NOT NULL\nORDER BY [CREATED_ON] DESC;",
+            "top_by_numeric_metric": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_CANDIDATE]\nWHERE [CANDIDATE_ID] IS NOT NULL\nORDER BY [CANDIDATE_ID] DESC;",
+            "grouped_numeric_summary": "SELECT TOP 50 [ARIF_ID] AS group_value,\n       COUNT(*) AS row_count,\n       AVG(CAST([CANDIDATE_ID] AS float)) AS avg_value,\n       MIN([CANDIDATE_ID]) AS min_value,\n       MAX([CANDIDATE_ID]) AS max_value\nFROM [dbo].[T_IIR_ARIF_CANDIDATE]\nWHERE [ARIF_ID] IS NOT NULL\n  AND [CANDIDATE_ID] IS NOT NULL\nGROUP BY [ARIF_ID]\nORDER BY AVG(CAST([CANDIDATE_ID] AS float)) DESC;",
+            "text_search_like": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_CANDIDATE]\nWHERE [GIVENNAME] LIKE '%search_text%';",
+            "ordered_sample": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_CANDIDATE]\nORDER BY [CREATED_ON] DESC;"
+          },
+          "dbo.T_IIR_ARIF_EDUCATION": {
+            "basic_select_top_100": "SELECT TOP 100 * FROM [dbo].[T_IIR_ARIF_EDUCATION];",
+            "row_count": "SELECT COUNT(*) AS row_count FROM [dbo].[T_IIR_ARIF_EDUCATION];",
+            "distinct_entity_count": "SELECT COUNT(DISTINCT [SCHOOL_ID]) AS distinct_entity_count FROM [dbo].[T_IIR_ARIF_EDUCATION];",
+            "grouped_count": "SELECT TOP 50 [SCHOOL_ID] AS group_value, COUNT(*) AS row_count\nFROM [dbo].[T_IIR_ARIF_EDUCATION]\nWHERE [SCHOOL_ID] IS NOT NULL\nGROUP BY [SCHOOL_ID]\nORDER BY COUNT(*) DESC;",
+            "latest_records": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EDUCATION]\nWHERE [NORM_STARTDATE] IS NOT NULL\nORDER BY [NORM_STARTDATE] DESC;",
+            "top_by_numeric_metric": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EDUCATION]\nWHERE [ARIF_ID] IS NOT NULL\nORDER BY [ARIF_ID] DESC;",
+            "grouped_numeric_summary": "SELECT TOP 50 [SCHOOL_ID] AS group_value,\n       COUNT(*) AS row_count,\n       AVG(CAST([ARIF_ID] AS float)) AS avg_value,\n       MIN([ARIF_ID]) AS min_value,\n       MAX([ARIF_ID]) AS max_value\nFROM [dbo].[T_IIR_ARIF_EDUCATION]\nWHERE [SCHOOL_ID] IS NOT NULL\n  AND [ARIF_ID] IS NOT NULL\nGROUP BY [SCHOOL_ID]\nORDER BY AVG(CAST([ARIF_ID] AS float)) DESC;",
+            "text_search_like": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EDUCATION]\nWHERE [DEGREE] LIKE '%search_text%';",
+            "ordered_sample": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EDUCATION]\nORDER BY [NORM_STARTDATE] DESC;"
+          },
+          "dbo.T_IIR_ARIF_EXPERIENCE": {
+            "basic_select_top_100": "SELECT TOP 100 * FROM [dbo].[T_IIR_ARIF_EXPERIENCE];",
+            "row_count": "SELECT COUNT(*) AS row_count FROM [dbo].[T_IIR_ARIF_EXPERIENCE];",
+            "distinct_entity_count": "SELECT COUNT(DISTINCT [JOB_ID]) AS distinct_entity_count FROM [dbo].[T_IIR_ARIF_EXPERIENCE];",
+            "grouped_count": "SELECT TOP 50 [JOB_ID] AS group_value, COUNT(*) AS row_count\nFROM [dbo].[T_IIR_ARIF_EXPERIENCE]\nWHERE [JOB_ID] IS NOT NULL\nGROUP BY [JOB_ID]\nORDER BY COUNT(*) DESC;",
+            "latest_records": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EXPERIENCE]\nWHERE [NORM_STARTDATE] IS NOT NULL\nORDER BY [NORM_STARTDATE] DESC;",
+            "top_by_numeric_metric": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EXPERIENCE]\nWHERE [ARIF_ID] IS NOT NULL\nORDER BY [ARIF_ID] DESC;",
+            "grouped_numeric_summary": "SELECT TOP 50 [JOB_ID] AS group_value,\n       COUNT(*) AS row_count,\n       AVG(CAST([ARIF_ID] AS float)) AS avg_value,\n       MIN([ARIF_ID]) AS min_value,\n       MAX([ARIF_ID]) AS max_value\nFROM [dbo].[T_IIR_ARIF_EXPERIENCE]\nWHERE [JOB_ID] IS NOT NULL\n  AND [ARIF_ID] IS NOT NULL\nGROUP BY [JOB_ID]\nORDER BY AVG(CAST([ARIF_ID] AS float)) DESC;",
+            "text_search_like": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EXPERIENCE]\nWHERE [TITLE] LIKE '%search_text%';",
+            "ordered_sample": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_EXPERIENCE]\nORDER BY [NORM_STARTDATE] DESC;"
+          },
+          "dbo.T_IIR_ARIF_SKILLS": {
+            "basic_select_top_100": "SELECT TOP 100 * FROM [dbo].[T_IIR_ARIF_SKILLS];",
+            "row_count": "SELECT COUNT(*) AS row_count FROM [dbo].[T_IIR_ARIF_SKILLS];",
+            "distinct_entity_count": "SELECT COUNT(DISTINCT [SKILL_ID]) AS distinct_entity_count FROM [dbo].[T_IIR_ARIF_SKILLS];",
+            "grouped_count": "SELECT TOP 50 [SKILL_ID] AS group_value, COUNT(*) AS row_count\nFROM [dbo].[T_IIR_ARIF_SKILLS]\nWHERE [SKILL_ID] IS NOT NULL\nGROUP BY [SKILL_ID]\nORDER BY COUNT(*) DESC;",
+            "top_by_numeric_metric": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_SKILLS]\nWHERE [ARIF_ID] IS NOT NULL\nORDER BY [ARIF_ID] DESC;",
+            "grouped_numeric_summary": "SELECT TOP 50 [SKILL_ID] AS group_value,\n       COUNT(*) AS row_count,\n       AVG(CAST([ARIF_ID] AS float)) AS avg_value,\n       MIN([ARIF_ID]) AS min_value,\n       MAX([ARIF_ID]) AS max_value\nFROM [dbo].[T_IIR_ARIF_SKILLS]\nWHERE [SKILL_ID] IS NOT NULL\n  AND [ARIF_ID] IS NOT NULL\nGROUP BY [SKILL_ID]\nORDER BY AVG(CAST([ARIF_ID] AS float)) DESC;",
+            "text_search_like": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_SKILLS]\nWHERE [ORG_SKILL] LIKE '%search_text%';",
+            "ordered_sample": "SELECT TOP 100 *\nFROM [dbo].[T_IIR_ARIF_SKILLS]\nORDER BY [SKILL_ID] DESC;"
+          }
+        }
+      }
+    }
+  ],
+  "relationship_payloads": [],
+  "join_payloads": []
+}

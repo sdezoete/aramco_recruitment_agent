@@ -1,0 +1,106 @@
+DATABASE: arif_recruitment
+SCHEMA VERSION: 5
+GENERATOR: generic_sql_server_schema_extractor
+
+JOIN HINTS:
+
+COUNT RULES:
+- dbo.T_IIR_ARIF_CANDIDATE: Use COUNT(*) when the user asks for raw row count of dbo.T_IIR_ARIF_CANDIDATE.
+- dbo.T_IIR_ARIF_CANDIDATE: Use COUNT(DISTINCT ARIF_ID) when the user asks for distinct entities represented by dbo.T_IIR_ARIF_CANDIDATE.
+- dbo.T_IIR_ARIF_EDUCATION: Use COUNT(*) when the user asks for raw row count of dbo.T_IIR_ARIF_EDUCATION.
+- dbo.T_IIR_ARIF_EDUCATION: Use COUNT(DISTINCT SCHOOL_ID) when the user asks for distinct entities represented by dbo.T_IIR_ARIF_EDUCATION.
+- dbo.T_IIR_ARIF_EXPERIENCE: Use COUNT(*) when the user asks for raw row count of dbo.T_IIR_ARIF_EXPERIENCE.
+- dbo.T_IIR_ARIF_EXPERIENCE: Use COUNT(DISTINCT JOB_ID) when the user asks for distinct entities represented by dbo.T_IIR_ARIF_EXPERIENCE.
+- dbo.T_IIR_ARIF_SKILLS: Use COUNT(*) when the user asks for raw row count of dbo.T_IIR_ARIF_SKILLS.
+- dbo.T_IIR_ARIF_SKILLS: Use COUNT(DISTINCT SKILL_ID) when the user asks for distinct entities represented by dbo.T_IIR_ARIF_SKILLS.
+
+TABLES:
+- dbo.T_IIR_ARIF_CANDIDATE (rows=106787, role=standalone)
+  Likely entity key: ARIF_ID
+  PK: ARIF_ID
+  Searchable: GIVENNAME, MIDDLENAME, SURNAME, CURRENT_EMPLOYER, CURRENT_JOB_TITLE, COUNTRY, NATIONAL_ID, SAUDI_EXPAT, GPA, SOURCE_OF_APPLICATION, GENDER, HIGHEST_JOB_REQ_ID, HIGHEST_APPLICATION_ID, HIGHEST_APPLICATION_STATUS, RESUME_FILE_TYPE, CANDIDATE_FLAG, INDREASON, NUMREASON, VERBREASON, SUMMARY, TEXT_TOKENS
+  Filterable: ARIF_ID, CREATED_ON, SAUDI_EXPAT, LAST_MODIFIED, SOURCE_OF_APPLICATION, GENDER, HIGHEST_APPLICATION_STATUS, APPLICATION_STATUS_CODE, RESUME_UPLOADED, RESUME_DATE, RESUME_FILE_TYPE, RESUME_PROCESSED, EDUCATION_EXTRACTED, EXPERIENCE_EXTRACTED, SKILLS_EXTRACTED, SUMMARY_EXTRACTED, WILD_SEARCH_EXTRACTED, CANDIDATE_FLAG, INDREASON, NUMREASON, VERBREASON
+  Sortable: ARIF_ID, CANDIDATE_ID, CREATED_ON, LAST_MODIFIED, APPLICATION_STATUS_CODE, RESUME_UPLOADED, RESUME_DATE, RESUME_PROCESSED, EDUCATION_EXTRACTED, EXPERIENCE_EXTRACTED, SKILLS_EXTRACTED, SUMMARY_EXTRACTED, WILD_SEARCH_EXTRACTED
+  - ARIF_ID int | role=primary_key | nullable=False | distinct=106787 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[10000000, 10000001, 10000002]
+  - CANDIDATE_ID int | role=numeric_attribute | nullable=False | distinct=106787 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1000015, 100005, 1000053]
+  - GIVENNAME nvarchar(300) | role=text | nullable=True | distinct=26240 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_1 | samples=[Sarah, Mohamad, ashraf]
+  - MIDDLENAME nvarchar(300) | role=text | nullable=True | distinct=11200 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_1 | samples=[Afit, Kunnath, Kader]
+  - SURNAME nvarchar(300) | role=text | nullable=True | distinct=44596 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_1 | samples=[Albanaqi, Alyami, Alshehri]
+  - CREATED_ON date | role=date_or_time | nullable=True | distinct=1558 | null_ratio=0.0 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[2026-03-08, 2026-03-07, 2026-03-06]
+  - CURRENT_EMPLOYER nvarchar(300) | role=text | nullable=True | distinct=36100 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[AGP LTD, Metal Majic, Armstrong Energy]
+  - CURRENT_JOB_TITLE nvarchar(300) | role=text | nullable=True | distinct=31679 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Lead Inspector, Mechanical Engineering, Instrumentation Engineer]
+  - YEARS_OF_EXPERIENCE nvarchar(300) | role=categorical_text | nullable=True | distinct=0 | null_ratio=1.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[]
+  - COUNTRY nvarchar(300) | role=text | nullable=True | distinct=190 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Russian Federation, Brunei Darussalam, Saudi Arabia]
+  - NATIONAL_ID nvarchar(300) | role=text | nullable=True | distinct=42488 | null_ratio=0.0 | agg=count_only | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_10_PREFIX_1 | samples=[1049131061, 1138593585, 1118403441]
+  - SAUDI_EXPAT nvarchar(300) | role=categorical_text | nullable=True | distinct=2 | null_ratio=0.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[Expat, Saudi]
+  - GPA nvarchar(300) | role=text | nullable=True | distinct=1853 | null_ratio=0.0 | agg=count_only | value_semantics=score_like_value | dominant_pattern=DECIMAL_RANGE_0_4_DP_2 | samples=[3.57, 3.19, 3.36]
+  - LAST_MODIFIED date | role=date_or_time | nullable=True | distinct=53 | null_ratio=0.0 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[2026-03-09, 2026-03-08, 2026-03-07]
+  - SOURCE_OF_APPLICATION nvarchar(300) | role=categorical_text | nullable=True | distinct=1 | null_ratio=0.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[SF]
+  - GENDER nvarchar(30) | role=categorical_text | nullable=True | distinct=3 | null_ratio=0.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[No Selection, Female, Male]
+  - HIGHEST_JOB_REQ_ID nvarchar(255) | role=text | nullable=True | distinct=3127 | null_ratio=0.0034 | agg=count_only | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_5_PREFIX_1 | samples=[15359, 15311, 17531]
+  - HIGHEST_APPLICATION_ID nvarchar(255) | role=text | nullable=True | distinct=79762 | null_ratio=0.0034 | agg=count_only | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_7_PREFIX_4 | samples=[4457396, 4461776, 4446677]
+  - HIGHEST_APPLICATION_STATUS nvarchar(255) | role=categorical_text | nullable=True | distinct=43 | null_ratio=0.0034 | agg=group_count | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Interview Completed, Availability Confirmation, Requisition Closed]
+  - APPLICATION_STATUS_CODE int | role=numeric_attribute | nullable=True | distinct=4 | null_ratio=0.0034 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1, 0, 3]
+  - RESUME_UPLOADED int | role=numeric_attribute | nullable=True | distinct=2 | null_ratio=0.0044 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1, 0]
+  - RESUME_DATE date | role=date_or_time | nullable=True | distinct=1431 | null_ratio=0.0044 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[2026-03-09, 2026-03-08, 2026-03-07]
+  - RESUME_FILE_TYPE nvarchar(30) | role=categorical_text | nullable=True | distinct=9 | null_ratio=0.0044 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[pdf, docx, doc]
+  - RESUME_PROCESSED int | role=numeric_attribute | nullable=True | distinct=2 | null_ratio=0.0041 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1, 0]
+  - EDUCATION_EXTRACTED int | role=numeric_attribute | nullable=True | distinct=1 | null_ratio=0.306 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1]
+  - EXPERIENCE_EXTRACTED int | role=numeric_attribute | nullable=True | distinct=1 | null_ratio=0.3365 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1]
+  - SKILLS_EXTRACTED int | role=numeric_attribute | nullable=True | distinct=1 | null_ratio=0.2869 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1]
+  - SUMMARY_EXTRACTED int | role=numeric_attribute | nullable=True | distinct=1 | null_ratio=0.2714 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1]
+  - WILD_SEARCH_EXTRACTED int | role=numeric_attribute | nullable=True | distinct=1 | null_ratio=0.2715 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1]
+  - CANDIDATE_FLAG nvarchar(255) | role=categorical_text | nullable=True | distinct=8 | null_ratio=0.0034 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[SED, AOC, ASC]
+  - INDREASON nvarchar(30) | role=categorical_text | nullable=True | distinct=100 | null_ratio=0.0 | agg=group_count | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_2_PREFIX_9 | samples=[98, 96, 95]
+  - NUMREASON nvarchar(30) | role=categorical_text | nullable=True | distinct=100 | null_ratio=0.0 | agg=group_count | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_2_PREFIX_9 | samples=[93, 92, 95]
+  - VERBREASON nvarchar(30) | role=categorical_text | nullable=True | distinct=100 | null_ratio=0.0 | agg=group_count | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_2_PREFIX_9 | samples=[95, 99, 94]
+  - SUMMARY nvarchar(max) | role=long_text | nullable=True | distinct=76127 | null_ratio=0.2705 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_10 | samples=[Ali Alshahrani is a PMP‑certified civil engineer holding a B.Sc. in Civil Engineering from Jubail Industrial College, with over a year of professional experience as a Site Engineer at SAUDICO managing..., Faisal Hamad Mohammed Alrasheed is a civil engineer holding a Bachelor of Civil Engineering and diplomas in Computer Applications and Business Administration, with over eight years of multidisciplinar..., Sarah Hamed Aljandal is a Geography and GIS graduate from Imam Abdulrahman bin Faisal University with hands‑on experience gained during a four‑month internship at the Ministry of Environment, Water &...]
+  - TEXT_TOKENS nvarchar(max) | role=long_text | nullable=True | distinct=77632 | null_ratio=0.2705 | agg=count_only | value_semantics=phone_like_value | dominant_pattern=PHONEISH_DIGITS_12 | samples=[Maali Alwohaibi +966583378725 maali.alwohaibi@gmail.com https://www.linkedin.com/in/maali-alwohaibi SUMMARY A disciplined, forward-thinking, and detail-oriented professional with a Bachelor's degree i..., Ghadah Dibas Alhabardi ghadahdibas@gmail.com | +966551473813 Career Objective I aim to work within an exceptional team in an outstanding organization, to accomplish tasks with quality and excellence a..., SADEEM MOHAMMED ALMAGHSHI Email: sadeem.maghshi@gmail.com | Phone: +966532051425 | Jubail OBJECTIVE Recently graduate with a Bachelor’s degree in Information Technology. Skilled in networking, system...]
+- dbo.T_IIR_ARIF_EDUCATION (rows=205046, role=standalone)
+  Likely entity key: SCHOOL_ID
+  PK: SCHOOL_ID
+  Searchable: DEGREE, MAJOR, INSTITUTION, STARTDATE, ENDDATE
+  Filterable: SCHOOL_ID, NORM_STARTDATE, NORM_ENDDATE
+  Sortable: SCHOOL_ID, ARIF_ID, CANDIDATE_ID, NORM_STARTDATE, NORM_ENDDATE
+  - SCHOOL_ID int | role=primary_key | nullable=False | distinct=205052 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1, 10, 100]
+  - ARIF_ID int | role=numeric_attribute | nullable=False | distinct=74222 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[10030654, 10010690, 10031145]
+  - CANDIDATE_ID int | role=numeric_attribute | nullable=False | distinct=74222 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1582520, 1517805, 513144]
+  - DEGREE nvarchar(300) | role=text | nullable=True | distinct=14297 | null_ratio=0.0787 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_1 | samples=[Postgraduate, Masters, W.A.E.C]
+  - MAJOR nvarchar(300) | role=text | nullable=True | distinct=23249 | null_ratio=0.1917 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Enterprise Program, Industrial Chemistry, Comparative Literature]
+  - INSTITUTION nvarchar(300) | role=text | nullable=True | distinct=44381 | null_ratio=0.06 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_3 | samples=[West Virginia University, Akhbar Elyom Academy, Karaganda Buketov University]
+  - STARTDATE nvarchar(300) | role=text | nullable=True | distinct=3578 | null_ratio=0.5302 | agg=count_only | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_4_PREFIX_2 | samples=[2017, 2009, 2021]
+  - ENDDATE nvarchar(300) | role=text | nullable=True | distinct=4498 | null_ratio=0.2375 | agg=count_only | value_semantics=structured_numeric_identifier | dominant_pattern=DIGITS_LEN_4_PREFIX_2 | samples=[2011, 2016, 2006]
+  - NORM_DEGREE nvarchar(300) | role=categorical_text | nullable=True | distinct=0 | null_ratio=1.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[]
+  - NORM_INSTITUTION nvarchar(300) | role=categorical_text | nullable=True | distinct=0 | null_ratio=1.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[]
+  - NORM_STARTDATE date | role=date_or_time | nullable=True | distinct=6154 | null_ratio=0.5788 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[8102-02-08, 6221-02-03, 2118-02-26]
+  - NORM_ENDDATE date | role=date_or_time | nullable=True | distinct=6923 | null_ratio=0.3076 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[9999-12-31, 5102-01-05, 2119-02-26]
+- dbo.T_IIR_ARIF_EXPERIENCE (rows=416387, role=standalone)
+  Likely entity key: JOB_ID
+  PK: JOB_ID
+  Searchable: TITLE, EMPLOYER, STARTDATE, ENDDATE
+  Filterable: JOB_ID, YEARS_OF_EXPERIENCE, NORM_STARTDATE, NORM_ENDDATE
+  Sortable: JOB_ID, ARIF_ID, CANDIDATE_ID, YEARS_OF_EXPERIENCE, NORM_STARTDATE, NORM_ENDDATE
+  - JOB_ID int | role=primary_key | nullable=False | distinct=416389 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1, 10, 100]
+  - ARIF_ID int | role=numeric_attribute | nullable=False | distinct=70914 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[10030591, 10002276, 10002017]
+  - CANDIDATE_ID int | role=numeric_attribute | nullable=False | distinct=70914 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1461732, 165845, 1514444]
+  - TITLE nvarchar(300) | role=text | nullable=True | distinct=129362 | null_ratio=0.0244 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Financial Analyst, Assistant Inspector, Tax Assistant]
+  - EMPLOYER nvarchar(300) | role=text | nullable=True | distinct=161660 | null_ratio=0.0254 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_3 | samples=[ABV Rock Group, Computech – Sudan, Four Seasons Hotel]
+  - STARTDATE nvarchar(300) | role=text | nullable=True | distinct=15308 | null_ratio=0.0526 | agg=count_only | value_semantics=alphanumeric_code | dominant_pattern=ALNUM_LEN_8_SHAPE_AAA D+ | samples=[Aug 2017, Sep 2017, Jan 2009]
+  - ENDDATE nvarchar(300) | role=text | nullable=True | distinct=12942 | null_ratio=0.1407 | agg=count_only | value_semantics=alphanumeric_code | dominant_pattern=ALNUM_LEN_8_SHAPE_AAA D+ | samples=[Feb 2012, Apr 2018, Apr 2024]
+  - COUNTRY nvarchar(300) | role=categorical_text | nullable=True | distinct=0 | null_ratio=1.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[]
+  - YEARS_OF_EXPERIENCE int | role=numeric_measure | nullable=True | distinct=67 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[0, 1, 2]
+  - NORM_TITLE nvarchar(300) | role=categorical_text | nullable=True | distinct=0 | null_ratio=1.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[]
+  - NORM_EMPLOYER nvarchar(300) | role=categorical_text | nullable=True | distinct=0 | null_ratio=1.0 | agg=group_count | value_semantics=None | dominant_pattern=None | samples=[]
+  - NORM_STARTDATE date | role=date_or_time | nullable=True | distinct=9299 | null_ratio=0.1848 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[2915-12-28, 2108-12-05, 2040-06-06]
+  - NORM_ENDDATE date | role=date_or_time | nullable=True | distinct=8577 | null_ratio=0.3494 | agg=min_max | value_semantics=None | dominant_pattern=None | samples=[9999-12-31, 4202-02-05, 2204-12-18]
+- dbo.T_IIR_ARIF_SKILLS (rows=1473748, role=standalone)
+  Likely entity key: SKILL_ID
+  PK: SKILL_ID
+  Searchable: ORG_SKILL, NORM_SKILL
+  Filterable: SKILL_ID
+  Sortable: SKILL_ID, ARIF_ID, CANDIDATE_ID
+  - SKILL_ID int | role=primary_key | nullable=False | distinct=1473776 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1, 10, 100]
+  - ARIF_ID int | role=numeric_attribute | nullable=False | distinct=72797 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[10031044, 10068204, 10072159]
+  - CANDIDATE_ID int | role=numeric_attribute | nullable=False | distinct=72797 | null_ratio=0.0 | agg=sum_avg_min_max | value_semantics=None | dominant_pattern=None | samples=[1403413, 1412712, 1593555]
+  - ORG_SKILL nvarchar(300) | role=text | nullable=True | distinct=428796 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Well Architect, UI/UX Design, KPI reporting]
+  - NORM_SKILL nvarchar(300) | role=text | nullable=True | distinct=428796 | null_ratio=0.0 | agg=count_only | value_semantics=free_text | dominant_pattern=TEXT_WORDS_2 | samples=[Governance writing, Continuous learning, Tax planning]
