@@ -1,0 +1,39 @@
+﻿health:
+{'status': 'ok'}
+ats_requisitions:
+{
+  "recruiter_id": "current_user",
+  "count": 3,
+  "job_requisitions": [
+    {
+      "requisition_id": "JR-1001",
+      "title": "Data Scientist",
+      "department": "AI",
+      "location": "Dhahran",
+      "status": "Open"
+    },
+    {
+      "requisition_id": "JR-1002",
+      "title": "AI Engineer",
+      "department": "AI Platform",
+      "location": "Riyadh",
+      "status": "Open"
+    },
+    {
+      "requisition_id": "JR-1003",
+      "title": "Generative AI Specialist",
+      "department": "Innovation",
+      "location": "Jeddah",
+      "status": "Open"
+    }
+  ]
+}
+ats_applications:
+{
+  "count": 20
+}
+requisition_ingest:
+{
+  "status": "needs_clarification",
+  "session_id": "sess-003b9e5fda"
+}

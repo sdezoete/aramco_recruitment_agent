@@ -4,3 +4,6 @@ pydantic-settings==2.3.4
 requests==2.32.3
 crewai==0.86.0
 reportlab==4.4.10
+openai==1.109.1
+fastapi==0.115.6
+uvicorn==0.32.1

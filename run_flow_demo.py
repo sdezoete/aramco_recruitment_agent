@@ -31,15 +31,25 @@ def main() -> None:
     print("start_result:")
     print(json.dumps(first_result.model_dump(), indent=2, ensure_ascii=True))
 
-    if first_result.status == "needs_clarification":
+    result = first_result
+    while result.status == "needs_clarification":
+        answer_map = {
+            "q_must_have_skills": "python, mlops, kubernetes",
+            "q_min_years_relevant": "5",
+            "q_location": "Dhahran",
+            "q_education_level": "Bachelor",
+        }
         answers = [
-            ClarificationAnswer(question_id="q_must_have_skills", answer="python, mlops, kubernetes"),
-            ClarificationAnswer(question_id="q_min_years_relevant", answer="5"),
-            ClarificationAnswer(question_id="q_location", answer="Dhahran"),
+            ClarificationAnswer(
+                question_id=question.question_id,
+                answer=answer_map.get(question.question_id, "Not specified"),
+            )
+            for question in result.clarification_questions
         ]
-        second_result = flow.resume_with_answers(session_id=session_id, answers=answers)
+
+        result = flow.resume_with_answers(session_id=session_id, answers=answers)
         print("resume_result:")
-        print(json.dumps(second_result.model_dump(), indent=2, ensure_ascii=True))
+        print(json.dumps(result.model_dump(), indent=2, ensure_ascii=True))
 
 
 if __name__ == "__main__":

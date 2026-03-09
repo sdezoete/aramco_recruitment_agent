@@ -1,0 +1,282 @@
+﻿job_requisitions:
+{
+  "recruiter_id": "current_user",
+  "count": 3,
+  "job_requisitions": [
+    {
+      "requisition_id": "JR-1001",
+      "title": "Data Scientist",
+      "department": "AI",
+      "location": "Dhahran",
+      "status": "Open"
+    },
+    {
+      "requisition_id": "JR-1002",
+      "title": "AI Engineer",
+      "department": "AI Platform",
+      "location": "Riyadh",
+      "status": "Open"
+    },
+    {
+      "requisition_id": "JR-1003",
+      "title": "Generative AI Specialist",
+      "department": "Innovation",
+      "location": "Jeddah",
+      "status": "Open"
+    }
+  ]
+}
+applications:
+{
+  "requisition_id": "JR-1001",
+  "count": 20,
+  "applications": [
+    {
+      "application_id": "APP-JR-1001-0001",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200003,
+      "arif_id": 10000002,
+      "candidate_name": "Dana Almutairi",
+      "current_job_title": "Data Scientist",
+      "applied_on": "2023-08-13",
+      "status": "Shortlisted"
+    },
+    {
+      "application_id": "APP-JR-1001-0002",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200019,
+      "arif_id": 10000018,
+      "candidate_name": "Sarah Alotaibi",
+      "current_job_title": "ML Engineer",
+      "applied_on": "2024-10-27",
+      "status": "Availability Confirmation"
+    },
+    {
+      "application_id": "APP-JR-1001-0003",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200015,
+      "arif_id": 10000014,
+      "candidate_name": "Maha Alqahtani",
+      "current_job_title": "ML Engineer",
+      "applied_on": "2024-03-19",
+      "status": "Availability Confirmation"
+    },
+    {
+      "application_id": "APP-JR-1001-0004",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200023,
+      "arif_id": 10000022,
+      "candidate_name": "Ibrahim Almutairi",
+      "current_job_title": "Data Analyst",
+      "applied_on": "2025-03-03",
+      "status": "Interview Completed"
+    },
+    {
+      "application_id": "APP-JR-1001-0005",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200031,
+      "arif_id": 10000030,
+      "candidate_name": "Yousef Alshammari",
+      "current_job_title": "Data Scientist",
+      "applied_on": "2025-07-02",
+      "status": "Interview Completed"
+    },
+    {
+      "application_id": "APP-JR-1001-0006",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200039,
+      "arif_id": 10000038,
+      "candidate_name": "Tariq Almalki",
+      "current_job_title": "ML Engineer",
+      "applied_on": "2023-04-01",
+      "status": "Application Review"
+    },
+    {
+      "application_id": "APP-JR-1001-0007",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200055,
+      "arif_id": 10000054,
+      "candidate_name": "Huda Alsubaie",
+      "current_job_title": "Data Analyst",
+      "applied_on": "2025-06-01",
+      "status": "Shortlisted"
+    },
+    {
+      "application_id": "APP-JR-1001-0008",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200057,
+      "arif_id": 10000056,
+      "candidate_name": "Huda Alghamdi",
+      "current_job_title": "Senior Data Analyst",
+      "applied_on": "2024-05-03",
+      "status": "Application Review"
+    },
+    {
+      "application_id": "APP-JR-1001-0009",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200007,
+      "arif_id": 10000006,
+      "candidate_name": "Tariq Alyami",
+      "current_job_title": "Machine Learning Engineer",
+      "applied_on": "2023-01-26",
+      "status": "Shortlisted"
+    },
+    {
+      "application_id": "APP-JR-1001-0010",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200043,
+      "arif_id": 10000042,
+      "candidate_name": "Huda Alotaibi",
+      "current_job_title": "Data Analyst",
+      "applied_on": "2026-03-06",
+      "status": "Availability Confirmation"
+    },
+    {
+      "application_id": "APP-JR-1001-0011",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200030,
+      "arif_id": 10000029,
+      "candidate_name": "Abdullah Alotaibi",
+      "current_job_title": "AI Engineer",
+      "applied_on": "2024-12-11",
+      "status": "Application Review"
+    },
+    {
+      "application_id": "APP-JR-1001-0012",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200005,
+      "arif_id": 10000004,
+      "candidate_name": "Faisal Alotaibi",
+      "current_job_title": "Applied Scientist",
+      "applied_on": "2024-02-04",
+      "status": "Availability Confirmation"
+    },
+    {
+      "application_id": "APP-JR-1001-0013",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200034,
+      "arif_id": 10000033,
+      "candidate_name": "Saif Alotaibi",
+      "current_job_title": "Senior Data Scientist",
+      "applied_on": "2023-10-25",
+      "status": "Application Review"
+    },
+    {
+      "application_id": "APP-JR-1001-0014",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200049,
+      "arif_id": 10000048,
+      "candidate_name": "Abdullah Alotaibi",
+      "current_job_title": "Data Analyst",
+      "applied_on": "2026-01-10",
+      "status": "Shortlisted"
+    },
+    {
+      "application_id": "APP-JR-1001-0015",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200058,
+      "arif_id": 10000057,
+      "candidate_name": "Saif Almalki",
+      "current_job_title": "Senior Data Analyst",
+      "applied_on": "2025-07-23",
+      "status": "Shortlisted"
+    },
+    {
+      "application_id": "APP-JR-1001-0016",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200028,
+      "arif_id": 10000027,
+      "candidate_name": "Reem Alharbi",
+      "current_job_title": "Applied Scientist",
+      "applied_on": "2025-08-03",
+      "status": "Application Review"
+    },
+    {
+      "application_id": "APP-JR-1001-0017",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200045,
+      "arif_id": 10000044,
+      "candidate_name": "Faisal Almutairi",
+      "current_job_title": "Data Scientist",
+      "applied_on": "2023-04-11",
+      "status": "Availability Confirmation"
+    },
+    {
+      "application_id": "APP-JR-1001-0018",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200021,
+      "arif_id": 10000020,
+      "candidate_name": "Faisal Almalki",
+      "current_job_title": "Data Analyst",
+      "applied_on": "2023-10-13",
+      "status": "Interview Completed"
+    },
+    {
+      "application_id": "APP-JR-1001-0019",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200036,
+      "arif_id": 10000035,
+      "candidate_name": "Omar Alotaibi",
+      "current_job_title": "Data Analyst",
+      "applied_on": "2023-06-17",
+      "status": "Interview Completed"
+    },
+    {
+      "application_id": "APP-JR-1001-0020",
+      "requisition_id": "JR-1001",
+      "candidate_id": 200012,
+      "arif_id": 10000011,
+      "candidate_name": "Huda Alghamdi",
+      "current_job_title": "Data Scientist",
+      "applied_on": "2024-07-12",
+      "status": "Availability Confirmation"
+    }
+  ]
+}
+candidate_information:
+{
+  "found": true,
+  "candidate_id": 200003,
+  "candidate": {
+    "ARIF_ID": 10000002,
+    "CANDIDATE_ID": 200003,
+    "GIVENNAME": "Dana",
+    "MIDDLENAME": null,
+    "SURNAME": "Almutairi",
+    "CREATED_ON": "2023-08-13",
+    "CURRENT_EMPLOYER": "PetroInsight Analytics",
+    "CURRENT_JOB_TITLE": "Data Scientist",
+    "YEARS_OF_EXPERIENCE": "0",
+    "COUNTRY": "Saudi Arabia",
+    "NATIONAL_ID": "1460027313",
+    "SAUDI_EXPAT": "Expat",
+    "GPA": "3.83",
+    "LAST_MODIFIED": "2026-03-09",
+    "SOURCE_OF_APPLICATION": "SF",
+    "GENDER": "No Selection",
+    "HIGHEST_JOB_REQ_ID": "16084",
+    "HIGHEST_APPLICATION_ID": "4546413",
+    "HIGHEST_APPLICATION_STATUS": "Shortlisted",
+    "APPLICATION_STATUS_CODE": 2,
+    "RESUME_UPLOADED": 1,
+    "RESUME_DATE": "2023-08-17",
+    "RESUME_FILE_TYPE": "pdf",
+    "RESUME_PROCESSED": 1,
+    "EDUCATION_EXTRACTED": 1,
+    "EXPERIENCE_EXTRACTED": 1,
+    "SKILLS_EXTRACTED": 1,
+    "SUMMARY_EXTRACTED": 1,
+    "WILD_SEARCH_EXTRACTED": 1,
+    "CANDIDATE_FLAG": "SED",
+    "INDREASON": "58",
+    "NUMREASON": "55",
+    "VERBREASON": "57",
+    "SUMMARY": "Dana Almutairi is a data science applicant targeting Data Scientist roles with 0+ years of analytics and machine learning experience. Holds a Bachelor in Computer Science. Core strengths include mlflow, tensorflow, computer vision, python. Demonstrated ability to build predictive models, communicate findings, and deploy solutions in business environments.",
+    "TEXT_TOKENS": "Dana Almutairi dana.almutairi3@example.com +966588461803 Dana Almutairi is a data science applicant targeting Data Scientist roles with 0+ years of analytics and machine learning experience. Holds a Bachelor in Computer Science. Core strengths include mlflow, tensorflow, computer vision, python. Demonstrated ability to build predictive models, communicate findings, and deploy solutions in business environments. Experience title Data Scientist employer PetroInsight Analytics. Skills: mlflow, tensorflow, computer vision, python, kubernetes."
+  },
+  "resume": {
+    "storage_path": "candidate_pdf_files\\200003.pdf",
+    "file_exists": true,
+    "source": "configured_resume_storage"
+  }
+}

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruitment Console</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-pattern" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Recruitment Console</h1>
+      <p>ATS + Agent Workspace</p>
+    </div>
+    <div class="topbar-actions">
+      <button id="refreshBtn" class="btn btn-ghost">Refresh</button>
+      <span id="connectionStatus" class="status-pill">Checking API...</span>
+    </div>
+  </header>
+
+  <main class="app-grid">
+    <aside class="panel panel-left">
+      <div class="panel-head">
+        <h2>Requisitions</h2>
+        <p>Current recruiter: <strong id="recruiterLabel">current_user</strong></p>
+      </div>
+
+      <div class="filters">
+        <input id="reqSearch" type="text" placeholder="Search ID or title">
+        <select id="statusFilter">
+          <option value="all">All Statuses</option>
+          <option value="open">Open</option>
+          <option value="in progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="clarification needed">Clarification Needed</option>
+        </select>
+      </div>
+
+      <div id="requisitionList" class="requisition-list" aria-live="polite"></div>
+    </aside>
+
+    <section class="panel panel-center">
+      <div class="tabs" role="tablist" aria-label="Workspace Tabs">
+        <button class="tab is-active" data-tab="requisition">Requisition</button>
+        <button class="tab" data-tab="candidates">Candidates</button>
+        <button class="tab" data-tab="profile">Candidate Profile</button>
+        <button class="tab" data-tab="resume">Resume</button>
+        <button class="tab" data-tab="audit">Audit Trail</button>
+      </div>
+
+      <div class="tab-panels">
+        <section class="tab-panel is-active" data-panel="requisition">
+          <div class="content-head">
+            <h3 id="reqTitle">Select a requisition</h3>
+            <span id="reqStatusBadge" class="badge">-</span>
+          </div>
+          <div class="card-grid two">
+            <article class="card">
+              <h4>Requisition Info</h4>
+              <dl id="reqInfo" class="kv-list"></dl>
+            </article>
+            <article class="card">
+              <h4>Run Analysis</h4>
+              <label for="jdInput">Job Description</label>
+              <textarea id="jdInput" rows="8" placeholder="Paste or edit JD text here"></textarea>
+              <div class="row">
+                <button id="ingestBtn" class="btn btn-primary">Run Agent Analysis</button>
+              </div>
+              <pre id="ingestSummary" class="mono-box">No run yet.</pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="tab-panel" data-panel="candidates">
+          <div class="content-head">
+            <h3>Candidate Matches</h3>
+            <div class="row">
+              <button id="loadCandidatesBtn" class="btn btn-ghost">Load ATS Applications</button>
+              <button id="runSearchBtn" class="btn btn-primary">Run Ranked Search</button>
+            </div>
+          </div>
+          <div class="candidate-buckets" role="tablist" aria-label="Candidate Buckets">
+            <button id="bucketPoolBtn" class="bucket-tab is-active" data-candidate-tab="pool">Pipeline</button>
+            <button id="bucketShortlistBtn" class="bucket-tab" data-candidate-tab="shortlist">Shortlisted</button>
+            <button id="bucketRejectBtn" class="bucket-tab" data-candidate-tab="rejected">Rejected</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Candidate</th>
+                  <th>Current Title</th>
+                  <th>Score</th>
+                  <th>Skill Coverage</th>
+                  <th>Evidence</th>
+                  <th>Gaps</th>
+                  <th>Decision</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="candidateRows">
+                <tr><td colspan="9" class="muted">No candidates loaded.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="tab-panel" data-panel="profile">
+          <div class="content-head">
+            <h3>Candidate Profile</h3>
+            <span id="profileHint" class="muted">Select a candidate from Candidates tab.</span>
+          </div>
+          <div id="candidateProfile" class="card-stack"></div>
+        </section>
+
+        <section class="tab-panel" data-panel="resume">
+          <div class="content-head">
+            <h3>Resume</h3>
+            <span id="resumeHint" class="muted">Select a candidate to view mock resume.</span>
+          </div>
+          <article class="card">
+            <h4>Mock Resume Document</h4>
+            <pre id="resumeDoc" class="resume-doc">No resume selected.</pre>
+          </article>
+          <article class="card">
+            <h4>Resume Metadata</h4>
+            <pre id="resumeMeta" class="mono-box">No resume selected.</pre>
+          </article>
+        </section>
+
+        <section class="tab-panel" data-panel="audit">
+          <div class="content-head">
+            <h3>Audit Timeline</h3>
+          </div>
+          <div id="auditTrail" class="timeline">
+            <div class="timeline-item muted">No events yet.</div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <aside class="panel panel-right">
+      <div class="panel-head">
+        <h2>Agent Interaction</h2>
+        <p id="agentSessionHint">Session: none</p>
+      </div>
+
+      <div id="chatStream" class="chat-stream">
+        <div class="chat-msg agent">Agent ready. Select a requisition and run analysis.</div>
+      </div>
+
+      <div id="clarificationBox" class="clarification-box"></div>
+
+      <div class="composer">
+        <input id="chatInput" type="text" placeholder="Type recruiter note...">
+        <button id="sendChatBtn" class="btn btn-ghost">Send</button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
