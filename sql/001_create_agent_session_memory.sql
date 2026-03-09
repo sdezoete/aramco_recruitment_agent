@@ -1,0 +1,23 @@
+IF OBJECT_ID('dbo.AGENT_SESSION_MEMORY', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.AGENT_SESSION_MEMORY (
+        session_id NVARCHAR(128) NOT NULL PRIMARY KEY,
+        requisition_id NVARCHAR(128) NULL,
+        state_json NVARCHAR(MAX) NOT NULL,
+        created_at DATETIME2(7) NOT NULL DEFAULT SYSUTCDATETIME(),
+        updated_at DATETIME2(7) NOT NULL DEFAULT SYSUTCDATETIME()
+    );
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_AGENT_SESSION_MEMORY_requisition_id'
+      AND object_id = OBJECT_ID('dbo.AGENT_SESSION_MEMORY')
+)
+BEGIN
+    CREATE INDEX IX_AGENT_SESSION_MEMORY_requisition_id
+        ON dbo.AGENT_SESSION_MEMORY (requisition_id);
+END;
+GO

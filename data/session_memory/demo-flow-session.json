@@ -1,0 +1,147 @@
+{
+  "session_id": "demo-flow-session",
+  "requisition_id": "JR-1001",
+  "state": {
+    "workflow_state": "RESULTS_PRESENTED",
+    "job_requisition_raw": {
+      "req_id": "JR-1001",
+      "title": "Senior Machine Learning Engineer",
+      "department": "AI",
+      "location": "Dhahran",
+      "jd_text": "We need a senior ML engineer with 5+ years experience, Python, MLOps, Kubernetes, and production model deployment in oil and gas contexts.",
+      "metadata": {
+        "source": "demo"
+      }
+    },
+    "job_requirements": {
+      "role_title": "Senior Machine Learning Engineer",
+      "seniority": "senior",
+      "must_have_skills": [
+        {
+          "skill": "python",
+          "min_years": null,
+          "weight": 1.0
+        },
+        {
+          "skill": "mlops",
+          "min_years": null,
+          "weight": 1.0
+        },
+        {
+          "skill": "kubernetes",
+          "min_years": null,
+          "weight": 1.0
+        }
+      ],
+      "nice_to_have_skills": [],
+      "domain_keywords": [
+        "oil and gas"
+      ],
+      "education": {
+        "min_level": null,
+        "preferred_majors": [],
+        "min_gpa": null
+      },
+      "experience": {
+        "min_years_total": 5.0,
+        "min_years_relevant": 5.0,
+        "required_titles": []
+      },
+      "work_constraints": {
+        "location": "Dhahran",
+        "onsite_policy": null,
+        "language": null,
+        "authorization": null
+      },
+      "scoring_preferences": {
+        "weight_skills": 0.45,
+        "weight_title_fit": 0.2,
+        "weight_domain": 0.15,
+        "weight_scores": 0.1,
+        "weight_education": 0.1
+      },
+      "exclusions": {},
+      "confidence": 0.8500000000000001,
+      "missing_fields": []
+    },
+    "search_plan": {
+      "filters": [
+        {
+          "field": "skills_any",
+          "operator": "in",
+          "value": [
+            "python",
+            "mlops",
+            "kubernetes"
+          ]
+        },
+        {
+          "field": "experience.min_years_relevant",
+          "operator": ">=",
+          "value": 5.0
+        }
+      ],
+      "joins": [
+        "CANDIDATE",
+        "SKILLS",
+        "EDUCATION",
+        "EXPERIENCE"
+      ],
+      "ranking_features": [
+        {
+          "name": "skills",
+          "weight": 0.45
+        },
+        {
+          "name": "title_fit",
+          "weight": 0.2
+        },
+        {
+          "name": "domain",
+          "weight": 0.15
+        },
+        {
+          "name": "scores",
+          "weight": 0.1
+        },
+        {
+          "name": "education",
+          "weight": 0.1
+        }
+      ],
+      "text_query_terms": [
+        "oil and gas"
+      ],
+      "limit": 50
+    },
+    "search_filters": {
+      "candidate_ids": null,
+      "skills_any": [
+        "python",
+        "mlops",
+        "kubernetes"
+      ],
+      "skills_all": null,
+      "text_keywords_any": [
+        "oil and gas"
+      ],
+      "min_gpa": null,
+      "degree_levels_any": null,
+      "majors_any": null,
+      "min_test_verbal": null,
+      "min_test_math": null,
+      "min_test_insight": null,
+      "limit": 50,
+      "offset": 0
+    },
+    "candidate_ids": [],
+    "candidate_count": 0,
+    "ranked_candidates": [],
+    "archetype_report": {
+      "archetypes": [],
+      "recommendation_note": "If shipping and monitoring are top priorities, favor MLOps Engineer candidates. If innovation in model quality is top priority, favor Deep Learning Specialist candidates."
+    }
+  },
+  "created_at": "2026-03-08T11:18:59.379365+00:00",
+  "updated_at": "2026-03-08T11:23:01.510747+00:00"
+}

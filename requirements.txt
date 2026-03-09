@@ -1,0 +1,5 @@
+pyodbc==5.2.0
+pydantic==2.7.4
+pydantic-settings==2.3.4
+requests==2.32.3
+crewai==0.86.0
