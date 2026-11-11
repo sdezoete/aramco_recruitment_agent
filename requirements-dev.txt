@@ -1,0 +1,3 @@
+# Dev/test only. Never shipped in wheels\.
+-r requirements.txt
+pytest

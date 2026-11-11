@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+wheels/
+usb_*/
+logs/
+certs/
+work/
+data/private/
+.claude/settings.local.json
+
+# reference docs from a sibling project (internal details, not shipped)
+docs_other_project/

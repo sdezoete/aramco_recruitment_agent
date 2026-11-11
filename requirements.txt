@@ -1,0 +1,10 @@
+# Top-level runtime dependencies, pinned (docs/AIRGAP_DEPLOYMENT_STANDARD.md §2).
+# Transitive deps are resolved into wheels\ by scripts\1-build-wheels.ps1 (Windows x64 / cp311).
+fastapi==0.162.4
+uvicorn==0.54.0
+pyodbc==5.5.0
+httpx==0.28.1
+truststore==0.10.5
+jsonschema==4.26.0
+python-docx==1.2.0
+pypdf==7.0.1
