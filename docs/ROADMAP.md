@@ -6,7 +6,7 @@ Documentation, the deployment standard, and the release scripts exist. No applic
 ## Phase 0: Pipeline
 - [x] AIRGAP_DEPLOYMENT_STANDARD, DEPLOY.md, DEPLOY-NOTES.md
 - [x] `scripts/1-build-wheels.ps1`, `2-install-offline.ps1`, `make-usb.ps1`
-- [ ] `git init`, first commit (make-usb uses git-tracked files)
+- [x] Git repo: github.com/sdezoete/aramco_recruitment_agent (`main`). History restarted 2026-11-11; the old implementation is kept only as a local bundle backup
 - [x] Pin exact versions in `requirements.txt`, then build and verify `wheels/` (27 wheels, offline install + pip check clean, 2026-11-11)
 - [x] `make-usb.ps1` dry run (fallback mode): correct file set, no `.env`
 - [ ] Vendor Chart.js into `static/vendor/`
