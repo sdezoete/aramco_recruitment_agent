@@ -32,6 +32,13 @@ Claude chooses a template through `render_view`. The server hydrates it into a *
 
 Plain chat text needs no template: Markdown in `text_delta` is rendered with a small, safe Markdown subset (bold, italics, lists, inline code, links). We do not use a raw-HTML Markdown renderer.
 
+## Implementation notes
+
+- All renderers live in `static/js/renderers.js` (one function per template). Charts go through `static/js/charts.js`, which uses the vendored Chart.js 4.4.7.
+- Every chart has a **Chart / Table** toggle. Single-series charts use one hue and no legend. The radar shows at most 3 series (categorical slots 1–3 are colour-blind safe as a set) with a legend. Part-to-whole metrics (`*_mix`) are drawn as bars, not pies.
+- Chart colours come from CSS role tokens and are rebuilt when the theme changes. Dark mode has its own selected values, not an automatic inversion.
+- **Dev gallery:** `/dev/gallery` (404 when `PRODUCTION=True`) renders every template from the local DB with a sample JD. Use it after changing a renderer or the CSS. `?theme=dark` and `?doc=jd_business_analyst` are supported.
+
 ## Design language ("very fancy", but readable)
 
 - Dark and light themes using CSS custom properties on `:root`, following `prefers-color-scheme`, with a manual toggle.

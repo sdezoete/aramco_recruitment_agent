@@ -31,21 +31,26 @@ JDs and reference documents in `data/docs/`.
 ### `get_document`
 - **parameters:** `doc_id: string`, `max_chars?: int`
 
-### `extract_job_spec`
-Turns a JD (`doc_id`, or raw text the user pasted) into a structured JobSpec (see DATA_MODEL.md), saved in `AgentMemory` as `active_job_spec` for this chat. The extraction is LLM-assisted. Skill names are then mapped onto the real `Skill` vocabulary, and unmapped skills are reported.
-- **parameters:** `doc_id?: string`, `jd_text?: string`, `title?: string`
-- **returns:** `{ job_spec, unmapped_skills[] }`
+### `set_job_spec`
+Sets the chat's active JobSpec (see DATA_MODEL.md), saved in `AgentMemory` as `active_job_spec`.
+- With `doc_id` (a JD file) or `jd_text` (a pasted JD), a deterministic extractor (`services/jobspec.py`) drafts the spec. It reads only the Requirements and Preferred sections: skills from the real `Skill` vocabulary, minimum years, degree and majors.
+- Explicit fields override the draft. That is how the LLM corrects the draft or sets requirements described in the chat.
+- Skill names are mapped onto the vocabulary. Unmapped skills are reported, because they can't be scored.
+- **parameters:** `doc_id?`, `jd_text?`, `title?`, `required_skills?: string[]`, `preferred_skills?: string[]`, `min_years?`, `degree?` (e.g. Bachelor, Master, PhD), `majors?`, `certifications?`, `title_keywords?`, `weights?`
+- **returns:** the spec (with `degree` as a name), `source`, and `unmapped_skills[]` when there are any
 
 ## Matching
 
 ### `match_candidates`
 **The "find the best candidate" tool.** Scores the pool, or a given set of candidates, against a JobSpec using `services/scoring.py`.
-- **parameters:** `job_spec?: object` (default: the chat's `active_job_spec`), `candidate_ids?: int[]`, `weights?: {skills, experience, relevance, education, certifications}`, `must_have_skills?: string[]`, `limit?: int`
+- Requires an active spec: call `set_job_spec` first.
+- **parameters:** `candidate_ids?: int[]`, `weights?: {skills, experience, relevance, education, certifications}`, `must_have_skills?: string[]`, `limit?: int`
+- With no `candidate_ids`, the pool is the candidates that have any spec skill, capped at `MATCH_MAX_POOL`. Small pools (fewer than 50) score everyone, so near-misses still show.
 - **returns:** `{ total_scored, results: [{ candidate_id, full_name, score (0-100), breakdown{}, matched_skills[], missing_skills[], flags[] }] }`. The shortlist is saved as `last_shortlist` in AgentMemory.
 
 ### `compare_candidates`
 Side-by-side comparison of 2 to 6 candidates against the active JobSpec.
-- **parameters:** `candidate_ids: int[]`, `job_spec?: object`
+- **parameters:** `candidate_ids: int[]` (uses the active spec)
 
 ## Analytics
 
@@ -58,7 +63,7 @@ Aggregates over the candidate pool, used for charts.
 
 ### `render_view`
 Shows a rich view in the chat. Call it after the data tools. The server hydrates the content from the DB or the saved shortlist.
-- **parameters:** `template: enum` (see RESPONSE_TEMPLATES.md), `title: string`, `candidate_ids?: int[]`, `doc_id?: string`, `metric?: string`, `options?: { highlight?: string[], sort_by?: string, chart_type?: enum[bar, radar, doughnut, line] }`
+- **parameters:** `template: enum` (see RESPONSE_TEMPLATES.md), `title: string`, `candidate_ids?: int[]`, `doc_ids?: string[]`, `metric?: string` (pool metrics or `shortlist_scores`), `options?: { limit?: int, chart_type?: enum[bar, doughnut, line, radar], scope?: enum[pool, shortlist] }`
 - **returns to the LLM:** `{ rendered: true, block_id }`
 - **side effect:** an SSE `ui_block` event
 

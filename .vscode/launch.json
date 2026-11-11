@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "App (dev, OpenAI from .env)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--reload", "--port", "8000"],
+      "cwd": "${workspaceFolder}",
+      "justMyCode": true
+    },
+    {
+      "name": "Mock LLM (port 8001)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "tests.mock_llm",
+      "args": ["--port", "8001"],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "App against mock LLM",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--reload", "--port", "8000"],
+      "cwd": "${workspaceFolder}",
+      "env": { "RA_LLM_BASE_URL": "http://127.0.0.1:8001/v1", "RA_LLM_MODEL": "mock-harmony" }
+    },
+    {
+      "name": "Tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["-q"],
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    { "name": "App + mock LLM", "configurations": ["Mock LLM (port 8001)", "App against mock LLM"] }
+  ]
+}

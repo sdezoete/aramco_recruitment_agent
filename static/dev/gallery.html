@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renderer Gallery</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script src="/static/js/theme-init.js"></script>
+</head>
+<body>
+  <main class="scroller gallery">
+    <div class="thread" id="thread">
+      <header class="gallery-head">
+        <h1>Renderer gallery <span class="env-badge">dev only</span></h1>
+        <button class="btn" id="theme-toggle" type="button">Toggle theme</button>
+      </header>
+      <p class="muted">Every response template, rendered from the local database with the sample JD. Not available when PRODUCTION=True.</p>
+    </div>
+  </main>
+  <script src="/static/vendor/chart.js-4.4.7/chart.umd.js"></script>
+  <script type="module" src="/static/dev/gallery.js"></script>
+</body>
+</html>

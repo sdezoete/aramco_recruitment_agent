@@ -10,6 +10,7 @@ Project docs. Read the relevant one before a non-trivial change:
 - [docs/DATA_MODEL.md](docs/DATA_MODEL.md): **the DB schema (fixed, supplied by the user)** and the scoring model
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): components, request flow, agent loop, SSE protocol
 - [docs/TOOLS.md](docs/TOOLS.md): tool catalog, the contract between the LLM and the backend
+- [docs/HARMONY.md](docs/HARMONY.md): **harmony format rules** (roles, channels, history policy, gateway fallbacks). Read this before touching `app/llm/` or `app/agent/`
 - [docs/RESPONSE_TEMPLATES.md](docs/RESPONSE_TEMPLATES.md): UI block types the frontend renders
 - [docs/DECISIONS.md](docs/DECISIONS.md): decision log. Append an entry when you make an architectural choice
 - [docs/ROADMAP.md](docs/ROADMAP.md): phases, status, open questions
@@ -24,7 +25,7 @@ Project docs. Read the relevant one before a non-trivial change:
 | Python | 3.11 x64 (`.venv/`) |
 | Dev DB | SQL Server 2022 Developer, `localhost` default instance, database `recruitment`, Windows auth, ODBC Driver 17 for SQL Server |
 | Prod DB | SQL Server; set through `DB_*` in the server `.env` (server/auth TBD, see ROADMAP) |
-| LLM | OpenAI-compatible chat-completions; prod = corporate MaaS gateway; dev = any compatible endpoint set in `.env` |
+| LLM | OpenAI-compatible chat-completions in the **harmony** format. Prod: DeepSeek 4.1 Flash through the corporate MaaS gateway (API key). Dev: OpenAI (`gpt-5.4-mini`), or the mock LLM in `tests/mock_llm.py` |
 
 ## Stack
 
@@ -34,9 +35,14 @@ Project docs. Read the relevant one before a non-trivial change:
 ## Commands (repo root, PowerShell)
 
 ```
-.venv\Scripts\python -m pip install -r requirements.txt           # dev install (online)
-.venv\Scripts\python -m uvicorn app.main:app --reload --port 8000  # dev server, PRODUCTION=False
-.venv\Scripts\python -m pytest                                     # tests
+.venv\Scripts\python -m pip install -r requirements-dev.txt       # dev install (online)
+.venv\Scripts\python -m uvicorn app.main:app --reload --port 8000  # dev server, PRODUCTION=False -> http://127.0.0.1:8000
+.venv\Scripts\python -m app                                        # how the server runs it (HTTPS if TLS_* set)
+.venv\Scripts\python -m tests.mock_llm --port 8001                 # mock LLM (--raw-harmony, --no-tools)
+#   then run the app with RA_LLM_BASE_URL=http://127.0.0.1:8001/v1 RA_LLM_MODEL=mock-harmony
+.venv\Scripts\python -m pytest                                     # tests (e2e tests use the local DB + mock LLM)
+# http://127.0.0.1:8000/dev/gallery   every UI template from real data (dev only)
+# http://127.0.0.1:8000/?q=<prompt>   deep link that sends a prompt on load
 powershell -ExecutionPolicy Bypass -File scripts\1-build-wheels.ps1   # build + verify wheels\
 powershell -ExecutionPolicy Bypass -File scripts\make-usb.ps1         # build usb_x_y_z\
 sqlcmd -S localhost -E -d recruitment -Q "..."                     # inspect dev DB
@@ -46,21 +52,23 @@ sqlcmd -S localhost -E -d recruitment -Q "..."                     # inspect dev
 
 ```
 app/
-  __init__.py          __version__
-  main.py              FastAPI app, routes, static mount, startup checks
-  config.py            .env loader + PRODUCTION switch + validation
-  llm/client.py        OpenAI-compatible client (stream, tools, capability probe, fallbacks)
-  agent/loop.py        agent loop (LLM <-> tools), emits SSE events
-  agent/prompts.py     system prompt
-  agent/registry.py    tool schemas + handlers
-  tools/               candidates.py, documents.py, analytics.py, render.py
-  services/scoring.py  deterministic, explainable candidate-to-JD scoring
-  db/connection.py     pyodbc connection from DB_* settings
-  db/repository.py     ALL SQL lives here
-static/  index.html, css/, js/, js/renderers/, vendor/
-data/docs/             JDs and reference documents (samples only in git)
+  __init__.py            __version__
+  __main__.py            `python -m app`: uvicorn + TLS checks (self-signed/expired refused in prod)
+  main.py                FastAPI: static, /api/meta, /api/health, /api/chat (SSE), export, dev gallery
+  config.py              .env loader + PRODUCTION switch + validation (RA_<KEY> overrides)
+  llm/harmony.py         harmony roles/channels, stream parser for leaked tokens
+  llm/client.py          OpenAI-compatible client (stream, tools, probe, 400-adaptation)
+  agent/loop.py          agent loop (LLM <-> tools) -> SSE events; prompted-JSON fallback
+  agent/prompts.py       identity + developer instructions
+  agent/registry.py      tool schemas, validation (jsonschema), dispatch
+  tools/handlers.py      tool implementations; tools/render.py hydrates UI blocks; tools/context.py state
+  services/              scoring.py, jobspec.py (JD -> spec), documents.py, normalize.py
+  db/connection.py       pyodbc connection from DB_* settings
+  db/repository.py       ALL SQL lives here
+static/  index.html, css/app.css, js/{app,renderers,charts,markdown,sse,dom}.js, vendor/, dev/ (gallery)
+data/docs/               JDs and reference documents (fake samples in git)
 scripts/  1-build-wheels.ps1, 2-install-offline.ps1, make-usb.ps1, run-server.bat
-tests/
+tests/   unit tests, e2e agent tests, mock_llm.py
 ```
 
 ## Core rules
@@ -74,14 +82,14 @@ tests/
 7. **Tool contract changes are API changes.** Update `docs/TOOLS.md`, the registry, and the tests together. New UI block type: update `docs/RESPONSE_TEMPLATES.md` and add a renderer.
 8. **Frontend renderers** are pure `render(block) -> HTMLElement` functions that use `textContent` and never `innerHTML` with data.
 
-## LLM conventions (OpenAI-compatible)
+## LLM conventions (OpenAI-compatible + harmony, see docs/HARMONY.md)
 
-- `POST {LLM_BASE_URL}/chat/completions` with `tools=[{"type":"function","function":{...}}]` and `tool_choice="auto"`, `stream=true`.
-- Parse `tool_calls[].function.arguments` with `json.loads`, then validate against the tool's schema before executing. On invalid JSON or schema failure, return an error tool message so the model can retry.
-- Return each result as `{"role":"tool","tool_call_id":..., "content": json}`. Support several tool calls in one turn.
+- `POST {LLM_BASE_URL}/chat/completions` with `tools=[{"type":"function","function":{...}}]`, `tool_choice="auto"` and `stream=true`. The system message carries the harmony identity, date and `Reasoning:` level. The developer message carries the instructions.
+- **Analysis (reasoning) is never shown to users and never sent back to the model.** Completed turns keep only the user text and the final answer.
+- Parse `tool_calls[].function.arguments` with `json.loads` and validate against the schema before executing. On failure, return `{"error": ...}` as the tool result so the model can retry.
 - Cap the loop at `AGENT_MAX_STEPS` (default 8). Handle `finish_reason` values `tool_calls`, `stop` and `length`.
-- **Capability fallback:** if the gateway rejects `tools`, `stream` or `response_format`, retry without it. Without native tools, use prompted JSON tool calls (documented in ARCHITECTURE.md).
-- The model name shown to users comes from `LLM_DISPLAY_NAME`.
+- Never assume a gateway feature. The client adapts on a 400 response, and without native tools the loop switches to prompted-JSON tool calls. Any change to this must keep the three e2e modes (native, raw harmony, no tools) passing.
+- In production the UI shows `LLM_DISPLAY_NAME` (ARIF). In dev it shows the model id.
 
 ## Working style
 
