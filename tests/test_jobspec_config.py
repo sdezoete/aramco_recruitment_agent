@@ -18,6 +18,15 @@ def test_extract_sample_jd():
     assert "Data Science" in spec.majors
 
 
+def test_extract_hire_type_from_jd():
+    text = (ROOT / "data" / "docs" / "jd_reservoir_engineer.md").read_text(encoding="utf-8")
+    spec = jobspec.extract(text, VOCAB + ["Reservoir Simulation", "Petrel", "Well Testing", "PVT Analysis"])
+    assert spec.hire_type == "Saudi"
+    assert {"Reservoir Simulation", "Petrel", "Well Testing"} <= set(spec.required_skills)
+    assert jobspec.extract("# Analyst\nExpatriate contract.", VOCAB).hire_type == "Expat"
+    assert jobspec.extract("# Analyst\nRequirements:\n- SQL", VOCAB).hire_type is None
+
+
 def test_map_skills_reports_unmapped():
     mapped, unmapped = jobspec.map_skills(["python3", "Kubernetes", "ml"], VOCAB)
     assert mapped == ["Python", "Machine Learning"]

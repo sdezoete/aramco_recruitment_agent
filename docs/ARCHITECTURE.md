@@ -21,7 +21,7 @@
 ## Request flow (one chat turn)
 
 1. The browser POSTs `{chat_id, message}` to `/api/chat` and reads the response as an SSE stream.
-2. `agent/loop.py` loads the chat history (in process memory) and the chat's state from `AgentMemory` (`active_job_spec`, `last_shortlist`), then calls the LLM with the system prompt, history and tool definitions, using `stream=true` and `tool_choice=auto`.
+2. `agent/loop.py` loads the chat history (in process memory) and the chat's state from `T_IIR_ARIF_AGENT_MEMORY` (`active_job_spec`, `last_shortlist`), then calls the LLM with the system prompt, history and tool definitions, using `stream=true` and `tool_choice=auto`.
 3. Content deltas are forwarded to the browser as `text_delta` events.
 4. When `finish_reason == "tool_calls"`, the loop:
    - emits `tool_start` for each call (the UI shows a "Searching candidates…" chip)
@@ -54,7 +54,7 @@
 ## Data access
 
 - `db/connection.py` builds the ODBC connection string from `DB_*`: `DB_DRIVER`, `DB_SERVER`, `DB_NAME`, `DB_TRUSTED_CONNECTION`, or `DB_USER`/`DB_PASSWORD`, plus `DB_ENCRYPT` and `DB_TRUST_SERVER_CERTIFICATE`.
-- One connection per request, from a small pool, with autocommit on for reads. Writes are limited to `AgentMemory`.
+- One connection per request, from a small pool, with autocommit on for reads. Writes are limited to `T_IIR_ARIF_AGENT_MEMORY`; the `T_IIR_ARIF_*` data tables are read-only.
 - All SQL lives in `db/repository.py` and is parameterized.
 
 ## Configuration (`.env`, read by `app/config.py`)

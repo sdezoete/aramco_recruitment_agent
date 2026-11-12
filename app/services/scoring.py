@@ -8,8 +8,10 @@ from dataclasses import asdict, dataclass, field
 
 from app.services.normalize import canonical, degree_level, fuzzy_match, norm, tokens
 
-CRITERIA = ("skills", "experience", "relevance", "education", "certifications")
-DEFAULT_WEIGHTS = {"skills": 0.40, "experience": 0.25, "relevance": 0.15, "education": 0.10, "certifications": 0.10}
+CRITERIA = ("skills", "experience", "relevance", "education", "assessments")
+DEFAULT_WEIGHTS = {"skills": 0.40, "experience": 0.25, "relevance": 0.15, "education": 0.10, "assessments": 0.10}
+ASSESSMENT_NEUTRAL = 0.5          # no reasoning-test scores on file: neutral, flagged, never a penalty to 0
+HIRE_TYPES = ("Saudi", "Expat")   # T_IIR_ARIF_CANDIDATE.SAUDI_EXPAT values (DECISIONS ADR-010)
 
 
 @dataclass
@@ -18,9 +20,11 @@ class JobSpec:
     required_skills: list[str] = field(default_factory=list)
     preferred_skills: list[str] = field(default_factory=list)
     min_years: float = 0.0
+    min_gpa: float | None = None           # GPA scale 1-4; below it adds a flag (not a hard filter)
     degree_level: int = 0                  # 0 none, 1 diploma, 2 bachelor, 3 master, 4 phd
     majors: list[str] = field(default_factory=list)
-    certifications: list[str] = field(default_factory=list)
+    hire_type: str | None = None           # requisition is for Saudi or Expat hire: hard filter, never scored
+    locations: list[str] = field(default_factory=list)   # CANDIDATE_FLAG values (AOC, ASC, ...): hard filter
     title_keywords: list[str] = field(default_factory=list)
     weights: dict[str, float] = field(default_factory=lambda: dict(DEFAULT_WEIGHTS))
     doc_id: str | None = None
@@ -34,7 +38,19 @@ class JobSpec:
         known = {k: d[k] for k in cls.__dataclass_fields__ if k in d}
         spec = cls(**known)
         spec.weights = normalize_weights(spec.weights)
+        spec.hire_type = normalize_hire_type(spec.hire_type)
         return spec
+
+
+def normalize_hire_type(v: str | None) -> str | None:
+    if not v:
+        return None
+    s = str(v).strip().lower()
+    if s.startswith("saudi") or s in ("local", "national"):
+        return "Saudi"
+    if s.startswith("expat") or s in ("international", "foreign"):
+        return "Expat"
+    return None  # "any" / unknown
 
 
 def normalize_weights(w: dict | None) -> dict[str, float]:
@@ -77,7 +93,8 @@ def _relevance_score(spec: JobSpec, cand: dict) -> float:
     if not kw_tokens:
         return 1.0
     titles = [(cand.get("last_job_title"), 1.0)] + [
-        (e.get("job_title"), float(e.get("years_experience") or 0)) for e in cand.get("experience", [])]
+        (" ".join(filter(None, {e.get("job_title"), e.get("norm_title")})), float(e.get("years_experience") or 0))
+        for e in cand.get("experience", [])]
     best, weighted, total_years = 0.0, 0.0, 0.0
     for title, yrs in titles:
         overlap = len(tokens(title) & kw_tokens) / len(kw_tokens) if title else 0.0
@@ -90,8 +107,8 @@ def _relevance_score(spec: JobSpec, cand: dict) -> float:
 
 
 def _education_score(spec: JobSpec, cand: dict) -> float:
-    degrees = [cand.get("highest_degree")] + [e.get("degree") for e in cand.get("education", [])]
-    level = max((degree_level(d) for d in degrees), default=0)
+    level = max([degree_level(cand.get("highest_degree"))]
+                + [e.get("level") or degree_level(e.get("degree")) for e in cand.get("education", [])])
     if spec.degree_level <= 0:
         deg = 1.0
     elif level >= spec.degree_level:
@@ -108,22 +125,32 @@ def _education_score(spec: JobSpec, cand: dict) -> float:
     return round(0.6 * deg + 0.4 * (1.0 if major_ok else 0.0), 4)
 
 
-def _cert_score(spec: JobSpec, certs: list[str]) -> tuple[float, list[str]]:
-    if not spec.certifications:
-        return 1.0, []
-    hits = [c for c in spec.certifications if fuzzy_match(c, certs, threshold=0.6)]
-    return len(hits) / len(spec.certifications), hits
+def _assessment_score(cand: dict) -> tuple[float, bool]:
+    """Mean of the inductive / numerical / verbal reasoning scores (0-100) on file. (score, has_any)."""
+    vals = [v for v in (cand.get("assessments") or {}).values() if isinstance(v, (int, float))]
+    if not vals:
+        return ASSESSMENT_NEUTRAL, False
+    return sum(vals) / len(vals) / 100.0, True
+
+
+def passes_filters(spec: JobSpec, cand: dict) -> bool:
+    """Requisition hard filters (hire type, location). Applied before ranking, never part of the score."""
+    if spec.hire_type and cand.get("hire_type") and cand["hire_type"] != spec.hire_type:
+        return False
+    if spec.locations and cand.get("location") not in spec.locations:
+        return False
+    return True
 
 
 def score_candidate(spec: JobSpec, cand: dict, must_have: list[str] | None = None) -> dict:
     skills, matched, missing = _skill_score(spec, cand.get("skills", []))
-    certs, cert_hits = _cert_score(spec, cand.get("certifications", []))
+    assess, has_assess = _assessment_score(cand)
     breakdown = {
         "skills": round(skills, 4),
         "experience": round(_experience_score(spec, cand.get("total_experience")), 4),
         "relevance": _relevance_score(spec, cand),
         "education": _education_score(spec, cand),
-        "certifications": round(certs, 4),
+        "assessments": round(assess, 4),
     }
     w = normalize_weights(spec.weights)
     score = round(100 * sum(w[k] * breakdown[k] for k in CRITERIA), 1)
@@ -134,16 +161,28 @@ def score_candidate(spec: JobSpec, cand: dict, must_have: list[str] | None = Non
             flags.append(f"missing_must_have:{m}")
     if spec.min_years and float(cand.get("total_experience") or 0) < spec.min_years:
         flags.append("below_min_years")
+    if not has_assess and w["assessments"] > 0:
+        flags.append("no_assessment")
+    if spec.hire_type and cand.get("hire_type") != spec.hire_type:
+        flags.append("hire_type_mismatch")
+    if spec.locations and cand.get("location") not in spec.locations:
+        flags.append("location_mismatch")
+    if cand.get("status_included") is False:
+        flags.append("status_not_open")
+    if spec.min_gpa and cand.get("gpa") is not None and cand["gpa"] < spec.min_gpa:
+        flags.append("below_min_gpa")
     return {
         "candidate_id": cand["candidate_id"],
+        "ats_id": cand.get("ats_id"),
         "full_name": cand.get("full_name"),
+        "location": cand.get("location"),
+        "hire_type": cand.get("hire_type"),
         "last_job_title": cand.get("last_job_title"),
         "total_experience": cand.get("total_experience"),
         "score": score,
         "breakdown": breakdown,
         "matched_skills": matched,
         "missing_skills": missing,
-        "matched_certifications": cert_hits,
         "flags": flags,
     }
 
@@ -164,5 +203,5 @@ def band(score: float) -> str:
     return "weak"
 
 
-__all__ = ["JobSpec", "CRITERIA", "DEFAULT_WEIGHTS", "normalize_weights", "score_candidate", "rank", "band",
-           "norm"]
+__all__ = ["JobSpec", "CRITERIA", "DEFAULT_WEIGHTS", "HIRE_TYPES", "normalize_weights", "normalize_hire_type",
+           "passes_filters", "score_candidate", "rank", "band", "norm"]

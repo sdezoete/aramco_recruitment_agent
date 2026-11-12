@@ -363,7 +363,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 
 /* JD card */
-.jd-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.jd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 14px; }
 .jd-fact { padding: 10px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); }
 .jd-fact small { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
 .jd-fact b { font-size: 17px; }
@@ -430,3 +430,8 @@ button, input, textarea { font: inherit; color: inherit; }
   .rtable td { padding: 4px 0; border: 0; }
   .msg-user .bubble { max-width: 90%; }
 }
+
+/* Mixed Arabic/Latin: dir="auto" keeps the character order right; names and short labels stay aligned
+   with the (LTR) layout, while longer Arabic paragraphs (summaries, chat text) align to the right. */
+.who [dir], .card-name, .card-sub, .profile-head h3, .profile-head .card-sub, .matrix th[dir], .timeline [dir],
+.card-meta [dir] { text-align: left; }

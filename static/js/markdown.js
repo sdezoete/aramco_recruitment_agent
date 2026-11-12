@@ -22,7 +22,7 @@ export function renderMarkdown(src) {
   const frag = document.createDocumentFragment();
   const lines = String(src || "").replace(/\r/g, "").split("\n");
   let para = [], list = null;
-  const flushPara = () => { if (para.length) { frag.appendChild(h("p", null, inline(para.join(" ")))); para = []; } };
+  const flushPara = () => { if (para.length) { frag.appendChild(h("p", { dir: "auto" }, inline(para.join(" ")))); para = []; } };
   const flushList = () => { if (list) { frag.appendChild(list); list = null; } };
   for (const raw of lines) {
     const line = raw.trimEnd();
@@ -35,7 +35,7 @@ export function renderMarkdown(src) {
       flushPara();
       const tag = bullet ? "ul" : "ol";
       if (!list || list.tagName.toLowerCase() !== tag) { flushList(); list = h(tag); }
-      list.appendChild(h("li", null, inline((bullet || num)[1])));
+      list.appendChild(h("li", { dir: "auto" }, inline((bullet || num)[1])));
       continue;
     }
     flushList();

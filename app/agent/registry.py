@@ -11,17 +11,22 @@ from typing import Callable
 
 import jsonschema
 
+from app.db.repository import Repository
+from app.services.scoring import CRITERIA
 from app.tools import handlers as h
 from app.tools.context import ToolContext, ToolError
 from app.tools.render import TEMPLATES
 
 _STR_LIST = {"type": "array", "items": {"type": "string"}}
 _INT_LIST = {"type": "array", "items": {"type": "integer"}}
+_HIRE_TYPE = {"type": "string", "enum": ["Saudi", "Expat", "any"],
+              "description": "Requisition hire type: Saudi (local) or Expat. A hard filter, never a score."}
+_LOCATIONS = {**_STR_LIST, "description": "Location flags (CANDIDATE_FLAG), e.g. AOC, ASC. See location_mix."}
+_STATUSES = {**_STR_LIST, "description": "Application status values (furthest status reached). See status_mix."}
 _WEIGHTS = {
     "type": "object",
     "description": "Relative weights; normalized to sum to 1.",
-    "properties": {k: {"type": "number", "minimum": 0} for k in
-                   ("skills", "experience", "relevance", "education", "certifications")},
+    "properties": {k: {"type": "number", "minimum": 0} for k in CRITERIA},
     "additionalProperties": False,
 }
 
@@ -45,22 +50,27 @@ class Tool:
 
 TOOLS: list[Tool] = [
     Tool("search_candidates",
-         "Search the candidate pool by criteria and/or free text. Returns brief candidate records. Use for "
-         "exploratory questions ('who knows Tableau in Riyadh?'). For 'best candidate for a job' use "
-         "set_job_spec + match_candidates instead.",
-         _obj({"query": {"type": "string", "description": "Free text over summary, titles, major."},
+         "Search the candidate pool by criteria and/or free text (English or Arabic). Returns brief candidate "
+         "records. Use for exploratory questions ('who knows Petrel at AOC?'). For 'best candidate for a job' "
+         "use set_job_spec + match_candidates instead.",
+         _obj({"query": {"type": "string", "description": "Free text over summary, titles and resume keywords."},
                "skills": {**_STR_LIST, "description": "Skill names (mapped onto the skill vocabulary)."},
                "skills_mode": {"type": "string", "enum": ["any", "all"]},
                "min_years": {"type": "number"}, "max_years": {"type": "number"},
-               "degree": {"type": "string"}, "major": {"type": "string"},
-               "location": {"type": "string"}, "certification": {"type": "string"},
+               "degree": {"type": "string", "description": "Minimum degree (Diploma, Bachelor, Master, PhD)."},
+               "major": {"type": "string"},
+               "min_gpa": {"type": "number", "minimum": 1, "maximum": 4, "description": "GPA scale 1-4."},
+               "hire_type": _HIRE_TYPE, "location": _LOCATIONS,
+               "application_status": _STATUSES, "exclude_statuses": _STATUSES,
                "limit": {"type": "integer", "minimum": 1, "maximum": 50}}),
          h.search_candidates, "Searching candidates"),
     Tool("get_candidate_profile",
-         "Full profile of one candidate: summary, skills, experience, education, certifications.",
-         _obj({"candidate_id": {"type": "integer"},
+         "Full profile of one candidate: summary, skills, experience, education, reasoning assessments "
+         "(inductive / numerical / verbal, 0-100), hire type, location and application status.",
+         _obj({"candidate_id": {"type": "integer", "description": "The app's candidate id (ARIF id, shown as #)."},
+               "ats_id": {"type": "integer", "description": "Or: the recruiting system's candidate id."},
                "sections": {"type": "array", "items": {"type": "string", "enum": [
-                   "skills", "experience", "education", "certifications"]}}}, ["candidate_id"]),
+                   "skills", "experience", "education", "assessments"]}}}),
          h.get_candidate_profile, "Reading profile"),
     Tool("list_skills",
          "The skill vocabulary that exists in the candidate database, with candidate counts. Use it to map "
@@ -78,13 +88,17 @@ TOOLS: list[Tool] = [
          h.get_document, "Reading document"),
     Tool("set_job_spec",
          "Set the active job requirements for this chat. Give doc_id (a JD file) or jd_text (pasted JD) for "
-         "automatic extraction, and/or explicit fields, which override the extraction. Returns the spec "
-         "and any skills that don't exist in the vocabulary. Call it before match_candidates.",
+         "automatic extraction, and/or explicit fields, which override the extraction. hire_type (Saudi or "
+         "Expat requisition) and locations are hard filters on the pool. Returns the spec and any skills that "
+         "don't exist in the vocabulary. Call it before match_candidates.",
          _obj({"doc_id": {"type": "string"}, "jd_text": {"type": "string"}, "title": {"type": "string"},
                "required_skills": _STR_LIST, "preferred_skills": _STR_LIST,
                "min_years": {"type": "number", "minimum": 0},
                "degree": {"type": "string", "description": "Minimum degree, e.g. Bachelor, Master, PhD."},
-               "majors": _STR_LIST, "certifications": _STR_LIST, "title_keywords": _STR_LIST,
+               "min_gpa": {"type": "number", "minimum": 1, "maximum": 4,
+                           "description": "GPA scale 1-4. Candidates below it are flagged, not removed."},
+               "majors": _STR_LIST, "title_keywords": _STR_LIST,
+               "hire_type": _HIRE_TYPE, "locations": _LOCATIONS,
                "weights": _WEIGHTS}),
          h.set_job_spec, "Setting job requirements"),
     Tool("match_candidates",
@@ -92,6 +106,10 @@ TOOLS: list[Tool] = [
          "with the deterministic scoring model. Returns ranked results with per-criterion breakdowns and "
          "saves them as the chat's shortlist. Then call render_view to show them.",
          _obj({"candidate_ids": _INT_LIST, "weights": _WEIGHTS, "must_have_skills": _STR_LIST,
+               "exclude_statuses": {**_STATUSES, "description": "Extra statuses to leave out, on top of the "
+                                    "default exclusions (hired, offer stage, ... per the status list)."},
+               "include_all_statuses": {"type": "boolean", "description": "true = also score candidates whose "
+                                        "status is normally excluded (e.g. already hired)."},
                "limit": {"type": "integer", "minimum": 1, "maximum": 50}}),
          h.match_candidates, "Scoring candidates"),
     Tool("compare_candidates",
@@ -99,17 +117,17 @@ TOOLS: list[Tool] = [
          _obj({"candidate_ids": {**_INT_LIST, "minItems": 2, "maxItems": 6}}, ["candidate_ids"]),
          h.compare_candidates, "Comparing candidates"),
     Tool("get_pool_stats",
-         "Aggregate statistics over the candidate pool (or given candidates) for analysis and charts.",
-         _obj({"metric": {"type": "string", "enum": ["skill_supply", "experience_distribution", "degree_mix",
-                                                     "major_mix", "location_mix", "certification_mix"]},
+         "Aggregate statistics over the candidate pool (or given candidates) for analysis and charts. Also "
+         "the way to discover valid filter values (location_mix, status_mix, hire_type_mix).",
+         _obj({"metric": {"type": "string", "enum": list(Repository.METRICS)},
                "candidate_ids": _INT_LIST}, ["metric"]),
          h.get_pool_stats, "Computing statistics"),
     Tool("render_view",
          "Show a rich view in the chat. The server fills in the real data from the database or the saved "
          "shortlist, so only pass ids and the template. Templates: ranked_table (shortlist with scores), "
          "candidate_cards, candidate_profile (one id), comparison_matrix, score_radar (2-6 ids), chart "
-         "(metric: skill_supply | experience_distribution | degree_mix | major_mix | location_mix | "
-         "certification_mix | shortlist_scores), jd_card (active job spec), document_hits, kpi_strip.",
+         "(metric: " + " | ".join(Repository.METRICS) + " | shortlist_scores), jd_card (active job spec), "
+         "document_hits, kpi_strip.",
          _obj({"template": {"type": "string", "enum": list(TEMPLATES)},
                "title": {"type": "string"},
                "candidate_ids": _INT_LIST,

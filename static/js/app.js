@@ -48,7 +48,7 @@ function scrollToEnd(force = false) {
 
 function addUser(text) {
   els.hero.hidden = true;
-  els.thread.appendChild(h("div", { class: "msg msg-user" }, h("div", { class: "bubble" }, text)));
+  els.thread.appendChild(h("div", { class: "msg msg-user" }, h("div", { class: "bubble", dir: "auto" }, text)));
   if (els.title.textContent === "New conversation") els.title.textContent = text.length > 70 ? text.slice(0, 70) + "…" : text;
   scrollToEnd(true);
 }

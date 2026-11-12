@@ -7,7 +7,8 @@ A chat-based recruiting assistant. A recruiter types in plain language ("find th
 The standard imported above is binding: we develop here, release to `usb_x_y_z`, and deploy to an air-gapped Windows server. Wheels only, no CDNs, and the `PRODUCTION` switch in `.env`.
 
 Project docs. Read the relevant one before a non-trivial change:
-- [docs/DATA_MODEL.md](docs/DATA_MODEL.md): **the DB schema (fixed, supplied by the user)** and the scoring model
+- [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md): **the server tables (`T_IIR_ARIF_*`) and the app's memory table, authoritative.** Source: `docs/schema/db_structure_server.txt`. Fields marked TO CONFIRM carry a stated assumption; don't build more on them until the user answers
+- [docs/DATA_MODEL.md](docs/DATA_MODEL.md): the candidate profile shape the repository returns, the scoring model and the hard filters
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): components, request flow, agent loop, SSE protocol
 - [docs/TOOLS.md](docs/TOOLS.md): tool catalog, the contract between the LLM and the backend
 - [docs/HARMONY.md](docs/HARMONY.md): **harmony format rules** (roles, channels, history policy, gateway fallbacks). Read this before touching `app/llm/` or `app/agent/`
@@ -45,7 +46,8 @@ Project docs. Read the relevant one before a non-trivial change:
 # http://127.0.0.1:8000/?q=<prompt>   deep link that sends a prompt on load
 powershell -ExecutionPolicy Bypass -File scripts\1-build-wheels.ps1   # build + verify wheels\
 powershell -ExecutionPolicy Bypass -File scripts\make-usb.ps1         # build usb_x_y_z\
-sqlcmd -S localhost -E -d recruitment -Q "..."                     # inspect dev DB
+sqlcmd -S localhost -E -d recruitment -Q "..."                     # inspect dev DB (run sqlcmd from PowerShell, not Git Bash)
+sqlcmd -S localhost -E -d recruitment -i sql\01_dev_server_tables.sql; .venv\Scripts\python scripts\seed_dev_db.py   # reset dev data
 ```
 
 ## Target layout
@@ -67,13 +69,19 @@ app/
   db/repository.py       ALL SQL lives here
 static/  index.html, css/app.css, js/{app,renderers,charts,markdown,sse,dom}.js, vendor/, dev/ (gallery)
 data/docs/               JDs and reference documents (fake samples in git)
-scripts/  1-build-wheels.ps1, 2-install-offline.ps1, make-usb.ps1, run-server.bat
+sql/                     01_dev_server_tables.sql (dev only), 02_agent_memory.sql (dev + server, run by a DBA),
+                         03_recommended_indexes.sql (optional request to the table owner)
+data/reference/          application_statuses.csv (status code -> stage, order, open for matching; placeholder)
+docs/schema/             db_structure_server.txt (the server table structure as supplied)
+scripts/  1-build-wheels.ps1, 2-install-offline.ps1, make-usb.ps1, run-server.bat, seed_dev_db.py (dev only)
 tests/   unit tests, e2e agent tests, mock_llm.py
 ```
 
 ## Core rules
 
-1. **The DB schema is fixed.** Use only the tables and columns in `docs/DATA_MODEL.md`. Never create, alter, or drop tables, and never add columns. If a feature needs data that is not in the schema, stop and ask. The app writes only to `AgentMemory`; every other table is read-only.
+1. **The server tables are fixed.** Use only the `T_IIR_ARIF_*` tables and columns in `docs/DATA_DICTIONARY.md`; never alter them. The dev DB holds an exact copy (`sql/01_dev_server_tables.sql` + fake data from `scripts/seed_dev_db.py`). The app writes only to its own `T_IIR_ARIF_AGENT_MEMORY` (`sql/02_agent_memory.sql`). The user allows app-owned tables, but each one needs a `sql/` script, a DECISIONS entry and a DEPLOY-NOTES line. If a feature needs data that isn't in the server tables, stop and ask.
+   The app's `candidate_id` is `ARIF_ID` (`CANDIDATE_ID` is the unique ATS id). Use the **original** columns only; the `NORM_*` columns are not used (ADR-012). `NATIONAL_ID`, `GENDER` and `COUNTRY` (nationality) are never selected. `SAUDI_EXPAT` is only the requisition's hire-type filter (ADR-010). Names and text can be Arabic, so keep everything Unicode-safe.
+   The server holds 350k–500k candidates: pre-filter and cap in SQL, use set-based `IN (subquery)` rather than `OR` across tables, and re-time with a scaled-up dev DB after changing a query (ADR-014). Status codes map through `data/reference/application_statuses.csv` (ADR-013).
 2. **All SQL lives in `db/repository.py`**, parameterized (`?` placeholders). Never build SQL from strings that contain user or LLM input.
 3. **The LLM never invents the data shown in the UI.** Data tools return IDs and facts. `render_view` takes IDs plus a template, and the server hydrates the values from the DB.
 4. **Scoring is deterministic Python** (`services/scoring.py`) with a per-criterion breakdown. The LLM explains results and may adjust weights through tool arguments.

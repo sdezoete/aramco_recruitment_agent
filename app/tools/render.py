@@ -4,6 +4,7 @@ Block envelope (docs/RESPONSE_TEMPLATES.md): {template, title, data, actions}. b
 """
 from __future__ import annotations
 
+from app.db.repository import Repository
 from app.services import documents as docs
 from app.services.jobspec import describe
 from app.services.scoring import CRITERIA, band, rank
@@ -12,7 +13,7 @@ from app.tools.context import ToolContext, ToolError
 TEMPLATES = ("ranked_table", "candidate_cards", "candidate_profile", "comparison_matrix", "score_radar",
              "chart", "jd_card", "document_hits", "kpi_strip")
 CRITERION_LABELS = {"skills": "Skills", "experience": "Experience", "relevance": "Role relevance",
-                    "education": "Education", "certifications": "Certifications"}
+                    "education": "Education", "assessments": "Assessments"}
 
 
 def _ids(a: dict) -> list[int]:
@@ -69,6 +70,7 @@ def build(ctx: ToolContext, a: dict) -> dict:
             "criteria": [{"key": c, "label": CRITERION_LABELS[c]} for c in CRITERIA],
             "rows": [{"rank": n + 1, "candidate_id": r["candidate_id"], "full_name": r["full_name"],
                       "last_job_title": r.get("last_job_title"), "total_experience": r.get("total_experience"),
+                      "location": r.get("location"), "hire_type": r.get("hire_type"),
                       "score": r["score"], "band": band(r["score"]), "breakdown": r["breakdown"],
                       "matched_skills": r["matched_skills"], "missing_skills": r["missing_skills"],
                       "flags": r.get("flags", [])} for n, r in enumerate(rows)],
@@ -91,11 +93,12 @@ def build(ctx: ToolContext, a: dict) -> dict:
             if not p:
                 continue
             s = sl.get(i)
-            cards.append({"candidate_id": i, "full_name": p["full_name"], "last_job_title": p["last_job_title"],
-                          "last_company": p["last_company"], "location": p["location"],
+            cards.append({"candidate_id": i, "ats_id": p["ats_id"], "full_name": p["full_name"],
+                          "last_job_title": p["last_job_title"], "last_company": p["last_company"],
+                          "location": p["location"], "hire_type": p["hire_type"],
+                          "application_status": p["application_status"],
                           "total_experience": p["total_experience"], "highest_degree": p["highest_degree"],
-                          "primary_major": p["primary_major"], "skills": p["skills"],
-                          "certifications": p["certifications"], "summary": p["summary"],
+                          "primary_major": p["primary_major"], "skills": p["skills"], "summary": p["summary"],
                           "score": s["score"] if s else None, "band": band(s["score"]) if s else None,
                           "matched_skills": s["matched_skills"] if s else []})
         return {"template": t, "title": title, "data": {"cards": cards},
@@ -111,9 +114,11 @@ def build(ctx: ToolContext, a: dict) -> dict:
         scored = None
         if ctx.chat.job_spec:
             scored = rank(ctx.require_spec(), [p])[0]
-        data = {**{k: p[k] for k in ("candidate_id", "full_name", "location", "total_experience", "highest_degree",
-                                     "primary_major", "last_job_title", "last_company", "summary", "skills",
-                                     "experience", "education", "certifications")},
+        data = {**{k: p[k] for k in ("candidate_id", "ats_id", "full_name", "location", "hire_type",
+                                     "total_experience", "highest_degree", "primary_major", "gpa",
+                                     "last_job_title", "last_company", "application_status", "pipeline_stage",
+                                     "status_included", "job_req_id",
+                                     "summary", "skills", "experience", "education", "assessments")},
                 "score": scored["score"] if scored else None,
                 "band": band(scored["score"]) if scored else None,
                 "breakdown": scored["breakdown"] if scored else None,
@@ -145,8 +150,7 @@ def build(ctx: ToolContext, a: dict) -> dict:
             chart_type = opts.get("chart_type") or "bar"
         else:
             if not metric:
-                raise ToolError("chart needs metric: skill_supply, experience_distribution, degree_mix, "
-                                "major_mix, location_mix, certification_mix or shortlist_scores")
+                raise ToolError("chart needs metric: " + ", ".join(Repository.METRICS) + " or shortlist_scores")
             scope = ids or None
             if opts.get("scope") == "shortlist" and ctx.chat.shortlist:
                 scope = [r["candidate_id"] for r in ctx.chat.shortlist[:limit]]

@@ -23,7 +23,7 @@ The production model, DeepSeek 4.1 Flash on the air-gapped server, is reached th
 ## History policy
 
 - Within a turn, the assistant messages that carry `tool_calls`, and their tool results, are sent back so the model can continue the chain.
-- When a turn ends with a final answer, only the **user message and final answer text** stay in the chat history. The tool-call chain and all analysis are dropped. Facts the next turn needs (the active job spec and the shortlist) live in `AgentMemory` and are reached through tools.
+- When a turn ends with a final answer, only the **user message and final answer text** stay in the chat history. The tool-call chain and all analysis are dropped. Facts the next turn needs (the active job spec and the shortlist) live in `T_IIR_ARIF_AGENT_MEMORY` and are reached through tools.
 
 ## Robustness: the gateway's behaviour is not assumed
 

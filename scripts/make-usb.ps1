@@ -14,7 +14,8 @@ $ErrorActionPreference = 'Stop'
 $root    = Split-Path -Parent $PSScriptRoot
 $appName = 'recruitment-agent'
 $exclude = @('^\.env$', '^\.venv/', '^wheels/', '^usb_', '^logs/', '^certs/', '^work/', '^data/private/',
-             '^docs_other_project/', '^\.claude/')
+             '^docs_other_project/', '^\.claude/',
+             '^scripts/seed_dev_db\.py$', '^sql/01_dev_')   # dev-only: fake data + dev copy of server tables
 
 # Version
 $init = Get-Content (Join-Path $root 'app\__init__.py') -Raw

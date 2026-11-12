@@ -12,4 +12,10 @@ The release package contains **no `.env`**. When a release needs a setting added
 
 **Server prerequisites:** Python 3.11 x64, and ODBC Driver 17 or 18 for SQL Server.
 
+**Database (once, by a DBA):** run `sql\02_agent_memory.sql` in the database that holds the `T_IIR_ARIF_*` tables. It creates the app's own table `T_IIR_ARIF_AGENT_MEMORY` (idempotent). Grant the app login `SELECT` on `T_IIR_ARIF_CANDIDATE`, `T_IIR_ARIF_EDUCATION`, `T_IIR_ARIF_EXPERIENCE` and `T_IIR_ARIF_SKILLS`, plus `SELECT, INSERT, UPDATE, DELETE` on `T_IIR_ARIF_AGENT_MEMORY`. `/api/health` shows `db.memory_table: true` when the table is there.
+
+**Optional (recommended at 350k+ candidates):** ask the owner of the `T_IIR_ARIF_*` tables to run `sql\03_recommended_indexes.sql`. The app works without it.
+
+**Reference data:** `data\reference\application_statuses.csv` maps status codes to stages and to "open for matching". The shipped file is a placeholder; replace it with the real list (same columns) and restart the app.
+
 **What changed:** initial release.

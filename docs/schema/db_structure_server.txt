@@ -1,0 +1,131 @@
+schema table      pos         column type       nullable identity pk           references          default
+
+dbo        T_IIR_ARIF_CANDIDATE 1              ARIF_ID int           NO         IDENTITY              PK                          
+
+dbo        T_IIR_ARIF_CANDIDATE 2              CANDIDATE_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 3              GIVENNAME      nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 4              MIDDLENAME   nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 5              SURNAME           nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 6              CREATED_ON    date       YES                                                         (getdate())
+
+dbo        T_IIR_ARIF_CANDIDATE 7              CURRENT_EMPLOYER    nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 8              CURRENT_JOB_TITLE     nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 9              YEARS_OF_EXPERIENCE nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 10           COUNTRY            nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 11           NATIONAL_ID   nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 12           SAUDI_EXPAT    nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 13           GPA       nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 14           LAST_MODIFIED               date       YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 15           SOURCE_OF_APPLICATION          nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 16           GENDER               nvarchar(30)      YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 17           HIGHEST_JOB_REQ_ID  nvarchar(255)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 18           HIGHEST_APPLICATION_ID          nvarchar(255)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 19           HIGHEST_APPLICATION_STATUS               nvarchar(255)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 20           APPLICATION_STATUS_CODE     int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 21           RESUME_UPLOADED     int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 22           RESUME_DATE date       YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 23           RESUME_FILE_TYPE        nvarchar(30)      YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 24           RESUME_PROCESSED    int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 25           EDUCATION_EXTRACTED              int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 26           EXPERIENCE_EXTRACTED             int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 27           SKILLS_EXTRACTED         int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 28           SUMMARY_EXTRACTED int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 29           WILD_SEARCH_EXTRACTED         int           YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 30           CANDIDATE_FLAG           nvarchar(255)    YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 31           INDREASON       nvarchar(30)      YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 32           NUMREASON    nvarchar(30)      YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 33           VERBREASON    nvarchar(30)      YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 34           SUMMARY          nvarchar(max)  YES                                                        
+
+dbo        T_IIR_ARIF_CANDIDATE 35           TEXT_TOKENS   nvarchar(max)  YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 1              SCHOOL_ID        int           NO         IDENTITY              PK                          
+
+dbo        T_IIR_ARIF_EDUCATION 2              ARIF_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 3              CANDIDATE_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 4              DEGREE nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 5              MAJOR nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 6              INSTITUTION     nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 7              STARTDATE         nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 8              ENDDATE             nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 9              NORM_DEGREE nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 10           NORM_INSTITUTION      nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 11           NORM_STARTDATE        date       YES                                                        
+
+dbo        T_IIR_ARIF_EDUCATION 12           NORM_ENDDATE            date       YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 1              JOB_ID int           NO         IDENTITY              PK                          
+
+dbo        T_IIR_ARIF_EXPERIENCE 2              ARIF_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 3              CANDIDATE_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 4              TITLE      nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 5              EMPLOYER          nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 6              STARTDATE         nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 7              ENDDATE             nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 8              COUNTRY            nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 9              YEARS_OF_EXPERIENCE int           YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 10           NORM_TITLE     nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 11           NORM_EMPLOYER          nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 12           NORM_STARTDATE        date       YES                                                        
+
+dbo        T_IIR_ARIF_EXPERIENCE 13           NORM_ENDDATE            date       YES                                                        
+
+dbo        T_IIR_ARIF_SKILLS           1              SKILL_ID               int           NO         IDENTITY              PK                          
+
+dbo        T_IIR_ARIF_SKILLS           2              ARIF_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_SKILLS           3              CANDIDATE_ID int           NO                                                        
+
+dbo        T_IIR_ARIF_SKILLS           4              ORG_SKILL          nvarchar(300)    YES                                                        
+
+dbo        T_IIR_ARIF_SKILLS           5              NORM_SKILL     nvarchar(300)    YES           

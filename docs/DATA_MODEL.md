@@ -1,97 +1,54 @@
 # Data Model
 
-**The schema is supplied by the user and is fixed.** Never create, alter, or drop tables or columns. If a feature needs data that isn't here, ask the user. Update this file only when the user supplies a schema change.
+**Tables:** see [DATA_DICTIONARY.md](DATA_DICTIONARY.md), which is authoritative. The app reads the server's `T_IIR_ARIF_*` tables (read-only, structure fixed) and writes only to its own `T_IIR_ARIF_AGENT_MEMORY`. Never alter the `T_IIR_ARIF_*` data tables. New app-owned tables need a script in `sql/` and a DECISIONS entry.
 
-- Engine: Microsoft SQL Server. Dev uses SQL Server 2022 Developer at `localhost` (default instance), database `recruitment`, Windows authentication, ODBC Driver 17 for SQL Server.
-- Access: `pyodbc` with parameterized SQL in `app/db/repository.py` only.
-- Schema snapshot below was read from the dev DB on 2026-11-11. **Pending:** the user is supplying the authoritative table structure. Reconcile this file against it when it arrives.
+- Engine: Microsoft SQL Server. Dev: SQL Server 2022 Developer at `localhost`, database `recruitment`, Windows auth, ODBC Driver 17. The dev DB holds an exact copy of the server tables (`sql/01_dev_server_tables.sql`) with fake data (`scripts/seed_dev_db.py`).
+- Access: `pyodbc`, with parameterized SQL in `app/db/repository.py` only.
 
-## Tables (schema `dbo`)
+## Candidate profile (what the repository returns)
 
-### Candidate
-| column | type | null | notes |
-|---|---|---|---|
-| candidate_id | int | NO | **PK** |
-| full_name | nvarchar(255) | YES | |
-| location | nvarchar(100) | YES | |
-| total_experience | float | YES | years |
-| highest_degree | nvarchar(100) | YES | free text (e.g. "BSc", "Master") |
-| primary_major | nvarchar(100) | YES | |
-| last_job_title | nvarchar(100) | YES | |
-| last_company | nvarchar(100) | YES | |
-| summary | nvarchar(max) | YES | free text |
+`Repository.profiles(ids)` assembles one dict per candidate from the four tables. Tools, scoring and rendering use only this shape, never raw columns.
 
-### Skill
-| column | type | null | notes |
-|---|---|---|---|
-| skill_id | int | NO | **PK** |
-| skill_name | nvarchar(100) | YES | **UNIQUE** |
+| key | source |
+|---|---|
+| `candidate_id` | `ARIF_ID` |
+| `ats_id` | `CANDIDATE_ID` (unique; `get_candidate_profile` accepts it) |
+| `full_name` | `GIVENNAME MIDDLENAME SURNAME` (may be Arabic) |
+| `last_job_title`, `last_company` | `CURRENT_JOB_TITLE`, `CURRENT_EMPLOYER` |
+| `total_experience` | `YEARS_OF_EXPERIENCE` parsed as a number; falls back to the sum of the experience rows |
+| `location` | `CANDIDATE_FLAG` (AOC, ASC, …) |
+| `hire_type` | `SAUDI_EXPAT` (`Saudi` / `Expat`), used only as a filter |
+| `gpa` | `GPA` parsed as a number on the 1–4 scale (null when out of range) |
+| `source`, `application_status`, `status_code`, `job_req_id` | `SOURCE_OF_APPLICATION`, `HIGHEST_APPLICATION_STATUS`, `APPLICATION_STATUS_CODE`, `HIGHEST_JOB_REQ_ID` |
+| `pipeline_stage`, `status_included` | from `data/reference/application_statuses.csv` by status code |
+| `assessments` | `{inductive: INDREASON, numerical: NUMREASON, verbal: VERBREASON}`, each 0–100 or null |
+| `summary` | `SUMMARY` |
+| `skills[]` | `ORG_SKILL` grouped by canonical form, shown with the vocabulary's display spelling |
+| `experience[]` | `{job_title, company, location (work country), years_experience, start, end, current}` (original columns), current job first, then by parsed date |
+| `education[]` | `{degree, level (0–4, from the DEGREE text), major, institute, start, end}`, newest first |
+| `highest_degree`, `primary_major` | the education row with the highest level |
 
-### CandidateSkill
-| column | type | null | notes |
-|---|---|---|---|
-| candidate_id | int | NO | **PK**, FK → Candidate.candidate_id |
-| skill_id | int | NO | **PK**, FK → Skill.skill_id |
-
-Has no proficiency level or years: a skill is either present or absent.
-
-### Experience
-| column | type | null | notes |
-|---|---|---|---|
-| experience_id | int | NO | **PK** |
-| candidate_id | int | YES | FK → Candidate |
-| job_title | nvarchar(255) | YES | |
-| company | nvarchar(255) | YES | |
-| location | nvarchar(100) | YES | |
-| years_experience | float | YES | years in this role |
-
-### Education
-| column | type | null | notes |
-|---|---|---|---|
-| education_id | int | NO | **PK** |
-| candidate_id | int | YES | FK → Candidate |
-| institute | nvarchar(255) | YES | |
-| major | nvarchar(100) | YES | |
-| degree | nvarchar(100) | YES | |
-| gpa | nvarchar(10) | YES | text; parse defensively (e.g. "3.6/4", "4.2/5") |
-
-### Certification
-| column | type | null | notes |
-|---|---|---|---|
-| certification_id | int | NO | **PK** |
-| candidate_id | int | YES | FK → Candidate |
-| name | nvarchar(255) | YES | |
-
-### AgentMemory (the only table the app writes to)
-| column | type | null | notes |
-|---|---|---|---|
-| chat_id | nvarchar(50) | NO | **PK** (with key) |
-| key | nvarchar(100) | NO | **PK**. `key` is a reserved word in T-SQL, so always quote it as `[key]` |
-| value | nvarchar(max) | NO | JSON text |
-| updated_at | datetime | YES | |
-
-Used for conversation state and preferences per chat (for example the active JD or the last shortlist). Upsert with `MERGE` or `UPDATE … IF @@ROWCOUNT = 0 INSERT`.
-
-Dev row counts on 2026-11-11: Candidate 10, Skill 10, CandidateSkill 26, Experience 10, Education 10, Certification 10, AgentMemory 17.
-
-## Not in the DB
-
-- **Jobs and JDs** have no table. JDs come from documents in `data/docs/` or from text the user pastes or uploads (see TOOLS.md). Requirements are extracted from a JD into a structured *JobSpec* in memory, which can be stored in `AgentMemory` for the chat.
-- Applications and pipeline stages have no table either, so pipeline analytics are limited to the candidate pool (skill supply, experience and degree distribution).
+Never in a profile: `NATIONAL_ID`, `GENDER`, `COUNTRY` (nationality), `TEXT_TOKENS`, or any `NORM_*` column (not used, ADR-012).
 
 ## Scoring model (`services/scoring.py`)
 
-Inputs are a **JobSpec** and candidate rows. A JobSpec is: `required_skills[]`, `preferred_skills[]`, `min_years`, `degrees[]`, `majors[]`, `certifications[]`, `title_keywords[]` and `weights`.
+A **JobSpec** holds `title`, `required_skills[]`, `preferred_skills[]`, `min_years`, `degree_level`, `min_gpa` (1–4; below it adds a `below_min_gpa` flag, not an exclusion), `majors[]`, `title_keywords[]`, `weights`, and two **hard filters**: `hire_type` (Saudi / Expat / none) and `locations[]`.
+
+**Hard filters run first.** Hire type, location, the statuses marked not open for matching in `application_statuses.csv` (unless `include_all_statuses`), and the optional `exclude_statuses` are applied in SQL when building the pool. They never contribute to a score: two candidates with the same job-related profile get the same score, whatever their hire type (ADR-010). Candidates passed explicitly by id are still scored and get a `hire_type_mismatch` / `location_mismatch` flag.
 
 | criterion | default weight | computation (each scored 0–1) |
 |---|---:|---|
-| skills | 0.40 | matched required skills / required count (via CandidateSkill→Skill.skill_name, normalized), plus a bonus of up to 0.1 for preferred skills, capped at 1 |
-| experience | 0.25 | `min(total_experience / min_years, 1.0)`; 1.0 when `min_years` is 0 |
-| relevance | 0.15 | overlap of title keywords with `last_job_title` and `Experience.job_title`, weighted by `years_experience` |
-| education | 0.10 | degree level meets or exceeds the requirement, plus major matches `primary_major` / `Education.major` |
-| certifications | 0.10 | coverage of the required certifications (fuzzy name match on `Certification.name`) |
+| skills | 0.40 | matched required skills / required count (canonical match against `ORG_SKILL`), plus a bonus of up to 0.1 for preferred skills, capped at 1 |
+| experience | 0.25 | `min(total_experience / min_years, 1.0)`; 1.0 when `min_years` is 0 (0.5 when the candidate has no experience) |
+| relevance | 0.15 | overlap of title keywords with the current title and with `TITLE` of each position, weighted by its years |
+| education | 0.10 | degree level from `DEGREE` meets the requirement (one level below scores 0.5), plus a fuzzy major match on `MAJOR` |
+| assessments | 0.10 | mean of the available reasoning scores / 100. **None on file → 0.5 (neutral)** with a `no_assessment` flag |
 
-- Skill and certification names are normalized for matching: case-folded, punctuation stripped, with a small alias map in code (for example "ms excel" → "excel").
-- A missing required skill adds a `missing_must_have` flag. The candidate is not excluded by default.
-- Weights can be overridden by the tool argument and are normalized to sum to 1.
-- Output always includes the breakdown, `matched_skills` and `missing_skills`.
+- Names are normalized for matching: Unicode-aware case folding and punctuation stripping, plus a small alias map (for example "ms excel" → "excel"). Arabic text survives normalization.
+- A missing must-have skill adds a `missing_must_have` flag; the candidate is not excluded.
+- Weights can be overridden through tool arguments and are normalized to sum to 1. Unknown keys (such as `certifications` from older saved specs) are ignored.
+- Output always includes the breakdown, `matched_skills`, `missing_skills` and `flags`.
+
+## Pool selection (`match_candidates`)
+
+The pool is the candidates that have any spec skill and pass the hard filters, capped at `MATCH_MAX_POOL` (2000) in SQL and ordered by the number of matching skills, then years of experience. At 350k–500k candidates the pool is never loaded unfiltered (performance notes in DATA_DICTIONARY.md). When fewer than 50 match, all eligible candidates (up to the cap) are scored too, so near-misses still show.

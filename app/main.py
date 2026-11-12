@@ -22,6 +22,7 @@ from app.agent.loop import run_turn
 from app.config import ROOT, get_settings
 from app.db.connection import connect
 from app.db.repository import Repository
+from app.services.scoring import CRITERIA
 from app.llm.client import LLMClient
 from app.tools.context import ChatState
 
@@ -75,7 +76,8 @@ async def _check_db() -> dict:
             conn.close()
     try:
         info = await asyncio.to_thread(ping)
-        state.db_status = {"reachable": True, "database": info["db"], "candidates": info["candidates"]}
+        state.db_status = {"reachable": True, "database": info["db"], "candidates": info["candidates"],
+                           "memory_table": bool(info["memory_table"])}
     except Exception as e:
         state.db_status = {"reachable": False, "detail": f"{type(e).__name__}: {str(e)[:200]}"}
     return state.db_status
@@ -235,6 +237,7 @@ async def dev_sample_blocks(doc_id: str = "jd_senior_data_scientist"):
                 {"template": "chart", "title": "Skill supply (pool)", "metric": "skill_supply"},
                 {"template": "chart", "title": "Shortlist scores", "metric": "shortlist_scores"},
                 {"template": "chart", "title": "Degree mix", "metric": "degree_mix"},
+                {"template": "chart", "title": "Application status (furthest reached)", "metric": "status_mix"},
                 {"template": "document_hits", "title": "Documents"},
             ]
             for v in views:
@@ -275,12 +278,12 @@ async def export_shortlist(chat_id: str):
         raise HTTPException(404, "no shortlist for this chat yet")
     buf = io.StringIO()
     w = csv.writer(buf)
-    w.writerow(["rank", "candidate_id", "full_name", "score", "skills", "experience", "relevance", "education",
-                "certifications", "matched_skills", "missing_skills", "flags"])
+    w.writerow(["rank", "arif_id", "ats_candidate_id", "full_name", "location", "hire_type", "score",
+                *CRITERIA, "matched_skills", "missing_skills", "flags"])
     for n, r in enumerate(st.shortlist, 1):
         b = r["breakdown"]
-        w.writerow([n, r["candidate_id"], r["full_name"], r["score"], b["skills"], b["experience"], b["relevance"],
-                    b["education"], b["certifications"], "; ".join(r["matched_skills"]),
+        w.writerow([n, r["candidate_id"], r.get("ats_id"), r["full_name"], r.get("location"), r.get("hire_type"),
+                    r["score"], *(b.get(c) for c in CRITERIA), "; ".join(r["matched_skills"]),
                     "; ".join(r["missing_skills"]), "; ".join(r.get("flags", []))])
     return Response(buf.getvalue().encode("utf-8-sig"), media_type="text/csv",
                     headers={"Content-Disposition": 'attachment; filename="shortlist.csv"'})

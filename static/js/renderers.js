@@ -24,9 +24,14 @@ function skillChips(all, matched = [], missing = []) {
   return h("div", { class: "chips" }, chips);
 }
 
+const FLAG_TEXT = {
+  below_min_years: "Below minimum years", no_assessment: "No assessment scores",
+  hire_type_mismatch: "Hire type differs from requisition", location_mismatch: "Other location",
+  status_not_open: "Status not open for matching", below_min_gpa: "Below minimum GPA",
+};
+
 function flagChips(flags = []) {
-  const text = (f) => f.startsWith("missing_must_have:") ? `Missing must-have: ${f.split(":")[1]}`
-    : f === "below_min_years" ? "Below minimum years" : f;
+  const text = (f) => f.startsWith("missing_must_have:") ? `Missing must-have: ${f.split(":")[1]}` : (FLAG_TEXT[f] || f);
   return flags.length ? h("div", { class: "chips" }, flags.map((f) => h("span", { class: "chip flag" }, "⚠ " + text(f)))) : null;
 }
 
@@ -61,8 +66,8 @@ R.ranked_table = (b, ctx) => {
       onkeydown: (e) => { if (e.key === "Enter") ctx.ask(`Show the full profile of ${r.full_name} (#${r.candidate_id})`); },
     },
       h("td", null, h("div", { class: "rank" + (r.rank === 1 ? " r1" : "") }, r.rank)),
-      h("td", { class: "who" }, h("b", null, r.full_name), h("small", null,
-        [r.last_job_title, fmtYears(r.total_experience)].filter(Boolean).join(" · "))),
+      h("td", { class: "who" }, h("b", { dir: "auto" }, r.full_name), h("small", { dir: "auto" },
+        [r.last_job_title, fmtYears(r.total_experience), r.location].filter(Boolean).join(" · "))),
       h("td", null, h("div", { class: "score-cell" }, ring(r.score), h("span", { class: "band" }, r.band))),
       h("td", null, miniBars(r.breakdown, crit)),
       h("td", null, skillChips([], r.matched_skills, r.missing_skills), flagChips(r.flags))))));
@@ -73,42 +78,60 @@ R.candidate_cards = (b, ctx) => ({
   body: h("div", { class: "cards" }, b.data.cards.map((c) => h("article", { class: "card" },
     h("div", { class: "card-top" },
       h("div", { class: "initials", "aria-hidden": "true" }, initials(c.full_name)),
-      h("div", { class: "grow" }, h("div", { class: "card-name" }, c.full_name),
-        h("div", { class: "card-sub" }, [c.last_job_title, c.last_company].filter(Boolean).join(" @ "))),
+      h("div", { class: "grow" }, h("div", { class: "card-name", dir: "auto" }, c.full_name),
+        h("div", { class: "card-sub", dir: "auto" }, [c.last_job_title, c.last_company].filter(Boolean).join(" @ "))),
       c.score !== null && c.score !== undefined ? ring(c.score) : null),
     h("div", { class: "card-meta" },
       c.location ? h("span", null, "📍 ", c.location) : null,
+      c.hire_type ? h("span", null, c.hire_type) : null,
       h("span", null, "⏱ ", fmtYears(c.total_experience)),
-      c.highest_degree ? h("span", null, "🎓 ", [c.highest_degree, c.primary_major].filter(Boolean).join(", ")) : null),
-    c.summary ? h("p", { class: "card-summary" }, c.summary) : null,
+      c.highest_degree ? h("span", { dir: "auto" }, "🎓 ", [c.highest_degree, c.primary_major].filter(Boolean).join(", ")) : null,
+      c.application_status ? h("span", null, "Status: ", c.application_status) : null),
+    c.summary ? h("p", { class: "card-summary", dir: "auto" }, c.summary) : null,
     skillChips(c.skills.filter((s) => !(c.matched_skills || []).includes(s)), c.matched_skills || []),
     h("button", { class: "btn", type: "button", onclick: () => ctx.ask(`Show the full profile of ${c.full_name} (#${c.candidate_id})`) },
       "View profile")))),
 });
 
+const ASSESS = [["inductive", "Inductive reasoning"], ["numerical", "Numerical reasoning"], ["verbal", "Verbal reasoning"]];
+
+function assessmentRows(a = {}) {
+  const have = ASSESS.filter(([k]) => typeof a[k] === "number");
+  if (!have.length) return h("p", { class: "muted" }, "No assessment scores on file.");
+  return ASSESS.map(([k, label]) => h("div", { class: "bar-row" },
+    h("span", null, label),
+    h("div", { class: "bar-track" }, typeof a[k] === "number" ? h("i", { style: { width: `${a[k]}%` } }) : null),
+    h("span", { class: "val" }, typeof a[k] === "number" ? String(a[k]) : "–")));
+}
+
 R.candidate_profile = (b) => {
   const p = b.data;
   const head = h("div", { class: "profile-head" },
     p.score !== null && p.score !== undefined ? ring(p.score, true) : h("div", { class: "initials" }, initials(p.full_name)),
-    h("div", null, h("h3", null, p.full_name),
-      h("div", { class: "card-sub" }, [p.last_job_title, p.last_company, p.location].filter(Boolean).join(" · ")),
+    h("div", null, h("h3", { dir: "auto" }, p.full_name),
+      h("div", { class: "card-sub", dir: "auto" }, [p.last_job_title, p.last_company].filter(Boolean).join(" · ")),
       h("div", { class: "card-meta" }, h("span", null, fmtYears(p.total_experience)),
-        p.highest_degree ? h("span", null, [p.highest_degree, p.primary_major].filter(Boolean).join(", ")) : null,
+        p.highest_degree ? h("span", { dir: "auto" }, [p.highest_degree, p.primary_major].filter(Boolean).join(", ")) : null,
+        p.location ? h("span", null, "📍 ", p.location) : null,
+        p.hire_type ? h("span", null, p.hire_type) : null,
+        p.application_status ? h("span", null, "Status: ", p.application_status, p.pipeline_stage ? ` (${p.pipeline_stage})` : "") : null,
+        p.ats_id ? h("span", { class: "muted" }, `ATS ${p.ats_id}`) : null,
         p.band ? h("span", { class: "band" }, p.band + " match") : null)));
   const left = h("div", null,
-    p.summary ? h("p", { class: "card-summary" }, p.summary) : null,
+    p.summary ? h("p", { class: "card-summary", dir: "auto" }, p.summary) : null,
     h("h4", null, "Skills"), skillChips(p.skills.filter((s) => !p.matched_skills.includes(s)), p.matched_skills, p.missing_skills),
     p.breakdown ? [h("h4", { style: { marginTop: "14px" } }, "Fit for the active job"), barRows(p.breakdown, p.criteria)] : null);
   const right = h("div", null,
     h("h4", null, "Experience"),
     p.experience.length ? h("ul", { class: "timeline" }, p.experience.map((e) => h("li", null,
-      h("b", null, e.job_title || "Role"), h("small", null,
-        [e.company, e.location, fmtYears(e.years_experience)].filter(Boolean).join(" · "))))) : h("p", { class: "muted" }, "No experience records."),
+      h("b", { dir: "auto" }, e.job_title || "Role"), h("small", { dir: "auto" },
+        [e.company, e.location, [e.start, e.end].filter(Boolean).join(" – "), fmtYears(e.years_experience)].filter(Boolean).join(" · "))))) : h("p", { class: "muted" }, "No experience records."),
     h("h4", { style: { marginTop: "14px" } }, "Education"),
     p.education.length ? h("ul", { class: "plain-list" }, p.education.map((e) =>
-      h("li", null, [e.degree, e.major].filter(Boolean).join(", "), e.institute ? ` · ${e.institute}` : "", e.gpa ? ` · GPA ${e.gpa}` : ""))) : h("p", { class: "muted" }, "None recorded."),
-    h("h4", { style: { marginTop: "14px" } }, "Certifications"),
-    p.certifications.length ? h("ul", { class: "plain-list" }, p.certifications.map((c) => h("li", null, c))) : h("p", { class: "muted" }, "None recorded."));
+      h("li", { dir: "auto" }, [e.degree, e.major].filter(Boolean).join(", "), e.institute ? ` · ${e.institute}` : "", e.end ? ` · ${e.end}` : ""))) : h("p", { class: "muted" }, "None recorded."),
+    p.gpa ? h("p", { class: "muted" }, `GPA ${Number(p.gpa).toFixed(2)} / 4`) : null,
+    h("h4", { style: { marginTop: "14px" } }, "Assessments (0–100)"),
+    assessmentRows(p.assessments));
   return { body: [head, h("div", { class: "profile-grid" }, left, right)] };
 };
 
@@ -120,7 +143,7 @@ R.comparison_matrix = (b) => {
     h("div", { class: "cell-val" }, h("div", { class: "bar-track" }, h("i", { style: { width: `${pct(v)}%` } })),
       h("span", null, `${pct(v)}%`), isBest ? h("span", { class: "sr-only" }, "(best)") : null));
   const table = h("table", { class: "matrix" },
-    h("thead", null, h("tr", null, h("th", null, ""), candidates.map((c) => h("th", null, c.full_name, h("div", { class: "band" }, `#${c.candidate_id}`))))),
+    h("thead", null, h("tr", null, h("th", null, ""), candidates.map((c) => h("th", { dir: "auto" }, c.full_name, h("div", { class: "band" }, `#${c.candidate_id}`))))),
     h("tbody", null,
       h("tr", null, h("th", null, "Overall score"), candidates.map((c) => h("td", null, h("div", { class: "score-cell" }, ring(c.score), h("span", { class: "band" }, c.band))))),
       criteria.map((cr) => h("tr", null, h("th", null, cr.label),
@@ -161,11 +184,13 @@ R.jd_card = (b) => {
     : null;
   const weights = Object.entries(d.weights || {}).map(([k, v]) => ({ key: k, label: k[0].toUpperCase() + k.slice(1) }));
   return { body: [
-    h("div", { class: "jd-grid" }, fact("Role", d.title || "–"), fact("Minimum experience", d.min_years ? `${d.min_years} yrs` : "Any"), fact("Minimum degree", d.degree || "Any")),
+    h("div", { class: "jd-grid" }, fact("Role", d.title || "–"), fact("Minimum experience", d.min_years ? `${d.min_years} yrs` : "Any"),
+      fact("Minimum degree", d.degree || "Any"), fact("Hire type", d.hire_type_label || "Any"),
+      d.min_gpa ? fact("Minimum GPA", `${d.min_gpa} / 4`) : null,
+      fact("Locations", d.locations && d.locations.length ? d.locations.join(", ") : "Any")),
     section("Required skills", d.required_skills, "hit"),
     section("Preferred skills", d.preferred_skills),
     section("Majors", d.majors),
-    section("Certifications", d.certifications),
     section("Not in candidate data (can't be scored)", d.unmapped_skills, "miss"),
     h("div", { class: "jd-section" }, h("h4", null, "Scoring weights"), barRows(d.weights || {}, weights)),
     d.doc_title ? h("p", { class: "muted" }, `Source: ${d.doc_title}`) : null,

@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Status (2026-11-11)
-The first working version is built: backend, harmony-aware LLM client, tools, scoring, the full frontend, and the dev gallery. 19 tests pass, including e2e agent turns against the local DB in all three gateway modes. OpenAI is configured as the dev LLM, but the machine's `OPENAI_API_KEY` is rejected (`invalid_api_key`), so a valid key must go in `.env`. Version `0.1.0` (not released).
+The first working version is built: backend, harmony-aware LLM client, tools, scoring, the full frontend, and the dev gallery. On 2026-11-11 the app moved to the server table structure (T_IIR_ARIF_*, ADR-009 to ADR-011); the dev DB holds an exact copy with 400 fake candidates (part Arabic). 31 tests pass, including e2e agent turns in all three gateway modes. OpenAI is configured as the dev LLM, but the machine's `OPENAI_API_KEY` is rejected (`invalid_api_key`), so a valid key must go in `.env`. Version `0.1.0` (not released).
 
 ## Phase 0: Pipeline
 - [x] AIRGAP_DEPLOYMENT_STANDARD, DEPLOY.md, DEPLOY-NOTES.md
@@ -35,8 +35,8 @@ The first working version is built: backend, harmony-aware LLM client, tools, sc
 - [ ] First release `usb_0_1_0`
 
 ## Open questions
-1. **Authoritative table structure:** the user is supplying it. DATA_MODEL.md currently mirrors the local `recruitment` DB. Is that DB the final structure?
-2. **Prod DB connection:** server name or instance, Windows vs SQL authentication, and a read-only login (plus write access on `AgentMemory` only)? Is ODBC Driver 17 or 18 installed on the server?
+1. ~~Authoritative table structure~~: received 2026-11-11 (`T_IIR_ARIF_*`, see DATA_DICTIONARY.md). Field questions answered the same day; still open: the real status list (Q9b, placeholder CSV in use) and the full location list (Q17).
+2. **Prod DB connection:** server name or instance, Windows vs SQL authentication, and a login with read access on `T_IIR_ARIF_*` plus read/write on `T_IIR_ARIF_AGENT_MEMORY` only? Who runs `sql/02_agent_memory.sql`? Is ODBC Driver 17 or 18 installed on the server?
 3. ~~Dev LLM endpoint~~: OpenAI (decided 2026-11-11). It needs a valid key in `.env`.
 4. **Gateway capabilities:** does the MaaS model support `tools` (function calling) and `stream`? The design falls back if not, but native support is much better. What is the exact model id of DeepSeek 4.1 Flash on the gateway?
 5. **JD source:** files in `data/docs/` only, or also another system?

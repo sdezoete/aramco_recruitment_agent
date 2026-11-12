@@ -1,0 +1,33 @@
+code,status,stage,stage_order,include_in_matching
+100,New Application,Applied,1,Y
+101,Application Incomplete,Applied,1,Y
+102,Duplicate Application,Applied,1,N
+110,Resume Received,Applied,1,Y
+200,Pre-Screening,Screening,2,Y
+201,Screened - Qualified,Screening,2,Y
+202,Screened - Not Qualified,Screening,2,Y
+203,On Hold - Screening,Screening,2,Y
+210,Recruiter Review,Screening,2,Y
+300,Assessment Invited,Assessment,3,Y
+301,Assessment Completed,Assessment,3,Y
+302,Assessment Not Passed,Assessment,3,Y
+303,Assessment Expired,Assessment,3,Y
+400,Hiring Manager Review,Interview,4,Y
+401,Interview Scheduled,Interview,4,Y
+402,Interview Completed,Interview,4,Y
+403,Second Interview,Interview,4,Y
+404,Not Selected After Interview,Interview,4,Y
+500,Selected,Offer,5,Y
+501,Offer Preparation,Offer,5,N
+502,Offer Extended,Offer,5,N
+503,Offer Accepted,Offer,5,N
+504,Offer Declined,Offer,5,Y
+600,Pre-Employment Checks,Hiring,6,N
+601,Medical Clearance,Hiring,6,N
+602,Visa Processing,Hiring,6,N
+700,Hired,Hired,7,N
+701,Onboarding,Hired,7,N
+800,Withdrawn by Candidate,Closed,8,Y
+801,Rejected,Closed,8,Y
+802,Requisition Cancelled,Closed,8,Y
+803,Not Eligible for Rehire,Closed,8,N

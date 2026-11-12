@@ -22,7 +22,7 @@ Claude chooses a template through `render_view`. The server hydrates it into a *
 |---------------------|--------------------------------------------|----------------------|
 | `ranked_table`      | a shortlist with scores                    | `columns[]`, `rows[]: {candidate_id, name, score, breakdown, matched_skills, missing_skills}` |
 | `candidate_cards`   | 1 to 6 candidates shown visually           | `cards[]: {id, name, title, years, location, score?, top_skills[], highlights[]}` |
-| `candidate_profile` | full view of one candidate                 | profile sections (experience timeline, education, certs, skills with level bars) |
+| `candidate_profile` | full view of one candidate                 | header (location, hire type, status, ATS id), summary, skills, fit bars, experience timeline, education, assessment bars (0–100) |
 | `comparison_matrix` | head-to-head comparison                    | `criteria[]`, `candidates[]`, `cells[criterion][candidate] = {score, note}` |
 | `score_radar`       | visual comparison per criterion            | Chart.js radar: `labels[]`, `datasets[]: {label, data[]}` |
 | `chart`             | analytics (funnel, distribution, mix)      | `chart_type`, `labels[]`, `datasets[]` |

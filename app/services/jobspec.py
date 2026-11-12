@@ -12,20 +12,28 @@ from app.services.scoring import JobSpec
 _PREFERRED_HEADINGS = re.compile(r"(preferred|nice[\s-]to[\s-]have|desirable|bonus|plus)", re.I)
 _REQUIRED_HEADINGS = re.compile(r"(required|requirements|must[\s-]have|essential|qualifications|skills)", re.I)
 _YEARS = re.compile(r"(\d{1,2})\s*\+?\s*(?:-\s*\d{1,2}\s*)?(?:years|yrs)", re.I)
+_SAUDI_HIRE = re.compile(r"saudi\s+nationals?\s+only|open\s+to\s+saudi\s+nationals|saudi\s+hire|local\s+hire|"
+                         r"hire\s+type\s*:\s*saudi", re.I)
+_EXPAT_HIRE = re.compile(r"expat(?:riate)?\s+(?:hire|position|contract|only)|international\s+hire|"
+                         r"hire\s+type\s*:\s*expat", re.I)
 _TITLE_STOP = {"senior", "junior", "lead", "principal", "staff", "sr", "jr", "i", "ii", "iii"}
 
 
 def _mentions(text_norm: str, skill: str) -> bool:
     c = canonical(skill)
     variants = {c} | {a for a, target in ALIASES.items() if target == c}
-    return any(re.search(r"(?<![a-z0-9])" + re.escape(v) + r"(?![a-z0-9])", text_norm) for v in variants if v)
+    return any(re.search(r"(?<!\w)" + re.escape(v) + r"(?!\w)", text_norm) for v in variants if v)
 
 
 def map_skills(names: list[str], vocabulary: list[str]) -> tuple[list[str], list[str]]:
-    """Map free-text skill names onto vocabulary names. Returns (mapped, unmapped)."""
+    """Map free-text skill names onto vocabulary names. Returns (mapped, unmapped).
+    Exact canonical hits first (fast on a large vocabulary); fuzzy matching only for the rest."""
+    by_canon = {}
+    for v in vocabulary:
+        by_canon.setdefault(canonical(v), v)
     mapped, unmapped = [], []
     for n in names:
-        m = fuzzy_match(n, vocabulary, threshold=0.75)
+        m = by_canon.get(canonical(n)) or fuzzy_match(n, vocabulary, threshold=0.75)
         if m and m not in mapped:
             mapped.append(m)
         elif not m:
@@ -56,7 +64,14 @@ def extract(text: str, vocabulary: list[str], title: str | None = None) -> JobSp
     pref_text = zones["preferred"]
     req_norm, pref_norm = norm(" ".join(req_text)), norm(" ".join(pref_text))
 
-    for skill in vocabulary:
+    words = set(req_norm.split()) | set(pref_norm.split())
+    alias_first = {}
+    for a, target in ALIASES.items():
+        alias_first.setdefault(target, set()).add(a.split()[0])
+    for skill in vocabulary:  # cheap first-word check before the regex (vocabulary can be large)
+        c = canonical(skill)
+        if not c or not ({c.split()[0]} | alias_first.get(c, set())) & words:
+            continue
         if _mentions(req_norm, skill):
             spec.required_skills.append(skill)
         elif _mentions(pref_norm, skill):
@@ -75,8 +90,10 @@ def extract(text: str, vocabulary: list[str], title: str | None = None) -> JobSp
                 if 2 < len(part) < 40 and part.lower() not in ("a related field", "related field"):
                     spec.majors.append(part)
 
-    spec.certifications = [l.lstrip("-*• ").strip() for l in req_text
-                           if re.search(r"certif", l, re.I) and not l.startswith("#") and len(l) < 120][:5]
+    if _SAUDI_HIRE.search(text):
+        spec.hire_type = "Saudi"
+    elif _EXPAT_HIRE.search(text):
+        spec.hire_type = "Expat"
 
     words = [w for w in re.findall(r"[A-Za-z]+", spec.title) if w.lower() not in _TITLE_STOP]
     spec.title_keywords = [" ".join(words)] if words else []
@@ -86,4 +103,5 @@ def extract(text: str, vocabulary: list[str], title: str | None = None) -> JobSp
 def describe(spec: JobSpec) -> dict:
     d = spec.to_dict()
     d["degree"] = DEGREE_NAMES.get(spec.degree_level, "any")
+    d["hire_type_label"] = spec.hire_type or "Any (Saudi or Expat)"
     return d
