@@ -143,10 +143,15 @@ def load_settings(env_file: Path | None = None) -> Settings:
                 raise ValueError(f"Invalid value for {f.name}: {raw!r}") from None
         s.sources[f.name] = src
 
-    # Dev convenience: fall back to the machine's OPENAI_API_KEY for the local OpenAI stand-in.
-    if not s.PRODUCTION and not s.LLM_API_KEY and os.environ.get("OPENAI_API_KEY"):
-        s.LLM_API_KEY = os.environ["OPENAI_API_KEY"]
-        s.sources["LLM_API_KEY"] = "env OPENAI_API_KEY"
+    # Dev convenience: fall back to OPENAI_API_KEY for the local OpenAI stand-in.
+    # .env wins over the machine environment, as for every other key.
+    if not s.PRODUCTION and not s.LLM_API_KEY:
+        if file_vals.get("OPENAI_API_KEY", "").strip():
+            s.LLM_API_KEY = file_vals["OPENAI_API_KEY"].strip()
+            s.sources["LLM_API_KEY"] = ".env OPENAI_API_KEY"
+        elif os.environ.get("OPENAI_API_KEY", "").strip():
+            s.LLM_API_KEY = os.environ["OPENAI_API_KEY"].strip()
+            s.sources["LLM_API_KEY"] = "env OPENAI_API_KEY"
     return s
 
 
