@@ -51,6 +51,7 @@ Sets the chat's active JobSpec (see DATA_MODEL.md), saved in `T_IIR_ARIF_AGENT_M
 ### `compare_candidates`
 Side-by-side comparison of 2 to 6 candidates against the active JobSpec.
 - **parameters:** `candidate_ids: int[]` (uses the active spec)
+- **returns:** `job_title`, `criteria`, `best_per_criterion`, `candidates[]` (score, breakdown, matched/missing skills) and a `next` hint telling the model to call `render_view` with `comparison_matrix` instead of writing a table
 
 ## Analytics
 

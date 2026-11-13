@@ -236,7 +236,9 @@ def compare_candidates(ctx: ToolContext, a: dict) -> dict:
     best = {c: max(results, key=lambda r: r["breakdown"][c])["candidate_id"] for c in CRITERIA}
     return {"job_title": spec.title, "criteria": list(CRITERIA), "best_per_criterion": best,
             "candidates": [{k: r[k] for k in ("candidate_id", "full_name", "score", "breakdown",
-                                              "matched_skills", "missing_skills")} for r in results]}
+                                              "matched_skills", "missing_skills")} for r in results],
+            "next": "Call render_view with template comparison_matrix (or score_radar) and these candidate_ids "
+                    "to show the comparison; do not write a table or list scores in prose."}
 
 
 # ---------------------------------------------------------------------------------------- analytics

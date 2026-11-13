@@ -30,7 +30,7 @@ Claude chooses a template through `render_view`. The server hydrates it into a *
 | `document_hits`     | document search results                    | `hits[]: {doc_id, title, doc_type, snippet}` |
 | `kpi_strip`         | headline numbers                           | `kpis[]: {label, value, delta?}` |
 
-Plain chat text needs no template: Markdown in `text_delta` is rendered with a small, safe Markdown subset (bold, italics, lists, inline code, links). We do not use a raw-HTML Markdown renderer.
+Plain chat text needs no template: Markdown in `text_delta` is rendered with a small, safe Markdown subset (headings, bold, italics, lists, inline code, pipe tables; no links). Tables are a fallback only: the prompt tells the model to show candidate/score data through `render_view`, and `compare_candidates` returns a `next` hint pointing at `comparison_matrix`. We do not use a raw-HTML Markdown renderer.
 
 ## Implementation notes
 
