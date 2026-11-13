@@ -4,6 +4,7 @@ import { renderMarkdown } from "./markdown.js";
 import { postSSE } from "./sse.js";
 import { renderBlock } from "./renderers.js";
 import { refreshCharts, clearCharts } from "./charts.js";
+import { createProfilePanel } from "./panel.js";
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -38,6 +39,9 @@ let chatId = store.get("ra-chat-id") || newId();
 store.set("ra-chat-id", chatId);
 let busy = false;
 let controller = null;
+
+const panel = createProfilePanel({ app: els.app, scroller: els.scroller, getChatId: () => chatId, ask: (p) => ask(p) });
+const viewCtx = { ask: (p) => ask(p), openProfile: (ids, i, srcEls) => panel.open(ids, i, srcEls) };
 
 // ------------------------------------------------------------------ chat rendering
 function scrollToEnd(force = false) {
@@ -114,7 +118,7 @@ class AssistantMessage {
   }
   block(b) {
     this.tools = null;   // next tool calls start a new chip row below the block
-    this.body.appendChild(renderBlock(b, { ask }));
+    this.body.appendChild(renderBlock(b, viewCtx));
     if (b.template === "ranked_table") enableExport();
     if (b.template === "jd_card") setActiveJob(b.data.title, b.data);
   }
@@ -147,6 +151,7 @@ async function ask(text) {
   els.input.value = "";
   autosize();
   closeMenu();
+  panel.invalidate();   // this turn may change the active job, and so the scores in cached profiles
   addUser(text);
   const msg = new AssistantMessage();
   scrollToEnd(true);
@@ -175,6 +180,7 @@ async function ask(text) {
     msg.error(`Connection problem: ${e.message}`);
   } finally {
     msg.done();
+    panel.invalidate({ reload: true });
     busy = false;
     els.send.disabled = false;
     els.input.focus();
@@ -202,6 +208,8 @@ function buildSuggestions() {
 
 async function newChat() {
   if (controller) controller.abort();
+  panel.close();
+  panel.invalidate();
   try { await fetch("/api/chat/reset", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: chatId }) }); } catch (e) { /* offline */ }
   chatId = newId();
   store.set("ra-chat-id", chatId);

@@ -12,7 +12,7 @@ from collections import OrderedDict
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Path as PathParam, Query, Request
 from fastapi.responses import FileResponse, JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -24,7 +24,8 @@ from app.db.connection import connect
 from app.db.repository import Repository
 from app.services.scoring import CRITERIA
 from app.llm.client import LLMClient
-from app.tools.context import ChatState
+from app.tools import render
+from app.tools.context import ChatState, ToolContext, ToolError
 
 log = logging.getLogger("ra")
 STATIC = ROOT / "static"
@@ -197,6 +198,40 @@ async def chat(body: ChatIn, request: Request):
 
     return StreamingResponse(stream(), media_type="text/event-stream",
                              headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@app.get("/api/candidates/{candidate_id}/profile")
+async def candidate_profile(candidate_id: int = PathParam(gt=0, le=2_147_483_647),
+                            chat_id: str = Query(min_length=8, max_length=50)):
+    """Profile panel (ADR-015): the candidate_profile block, hydrated and scored by the server against the
+    chat's active job spec, without an LLM round trip. Read-only: no history, no memory writes."""
+    if not _CHAT_ID.match(chat_id):
+        raise HTTPException(400, "invalid chat_id")
+    st = state.chat(chat_id)
+
+    def build() -> dict:
+        conn = connect(state.settings)
+        try:
+            repo = Repository(conn)
+            st.load(repo)
+            ctx = ToolContext(repo=repo, settings=state.settings, chat=st)
+            return render.build(ctx, {"template": "candidate_profile", "title": "Profile",
+                                      "candidate_ids": [candidate_id]})
+        finally:
+            conn.close()
+
+    t0, outcome = time.time(), "ok"
+    try:
+        return await asyncio.to_thread(build)
+    except ToolError:
+        outcome = "not_found"
+        raise HTTPException(404, "candidate not found") from None
+    except Exception:
+        outcome = "error"
+        raise
+    finally:   # metadata only: no candidate id or name
+        _audit({"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "action": "profile_view",
+                "seconds": round(time.time() - t0, 2), "outcome": outcome})
 
 
 @app.get("/dev/gallery", include_in_schema=False)

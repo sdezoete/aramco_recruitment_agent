@@ -112,13 +112,15 @@ button, input, textarea { font: inherit; color: inherit; }
 .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
 /* ------------------------------------------------------------------ layout */
-.app { display: grid; grid-template-columns: 280px 1fr; height: 100vh; height: 100dvh; }
+/* One screen-high row: the chat (.scroller) and the profile panel each scroll on their own, so the page
+   itself never scrolls. Without the row size a long profile stretched the grid and the whole page scrolled. */
+.app { display: grid; grid-template-columns: 280px 1fr; grid-template-rows: minmax(0, 1fr); height: 100vh; height: 100dvh; overflow: hidden; }
 .sidebar {
   display: flex; flex-direction: column; gap: 20px;
   padding: 20px 16px; background: var(--surface-1); border-right: 1px solid var(--border);
   overflow-y: auto;
 }
-.main { display: flex; flex-direction: column; min-width: 0; height: 100%; }
+.main { display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; }
 
 .brand { display: flex; align-items: center; gap: 12px; padding: 0 4px; }
 .brand-logo { border-radius: 9px; box-shadow: var(--shadow-sm); }
@@ -190,7 +192,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .only-mobile { display: none; }
 
 /* ------------------------------------------------------------------ thread */
-.scroller { flex: 1; overflow-y: auto; scroll-behavior: smooth; }
+.scroller { flex: 1; min-height: 0; overflow-y: auto; scroll-behavior: smooth; }
 .thread { max-width: 980px; margin: 0 auto; padding: 28px 24px 40px; display: flex; flex-direction: column; gap: 28px; }
 
 .hero { position: relative; text-align: center; padding: 48px 0 8px; }
@@ -388,6 +390,45 @@ button, input, textarea { font: inherit; color: inherit; }
 .kpi { padding: 14px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); }
 .kpi small { display: block; font-size: 12px; color: var(--text-muted); }
 .kpi b { font-size: 26px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------------ profile side panel (ADR-015) */
+.linkish { all: unset; cursor: pointer; font-weight: 600; color: var(--text-primary); border-bottom: 1px dashed var(--border-strong); }
+.linkish:hover { color: var(--accent-strong); border-bottom-color: var(--accent); }
+.linkish:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.rtable tbody tr.is-open { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.card.is-open { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.matrix th.is-open .linkish { color: var(--accent-strong); border-bottom-color: var(--accent); }
+
+.profile-panel {
+  display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; overflow: hidden;
+  background: var(--surface-1); border-left: 1px solid var(--border);
+  animation: panel-in .2s ease-out both;
+}
+.app.panel-open { grid-template-columns: 280px minmax(0, 1fr) clamp(380px, 34vw, 560px); }
+.panel-head { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 18px; border-bottom: 1px solid var(--border); min-height: 57px; }
+.panel-title { flex: 1; min-width: 0; margin: 0; font-size: 15px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.panel-title:focus { outline: none; }
+.panel-title:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.panel-pos { font-size: 12.5px; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.panel-nav { display: flex; gap: 2px; }
+.panel-nav .icon-btn:disabled { opacity: .35; cursor: default; background: transparent; }
+.panel-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 18px; transition: opacity .15s; }
+.panel-body.loading { opacity: .55; }
+.panel-foot { padding: 12px 18px 16px; border-top: 1px solid var(--border); }
+.panel-foot .btn { width: 100%; justify-content: center; }
+.panel-foot .btn:disabled { opacity: .45; cursor: default; }
+.panel-content .profile-grid { grid-template-columns: 1fr; }
+.panel-content .block-actions { padding: 14px 0 0; border: 0; background: transparent; }
+@keyframes panel-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+
+/* below 1200px the panel floats over the chat instead of taking a column */
+@media (max-width: 1199px) {
+  .app.panel-open { grid-template-columns: 280px minmax(0, 1fr); }
+  .profile-panel { position: fixed; inset: 0 0 0 auto; width: min(520px, 100vw); height: auto; z-index: 30; box-shadow: var(--shadow-md); }
+}
+@media (max-width: 860px) {
+  .app.panel-open { grid-template-columns: 1fr; }
+}
 
 /* ------------------------------------------------------------------ composer */
 .composer { padding: 12px 24px 18px; }

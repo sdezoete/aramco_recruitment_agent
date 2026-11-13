@@ -41,7 +41,8 @@ Project docs. Read the relevant one before a non-trivial change:
 .venv\Scripts\python -m app                                        # how the server runs it (HTTPS if TLS_* set)
 .venv\Scripts\python -m tests.mock_llm --port 8001                 # mock LLM (--raw-harmony, --no-tools)
 #   then run the app with RA_LLM_BASE_URL=http://127.0.0.1:8001/v1 RA_LLM_MODEL=mock-harmony
-.venv\Scripts\python -m pytest                                     # tests (e2e tests use the local DB + mock LLM)
+.venv\Scripts\python -m pytest                                     # tests (e2e tests use the local DB + mock LLM; also runs tests/js via node)
+node --test "tests/js/*.test.mjs"                                 # frontend unit tests only (dev-only, fake DOM)
 # http://127.0.0.1:8000/dev/gallery   every UI template from real data (dev only)
 # http://127.0.0.1:8000/?q=<prompt>   deep link that sends a prompt on load
 powershell -ExecutionPolicy Bypass -File scripts\1-build-wheels.ps1   # build + verify wheels\
@@ -67,14 +68,14 @@ app/
   services/              scoring.py, jobspec.py (JD -> spec), documents.py, normalize.py
   db/connection.py       pyodbc connection from DB_* settings
   db/repository.py       ALL SQL lives here
-static/  index.html, css/app.css, js/{app,renderers,charts,markdown,sse,dom}.js, vendor/, dev/ (gallery)
+static/  index.html, css/app.css, js/{app,renderers,panel,profile-nav,charts,markdown,sse,dom}.js, vendor/, dev/ (gallery)
 data/docs/               JDs and reference documents (fake samples in git)
 sql/                     01_dev_server_tables.sql (dev only), 02_agent_memory.sql (dev + server, run by a DBA),
                          03_recommended_indexes.sql (optional request to the table owner)
 data/reference/          application_statuses.csv (status code -> stage, order, open for matching; placeholder)
 docs/schema/             db_structure_server.txt (the server table structure as supplied)
 scripts/  1-build-wheels.ps1, 2-install-offline.ps1, make-usb.ps1, run-server.bat, seed_dev_db.py (dev only)
-tests/   unit tests, e2e agent tests, mock_llm.py
+tests/   unit tests, e2e agent tests, API tests, mock_llm.py, js/ (frontend tests on node --test)
 ```
 
 ## Core rules

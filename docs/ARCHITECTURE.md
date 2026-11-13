@@ -70,3 +70,4 @@ Order: built-in defaults → `.env` → `RA_<KEY>` environment variables (used b
 | POST | `/api/chat` | SSE chat turn |
 | POST | `/api/upload-jd` | upload JD text, .docx or .pdf. Returns text the chat can use |
 | GET | `/api/export/shortlist.csv?chat_id=` | export the last shortlist |
+| GET | `/api/candidates/{id}/profile?chat_id=` | profile side panel (ADR-015): the `candidate_profile` block, scored against the chat's active job, no LLM call. 404 for an unknown id. Read-only: no history or memory writes. Audit: `profile_view` metadata only |

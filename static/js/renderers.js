@@ -49,33 +49,48 @@ function barRows(breakdown, criteria) {
     h("span", { class: "val" }, `${pct(breakdown[c.key])}%`)));
 }
 
+// Open a profile: the side panel when the host page has one (ctx.openProfile), else a chat prompt.
+// people: [{candidate_id, full_name}] in view order; els: the matching elements to highlight (optional).
+function openProfile(ctx, people, i, els = []) {
+  const p = people[i];
+  if (ctx.openProfile) ctx.openProfile(people.map((x) => x.candidate_id), i, els);
+  else ctx.ask(`Show the full profile of ${p.full_name} (#${p.candidate_id})`);
+}
+
 // ----------------------------------------------------------------------------- templates
 const R = {};
 
 R.ranked_table = (b, ctx) => {
   const d = b.data;
   const crit = d.criteria;
+  const rows = [];
   const table = h("table", { class: "rtable" },
     h("thead", null, h("tr", null,
       h("th", null, "#"), h("th", null, "Candidate"), h("th", null, "Score"),
       h("th", null, h("span", { title: crit.map((c) => c.label).join(" · ") }, "Breakdown")),
       h("th", null, "Skills"))),
-    h("tbody", null, d.rows.map((r) => h("tr", {
-      tabindex: "0", title: "Open profile",
-      onclick: () => ctx.ask(`Show the full profile of ${r.full_name} (#${r.candidate_id})`),
-      onkeydown: (e) => { if (e.key === "Enter") ctx.ask(`Show the full profile of ${r.full_name} (#${r.candidate_id})`); },
-    },
-      h("td", null, h("div", { class: "rank" + (r.rank === 1 ? " r1" : "") }, r.rank)),
-      h("td", { class: "who" }, h("b", { dir: "auto" }, r.full_name), h("small", { dir: "auto" },
-        [r.last_job_title, fmtYears(r.total_experience), r.location].filter(Boolean).join(" · "))),
-      h("td", null, h("div", { class: "score-cell" }, ring(r.score), h("span", { class: "band" }, r.band))),
-      h("td", null, miniBars(r.breakdown, crit)),
-      h("td", null, skillChips([], r.matched_skills, r.missing_skills), flagChips(r.flags))))));
+    h("tbody", null, d.rows.map((r, i) => {
+      const tr = h("tr", {
+        tabindex: "0", title: "Open profile",
+        onclick: () => openProfile(ctx, d.rows, i, rows),
+        onkeydown: (e) => { if (e.key === "Enter") openProfile(ctx, d.rows, i, rows); },
+      },
+        h("td", null, h("div", { class: "rank" + (r.rank === 1 ? " r1" : "") }, r.rank)),
+        h("td", { class: "who" }, h("b", { dir: "auto" }, r.full_name), h("small", { dir: "auto" },
+          [r.last_job_title, fmtYears(r.total_experience), r.location].filter(Boolean).join(" · "))),
+        h("td", null, h("div", { class: "score-cell" }, ring(r.score), h("span", { class: "band" }, r.band))),
+        h("td", null, miniBars(r.breakdown, crit)),
+        h("td", null, skillChips([], r.matched_skills, r.missing_skills), flagChips(r.flags)));
+      rows.push(tr);
+      return tr;
+    })));
   return { body: table, flush: true };
 };
 
-R.candidate_cards = (b, ctx) => ({
-  body: h("div", { class: "cards" }, b.data.cards.map((c) => h("article", { class: "card" },
+R.candidate_cards = (b, ctx) => {
+  const cards = b.data.cards;
+  const cardEls = [];
+  const card = (c, i) => h("article", { class: "card" },
     h("div", { class: "card-top" },
       h("div", { class: "initials", "aria-hidden": "true" }, initials(c.full_name)),
       h("div", { class: "grow" }, h("div", { class: "card-name", dir: "auto" }, c.full_name),
@@ -89,9 +104,10 @@ R.candidate_cards = (b, ctx) => ({
       c.application_status ? h("span", null, "Status: ", c.application_status) : null),
     c.summary ? h("p", { class: "card-summary", dir: "auto" }, c.summary) : null,
     skillChips(c.skills.filter((s) => !(c.matched_skills || []).includes(s)), c.matched_skills || []),
-    h("button", { class: "btn", type: "button", onclick: () => ctx.ask(`Show the full profile of ${c.full_name} (#${c.candidate_id})`) },
-      "View profile")))),
-});
+    h("button", { class: "btn", type: "button", onclick: () => openProfile(ctx, cards, i, cardEls) }, "View profile"));
+  cards.forEach((c, i) => cardEls.push(card(c, i)));
+  return { body: h("div", { class: "cards" }, cardEls) };
+};
 
 const ASSESS = [["inductive", "Inductive reasoning"], ["numerical", "Numerical reasoning"], ["verbal", "Verbal reasoning"]];
 
@@ -135,15 +151,24 @@ R.candidate_profile = (b) => {
   return { body: [head, h("div", { class: "profile-grid" }, left, right)] };
 };
 
-R.comparison_matrix = (b) => {
+R.comparison_matrix = (b, ctx) => {
   const { criteria, candidates } = b.data;
+  const heads = [];
+  const nameHead = (c, i) => {
+    const th = h("th", { dir: "auto" },
+      h("button", { class: "linkish", type: "button", title: "Open profile", onclick: () => openProfile(ctx, candidates, i, heads) },
+        c.full_name),
+      h("div", { class: "band" }, `#${c.candidate_id}`));
+    heads.push(th);
+    return th;
+  };
   const best = {};
   for (const c of criteria) best[c.key] = Math.max(...candidates.map((x) => x.breakdown[c.key]));
   const cell = (v, isBest) => h("td", { class: isBest ? "best" : null },
     h("div", { class: "cell-val" }, h("div", { class: "bar-track" }, h("i", { style: { width: `${pct(v)}%` } })),
       h("span", null, `${pct(v)}%`), isBest ? h("span", { class: "sr-only" }, "(best)") : null));
   const table = h("table", { class: "matrix" },
-    h("thead", null, h("tr", null, h("th", null, ""), candidates.map((c) => h("th", { dir: "auto" }, c.full_name, h("div", { class: "band" }, `#${c.candidate_id}`))))),
+    h("thead", null, h("tr", null, h("th", null, ""), candidates.map(nameHead))),
     h("tbody", null,
       h("tr", null, h("th", null, "Overall score"), candidates.map((c) => h("td", null, h("div", { class: "score-cell" }, ring(c.score), h("span", { class: "band" }, c.band))))),
       criteria.map((cr) => h("tr", null, h("th", null, cr.label),
@@ -209,23 +234,32 @@ R.kpi_strip = (b) => ({
   body: h("div", { class: "kpis" }, b.data.kpis.map((k) => h("div", { class: "kpi" }, h("small", null, k.label), h("b", null, String(k.value))))),
 });
 
-export function renderBlock(block, ctx) {
+function renderParts(block, ctx) {
   const fn = R[block.template];
-  const head = h("div", { class: "block-head" },
-    h("div", { class: "block-title" }, block.title || ""), null, h("span", { class: "block-kind" }, KIND[block.template] || block.template));
-  let out;
   try {
-    out = fn ? fn(block, ctx) : { body: h("pre", null, JSON.stringify(block.data, null, 2)) };
+    return fn ? fn(block, ctx) : { body: h("pre", null, JSON.stringify(block.data, null, 2)) };
   } catch (e) {
     console.error(e);
-    out = { body: h("p", { class: "muted" }, "This view could not be displayed.") };
+    return { body: h("p", { class: "muted" }, "This view could not be displayed.") };
   }
+}
+
+const actionChips = (block, ctx) => block.actions && block.actions.length
+  ? h("div", { class: "block-actions" }, block.actions.map((a) =>
+      h("button", { class: "action-chip", type: "button", onclick: () => ctx.ask(a.prompt) }, a.label)))
+  : null;
+
+export function renderBlock(block, ctx) {
+  const head = h("div", { class: "block-head" },
+    h("div", { class: "block-title" }, block.title || ""), null, h("span", { class: "block-kind" }, KIND[block.template] || block.template));
+  const out = renderParts(block, ctx);
   if (out.tools) head.insertBefore(out.tools, head.lastChild);
-  const el = h("section", { class: "block", "data-template": block.template },
-    head, h("div", { class: "block-body" + (out.flush ? " flush" : "") }, out.body));
-  if (block.actions && block.actions.length) {
-    el.appendChild(h("div", { class: "block-actions" }, block.actions.map((a) =>
-      h("button", { class: "action-chip", type: "button", onclick: () => ctx.ask(a.prompt) }, a.label))));
-  }
-  return el;
+  return h("section", { class: "block", "data-template": block.template },
+    head, h("div", { class: "block-body" + (out.flush ? " flush" : "") }, out.body), actionChips(block, ctx));
+}
+
+/** A block's content without the card frame (used by the profile side panel). */
+export function renderContent(block, ctx) {
+  const out = renderParts(block, ctx);
+  return h("div", { class: "panel-content", "data-template": block.template }, out.body, actionChips(block, ctx));
 }
