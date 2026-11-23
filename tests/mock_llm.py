@@ -70,7 +70,9 @@ def _plan(text: str, results: list[dict]) -> tuple[str, list[tuple[str, dict]], 
         return "", [], (f"**{best['full_name']} (#{best['candidate_id']})** is the strongest match with a score "
                         f"of {best['score']}.\n\n- Matched: {', '.join(best['matched_skills']) or 'none'}\n"
                         f"- Missing: {', '.join(best['missing_skills']) or 'none'}\n\n"
-                        "See the ranking and radar above. Want me to compare the top three in detail?")
+                        "See the ranking and radar above.\n\n"
+                        "::followup:: Compare top 3\n"
+                        "- ::followup:: Interview questions for the top candidate")
     if "chart" in text or "skill" in text:
         if n == 0:
             return "I'll chart the skill supply.", [("render_view", {"template": "chart", "title": "Skill supply",

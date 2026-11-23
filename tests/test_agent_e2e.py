@@ -73,6 +73,13 @@ def _check_best_candidate_flow(evs, templates):
     assert tools[:2] == ["set_job_spec", "match_candidates"]
     final = "".join(d["text"] for k, d in evs if k == "text_delta")
     assert rows[0]["full_name"] in final
+    # follow-up lines become a `suggestions` event (buttons) and never reach the visible text (ADR-016)
+    assert "::followup" not in final.lower()
+    sugg = [d for k, d in evs if k == "suggestions"]
+    assert len(sugg) == 1
+    prompts = [i["prompt"] for i in sugg[0]["items"]]
+    assert prompts == ["Compare top 3", "Interview questions for the top candidate"]
+    assert kinds.index("suggestions") < kinds.index("done")
 
 
 @pytest.mark.parametrize("mode", ["native", "raw_harmony", "no_tools"])
@@ -89,6 +96,7 @@ def test_best_candidate_flow(db_ok, chat, mode, monkeypatch):
         assert client.caps.native_tools is False
     # harmony history policy: no reasoning stored, final answer stored
     assert chat.history[-1]["role"] == "assistant"
+    assert "::followup" not in chat.history[-1]["content"], "history keeps the answer as the user saw it"
     assert all("reasoning" not in str(m.keys()) for m in chat.history)
 
 

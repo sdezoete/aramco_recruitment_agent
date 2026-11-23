@@ -2,7 +2,7 @@
 import { h } from "./dom.js";
 import { renderMarkdown } from "./markdown.js";
 import { postSSE } from "./sse.js";
-import { renderBlock } from "./renderers.js";
+import { renderBlock, renderFollowups } from "./renderers.js";
 import { refreshCharts, clearCharts } from "./charts.js";
 import { createProfilePanel } from "./panel.js";
 
@@ -122,6 +122,10 @@ class AssistantMessage {
     if (b.template === "ranked_table") enableExport();
     if (b.template === "jd_card") setActiveJob(b.data.title, b.data);
   }
+  followups(items) {
+    const el = renderFollowups(items, (p) => ask(p));
+    if (el) this.body.appendChild(el);
+  }
   notice(m) { this.body.appendChild(h("div", { class: "notice" }, m)); }
   error(m) { this.endThinking(0); this.body.appendChild(h("div", { class: "error-box", role: "alert" }, m)); }
   done() {
@@ -170,6 +174,7 @@ async function ask(text) {
           if (d.ok && d.summary && msg.toolChips[d.id] && msg.toolChips[d.id].title.startsWith("set_job_spec")) setActiveJob(d.summary);
           break;
         case "ui_block": msg.block(d); break;
+        case "suggestions": msg.followups(d.items); break;
         case "notice": msg.notice(d.message); break;
         case "error": msg.error(d.message); break;
         case "done": msg.done(); break;

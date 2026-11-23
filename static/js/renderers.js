@@ -258,6 +258,26 @@ export function renderBlock(block, ctx) {
     head, h("div", { class: "block-body" + (out.flush ? " flush" : "") }, out.body), actionChips(block, ctx));
 }
 
+/**
+ * Follow-up buttons under an answer (ADR-016, SSE `suggestions`). One click sends the prompt as the next
+ * message. The clicked one is marked so the thread shows which path was taken; all stay usable.
+ */
+export function renderFollowups(items, ask) {
+  const list = (items || []).filter((x) => x && typeof x.prompt === "string" && x.prompt.trim()).slice(0, 3);
+  if (!list.length) return null;
+  const buttons = list.map((x) => {
+    const b = h("button", { class: "followup-chip", type: "button", title: x.prompt, dir: "auto" },
+      svgIcon("M5 12h12M13 6l6 6-6 6", "icon"), h("span", null, x.label || x.prompt));
+    b.addEventListener("click", () => {
+      buttons.forEach((o) => o.classList.remove("used"));
+      b.classList.add("used");
+      ask(x.prompt);
+    });
+    return b;
+  });
+  return h("div", { class: "followups", role: "group", "aria-label": "Suggested next steps" }, buttons);
+}
+
 /** A block's content without the card frame (used by the profile side panel). */
 export function renderContent(block, ctx) {
   const out = renderParts(block, ctx);

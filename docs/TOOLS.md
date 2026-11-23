@@ -66,7 +66,7 @@ Also the way to discover valid filter values (`location_mix`, `status_mix`, `hir
 ### `render_view`
 Shows a rich view in the chat. Call it after the data tools. The server hydrates the content from the DB or the saved shortlist.
 - **parameters:** `template: enum` (see RESPONSE_TEMPLATES.md), `title: string`, `candidate_ids?: int[]`, `doc_ids?: string[]`, `metric?: string` (pool metrics or `shortlist_scores`), `options?: { limit?: int, chart_type?: enum[bar, doughnut, line, radar], scope?: enum[pool, shortlist] }`
-- **returns to the LLM:** `{ rendered: true, block_id }`
+- **returns to the LLM:** `{ rendered: true, block_id, template, next }`. `next` reminds the model not to repeat the view's numbers, and to put next steps only in `::followup::` lines (ADR-016).
 - **side effect:** an SSE `ui_block` event
 
 ---

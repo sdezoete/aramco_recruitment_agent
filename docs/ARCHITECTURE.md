@@ -38,6 +38,7 @@
 | `tool_start` | `{ "id", "name", "label" }` |
 | `tool_end`   | `{ "id", "ok", "summary" }` |
 | `ui_block`   | a UI block (RESPONSE_TEMPLATES.md) |
+| `suggestions` | `{ "items": [{ "label", "prompt" }] }`: follow-up buttons under the answer, at most 3, sent once before `done` (ADR-016) |
 | `done`       | `{ "steps", "note"? }` |
 | `error`      | `{ "message" }` |
 

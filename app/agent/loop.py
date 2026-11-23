@@ -15,6 +15,7 @@ import uuid
 from typing import AsyncIterator, Callable
 
 from app.agent import prompts, registry
+from app.agent.followups import FollowupFilter, offers_from_prose, split_followups
 from app.config import Settings
 from app.db.repository import Repository
 from app.llm import harmony
@@ -97,6 +98,7 @@ async def _run(settings: Settings, client: LLMClient, repo: Repository, chat: Ch
         thinking_since: float | None = None
         streamed_text = False
         turn = None
+        followups = FollowupFilter()   # strips "::followup::" lines from the text as it streams
         try:
             async for ev in client.chat(messages, None if prompted else registry.definitions()):
                 if ev.kind == "reasoning":
@@ -109,7 +111,9 @@ async def _run(settings: Settings, client: LLMClient, repo: Repository, chat: Ch
                         thinking_since = None
                     if not prompted:
                         streamed_text = True
-                        yield "text_delta", {"text": ev.text}
+                        shown = followups.feed(ev.text)
+                        if shown:
+                            yield "text_delta", {"text": shown}
                 elif ev.kind == "end":
                     turn = ev.turn
         except ToolsUnsupported:
@@ -129,7 +133,10 @@ async def _run(settings: Settings, client: LLMClient, repo: Repository, chat: Ch
             return
 
         tool_calls = list(turn.tool_calls)
-        final_text = turn.content
+        rest, suggestions = followups.finish()
+        if rest:
+            yield "text_delta", {"text": rest}
+        final_text, _ = split_followups(turn.content)
 
         if prompted:
             obj = _parse_prompted(turn.content)
@@ -138,15 +145,21 @@ async def _run(settings: Settings, client: LLMClient, repo: Repository, chat: Ch
                                "function": {"name": str(obj["tool"]),
                                             "arguments": json.dumps(obj.get("arguments") or {})}}]
             else:
-                final_text = str(obj["final"]) if obj and "final" in obj else turn.content
+                raw = str(obj["final"]) if obj and "final" in obj else turn.content
+                final_text, suggestions = split_followups(raw)
                 yield "text_delta", {"text": final_text}
                 streamed_text = True
 
         if not tool_calls:
             if streamed_text:
                 yield "segment_end", {"kind": "final"}
+            if not suggestions:   # model ignored the format: turn a trailing "If you want, I can..." into buttons
+                suggestions = offers_from_prose(final_text)
+            if suggestions:   # follow-up buttons under the answer (ADR-016)
+                yield "suggestions", {"items": suggestions}
             if turn.finish_reason == "length":
                 yield "notice", {"message": "The answer was cut off at the token limit (LLM_MAX_TOKENS)."}
+            # history keeps the answer as the user saw it, without the follow-up lines
             chat.history.append({"role": "assistant", "content": final_text})
             yield "done", {"steps": step, "seconds": round(time.time() - started, 1), "usage": turn.usage}
             return

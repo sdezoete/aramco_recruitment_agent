@@ -230,6 +230,39 @@ test("single candidate: no position label and no prev/next buttons", async () =>
   assert.equal(btn("Next candidate").hidden, true);
 });
 
+// ------------------------------------------------------------- follow-up buttons (ADR-016)
+test("follow-up buttons send their prompt in one click and mark the one used", async () => {
+  const { renderFollowups } = await import("../../static/js/renderers.js");
+  const sent = [];
+  const el = renderFollowups([
+    { label: "Interview guide", prompt: "Turn these into a structured interview guide with scoring criteria" },
+    { label: "Compare", prompt: "Compare Reem (#127) and Pieter (#97)" },
+    { label: "", prompt: "No label uses the prompt" },
+    { label: "Fourth", prompt: "dropped: max 3" },
+  ], (p) => sent.push(p));
+  const buttons = el.findAll((n) => n.tagName === "BUTTON");
+  assert.equal(buttons.length, 3);
+  assert.equal(el.getAttribute("role"), "group");
+  assert.equal(buttons[2].textContent, "No label uses the prompt");
+  assert.equal(buttons[0].getAttribute("title"), "Turn these into a structured interview guide with scoring criteria");
+  buttons[0].click();
+  assert.deepEqual(sent, ["Turn these into a structured interview guide with scoring criteria"]);
+  assert.ok(buttons[0].classList.contains("used"));
+  buttons[1].click();
+  assert.ok(buttons[1].classList.contains("used") && !buttons[0].classList.contains("used"));
+  assert.equal(sent.length, 2);
+});
+
+test("follow-ups: nothing to show gives no element; text stays text", async () => {
+  const { renderFollowups } = await import("../../static/js/renderers.js");
+  assert.equal(renderFollowups([], () => {}), null);
+  assert.equal(renderFollowups(null, () => {}), null);
+  assert.equal(renderFollowups([{ label: "x", prompt: "  " }, null], () => {}), null);
+  const el = renderFollowups([{ label: "<b>bold</b>", prompt: "<script>alert(1)</script>" }], () => {});
+  assert.equal(el.find((n) => n.tagName === "B" || n.tagName === "SCRIPT"), null);
+  assert.equal(el.find((n) => n.tagName === "BUTTON").textContent, "<b>bold</b>");
+});
+
 // ------------------------------------------------------------- renderer wiring (views -> panel)
 const criteria = [{ key: "skills", label: "Skills" }];
 const ranked = { template: "ranked_table", title: "Best", actions: [], data: { criteria, rows: [11, 22, 33].map((id, i) => ({

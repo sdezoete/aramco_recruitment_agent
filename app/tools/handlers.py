@@ -238,7 +238,8 @@ def compare_candidates(ctx: ToolContext, a: dict) -> dict:
             "candidates": [{k: r[k] for k in ("candidate_id", "full_name", "score", "breakdown",
                                               "matched_skills", "missing_skills")} for r in results],
             "next": "Call render_view with template comparison_matrix (or score_radar) and these candidate_ids "
-                    "to show the comparison; do not write a table or list scores in prose."}
+                    "to show the comparison; do not write a table or list scores in prose. Next steps go in "
+                    "'::followup:: <request>' lines at the end of your answer."}
 
 
 # ---------------------------------------------------------------------------------------- analytics
@@ -253,4 +254,6 @@ def render_view(ctx: ToolContext, a: dict) -> dict:
     ctx.chat.block_seq += 1
     block["block_id"] = f"blk_{ctx.chat.block_seq}"
     ctx.blocks.append(block)
-    return {"rendered": True, "block_id": block["block_id"], "template": block["template"]}
+    return {"rendered": True, "block_id": block["block_id"], "template": block["template"],
+            "next": "The user sees this view. Don't repeat its numbers. Finish with a short answer and put "
+                    "next steps only as '::followup:: <request>' lines at the very end (no 'If you want...')."}
