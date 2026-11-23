@@ -1,7 +1,7 @@
 # Roadmap
 
-## Status (2026-11-11)
-The first working version is built: backend, harmony-aware LLM client, tools, scoring, the full frontend, and the dev gallery. On 2026-11-11 the app moved to the server table structure (T_IIR_ARIF_*, ADR-009 to ADR-011); the dev DB holds an exact copy with 400 fake candidates (part Arabic). 31 tests pass, including e2e agent turns in all three gateway modes. OpenAI is configured as the dev LLM, but the machine's `OPENAI_API_KEY` is rejected (`invalid_api_key`), so a valid key must go in `.env`. Version `0.1.0` (not released).
+## Status (2026-11-23)
+The first working version is built: backend, harmony-aware LLM client, tools, scoring, the full frontend, and the dev gallery. On 2026-11-11 the app moved to the server table structure (T_IIR_ARIF_*, ADR-009 to ADR-011); the dev DB holds an exact copy with 400 fake candidates (part Arabic). Since then: the comparison view steers the model to `comparison_matrix` and renders Markdown tables safely, candidate profiles open in a side panel without an LLM round trip (ADR-015), and answers end with one-click follow-up suggestion buttons (ADR-016). 100 tests pass (Python + frontend JS), including e2e agent turns in all three gateway modes. OpenAI is configured as the dev LLM, but the machine's `OPENAI_API_KEY` is rejected (`invalid_api_key`), so a valid key must go in `.env`. Version `0.1.0` (not released).
 
 ## Phase 0: Pipeline
 - [x] AIRGAP_DEPLOYMENT_STANDARD, DEPLOY.md, DEPLOY-NOTES.md
@@ -25,6 +25,9 @@ The first working version is built: backend, harmony-aware LLM client, tools, sc
 - [x] Chat shell, SSE client, thinking indicator, preambles, tool chips, theme toggle, mobile layout
 - [x] All 9 renderers + chart/table toggle + dev gallery
 - [x] Follow-up action chips, CSV export, `?q=` deep link
+- [x] Comparison view via `comparison_matrix`; safe Markdown tables in answers
+- [x] Profile side panel with previous/next, no LLM round trip (ADR-015); frontend unit tests on `node --test`
+- [x] Follow-up suggestion buttons from `::followup::` markers and prose offers (ADR-016)
 - [ ] Verify with a real OpenAI key (blocked: the machine key is invalid)
 - [ ] JD file upload (.docx/.pdf) from the UI. For now JDs come from `data/docs/` or are pasted into the chat
 
