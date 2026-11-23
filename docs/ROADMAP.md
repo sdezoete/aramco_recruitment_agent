@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Status (2026-11-23)
-The first working version is built: backend, harmony-aware LLM client, tools, scoring, the full frontend, and the dev gallery. On 2026-11-11 the app moved to the server table structure (T_IIR_ARIF_*, ADR-009 to ADR-011); the dev DB holds an exact copy with 400 fake candidates (part Arabic). Since then: the comparison view steers the model to `comparison_matrix` and renders Markdown tables safely, candidate profiles open in a side panel without an LLM round trip (ADR-015), and answers end with one-click follow-up suggestion buttons (ADR-016). 100 tests pass (Python + frontend JS), including e2e agent turns in all three gateway modes. OpenAI is configured as the dev LLM, but the machine's `OPENAI_API_KEY` is rejected (`invalid_api_key`), so a valid key must go in `.env`. Version `0.1.0` (not released).
+The first working version is built: backend, harmony-aware LLM client, tools, scoring, the full frontend, and the dev gallery. On 2026-11-11 the app moved to the server table structure (T_IIR_ARIF_*, ADR-009 to ADR-011); the dev DB holds an exact copy with 400 fake candidates (part Arabic). Since then: the comparison view steers the model to `comparison_matrix` and renders Markdown tables safely, candidate profiles open in a side panel without an LLM round trip (ADR-015), and answers end with one-click follow-up suggestion buttons (ADR-016). 100 tests pass (Python + frontend JS), including e2e agent turns in all three gateway modes. The dev LLM is OpenAI `gpt-5.4-mini`, with a valid key in `.env` (`OPENAI_API_KEY`). It was verified 2026-11-23: the probe passes (stream, developer role), and a real "best 5 reservoir engineers" turn ran `set_job_spec` → `match_candidates` → `render_view` with native tools and returned follow-up suggestions. Version `0.1.0` (not released).
 
 ## Phase 0: Pipeline
 - [x] AIRGAP_DEPLOYMENT_STANDARD, DEPLOY.md, DEPLOY-NOTES.md
@@ -28,7 +28,7 @@ The first working version is built: backend, harmony-aware LLM client, tools, sc
 - [x] Comparison view via `comparison_matrix`; safe Markdown tables in answers
 - [x] Profile side panel with previous/next, no LLM round trip (ADR-015); frontend unit tests on `node --test`
 - [x] Follow-up suggestion buttons from `::followup::` markers and prose offers (ADR-016)
-- [ ] Verify with a real OpenAI key (blocked: the machine key is invalid)
+- [x] Verify with a real OpenAI key (2026-11-23, key in `.env`)
 - [ ] JD file upload (.docx/.pdf) from the UI. For now JDs come from `data/docs/` or are pasted into the chat
 
 ## Phase 4: Production hardening
@@ -40,7 +40,7 @@ The first working version is built: backend, harmony-aware LLM client, tools, sc
 ## Open questions
 1. ~~Authoritative table structure~~: received 2026-11-11 (`T_IIR_ARIF_*`, see DATA_DICTIONARY.md). Field questions answered the same day; still open: the real status list (Q9b, placeholder CSV in use) and the full location list (Q17).
 2. **Prod DB connection:** server name or instance, Windows vs SQL authentication, and a login with read access on `T_IIR_ARIF_*` plus read/write on `T_IIR_ARIF_AGENT_MEMORY` only? Who runs `sql/02_agent_memory.sql`? Is ODBC Driver 17 or 18 installed on the server?
-3. ~~Dev LLM endpoint~~: OpenAI (decided 2026-11-11). It needs a valid key in `.env`.
+3. ~~Dev LLM endpoint~~: OpenAI (decided 2026-11-11). Valid key in `.env`, verified 2026-11-23.
 4. **Gateway capabilities:** does the MaaS model support `tools` (function calling) and `stream`? The design falls back if not, but native support is much better. What is the exact model id of DeepSeek 4.1 Flash on the gateway?
 5. **JD source:** files in `data/docs/` only, or also another system?
 6. **Server specifics:** install path, port, certificate location (the sibling project uses `D:\ssl_certificate\`), and the users / SSO in front of the app.
